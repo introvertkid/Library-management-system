@@ -6,20 +6,31 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+public class Main extends Application {
 
-public class Main extends Application
-{
     @Override
-    public void start(Stage primaryStage)
-    {
+    public void start(Stage primaryStage) {
+
         DatabaseHelper.connectToDatabase();
 
         try {
-            Parent root = FXMLLoader.load(this.getClass().getResource("/FXML/BaseScene.fxml"));
+
+            Parent root = FXMLLoader.load(this.getClass().getResource("/FXML/LoginScene.fxml"));
             Scene scene = new Scene(root);
-            primaryStage.setTitle("Library management system");
+
+            primaryStage.setTitle("Library Management System");
             primaryStage.setScene(scene);
-            primaryStage.show();
+
+                //full screen - taskbar
+//            primaryStage.setX(visualBounds.getMinX());
+//            primaryStage.setY(visualBounds.getMinY());
+//            primaryStage.setWidth(visualBounds.getWidth());
+//            primaryStage.setHeight(visualBounds.getHeight());
+                //full screen
+//            primaryStage.setFullScreen(true);
+//            primaryStage.setFullScreenExitHint("");
+              primaryStage.show();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
