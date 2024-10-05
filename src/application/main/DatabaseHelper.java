@@ -2,8 +2,6 @@ package main;
 
 import java.sql.*;
 
-//todo: need to check if database is empty -> initialize new database
-//todo: refactor connectToDatabase function because it automaticlly closes after connect
 public class DatabaseHelper
 {
     private static final String URL = "jdbc:mysql://localhost:3306/envi";
@@ -18,7 +16,6 @@ public class DatabaseHelper
         {
             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println("Connect to database successfully");
-//            initializeDatabase();
 //            conn.close();
         }
         catch (SQLException e)

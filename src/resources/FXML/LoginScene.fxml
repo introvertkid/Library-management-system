@@ -12,7 +12,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="Dashboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="552.0" prefWidth="957.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.Controller">
+<AnchorPane fx:id="loginScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="620.0" prefWidth="1200.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="main.LoginController">
    <children>
       <ScrollPane fx:id="scroll" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent; -fx-border: transparent;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
          <HBox fx:id="Signin" alignment="CENTER" spacing="0.0" style="-fx-padding: 20; -fx-background-color: #C0C0C0;">
@@ -29,7 +31,7 @@
                      <Label style="-fx-font-size: 14px; -fx-font-family: 'Montserrat';" text="Username" />
                      <TextField fx:id="usernameField" prefHeight="4.0" prefWidth="200.0" promptText="Username" style="-fx-font-size: 14px; -fx-background-color: white; -fx-border-color: #A0A0A0; -fx-border-radius: 5; -fx-prompt-text-fill: #A0A0A0;" />
                      <Label style="-fx-font-size: 14px; -fx-font-family: 'Montserrat';" text="Password" />
-                     <HBox fx:id="pass" prefWidth="258.0" style="-fx-background-color: transparent;">
+                     <HBox fx:id="passwordBox" prefWidth="258.0" style="-fx-background-color: transparent;">
                         <StackPane prefHeight="34.0" prefWidth="274.0">
                            <PasswordField fx:id="passwordField" prefHeight="31.0" promptText="Password" style="-fx-background-color: white; -fx-border-color: #A0A0A0; -fx-border-radius: 5; -fx-prompt-text-fill: #A0A0A0;" />
                            <TextField fx:id="passwordFieldHidden" prefHeight="31.0" promptText="Password" style="-fx-background-color: white; -fx-border-color: #A0A0A0; -fx-border-radius: 5; -fx-prompt-text-fill: #A0A0A0;" visible="false" />
