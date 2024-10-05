@@ -81,7 +81,7 @@
                                        <Font size="14.0" />
                                     </font>
                                  </TextField>
-                                 <Button fx:id="showPassword" mnemonicParsing="false" onMouseClicked="#handleShowPassword" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: white; -fx-border-radius: 5; -fx-font-family: Montserrat;" text="👁" />
+                                 <Button fx:id="showPassword" mnemonicParsing="false" onAction="#handleShowPassword" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: white; -fx-border-radius: 5; -fx-font-family: Montserrat;" text="👁" />
                               </children>
                            </StackPane>
                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Confirm password" textAlignment="CENTER" wrappingWidth="253.47002029418945" VBox.vgrow="ALWAYS">
@@ -101,7 +101,7 @@
                                        <Font size="14.0" />
                                     </font>
                                  </TextField>
-                                 <Button fx:id="showConfirmPassword" mnemonicParsing="false" onMouseClicked="#handleShowConfirmPassword" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: white; -fx-border-radius: 5; -fx-font-family: Montserrat;" text="👁" />
+                                 <Button fx:id="showConfirmPassword" mnemonicParsing="false" onAction="#handleShowConfirmPassword" prefHeight="25.0" prefWidth="29.0" style="-fx-background-color: white; -fx-border-radius: 5; -fx-font-family: Montserrat;" text="👁" />
                               </children>
                            </StackPane>
                            <Text fx:id="passwordError" fill="red" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
@@ -110,12 +110,12 @@
                            <Text fx:id="checkboxError" fill="red" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                               <children>
-                                 <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#handleBack" prefHeight="39.0" prefWidth="86.0" text="Back">
+                                 <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleBack" prefHeight="39.0" prefWidth="86.0" text="Back">
                                     <font>
                                        <Font name="System Bold" size="18.0" />
                                     </font>
                                  </Button>
-                                 <Button fx:id="signUpButton" mnemonicParsing="false" onMouseClicked="#handleSignUp" style="-fx-background-color: blue;" text="Sign up" textFill="WHITE">
+                                 <Button fx:id="signUpButton" mnemonicParsing="false" onAction="#handleSignUp" style="-fx-background-color: blue;" text="Sign up" textFill="WHITE">
                                     <font>
                                        <Font name="System Bold" size="18.0" />
                                     </font>

@@ -19,12 +19,15 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
+import java.awt.event.MouseEvent;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class SignUpController {
+public class SignUpController extends Controller {
     @FXML
     private HBox signUpHBox;
 
@@ -49,8 +52,8 @@ public class SignUpController {
     private boolean isPasswordVisible = false;
     private boolean isConfirmPasswordVisible = false;
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         // Initially, hide the text fields and only show the password fields
         passwordTextField.setManaged(false);
         passwordTextField.setVisible(false);
@@ -104,7 +107,7 @@ public class SignUpController {
     }
 
     @FXML
-    public void handleShowPassword() {
+    public void handleShowPassword(ActionEvent actionEvent) {
         if (!isPasswordVisible) {
             // Show the password (use TextField)
             passwordTextField.setManaged(true);
@@ -126,7 +129,8 @@ public class SignUpController {
         }
     }
 
-    public void handleShowConfirmPassword() {
+    @FXML
+    public void handleShowConfirmPassword(ActionEvent actionEvent) {
         if (!isConfirmPasswordVisible) {
             // Show the password (use TextField)
             confirmPasswordTextField.setManaged(true);
@@ -168,27 +172,13 @@ public class SignUpController {
         return false; // Return false if there's an error or no matching user found
     }
 
-    void loadHomePage() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/LoginScene.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) signUpHBox.getScene().getWindow();
-            stage.setTitle("Library management system");
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    @FXML
+    void handleBack(ActionEvent actionEvent) {
+        loadNewRoot("LoginScene", actionEvent);
     }
 
     @FXML
-    void handleBack() {
-        loadHomePage();
-    }
-
-    public void handleSignUp() {
+    public void handleSignUp(ActionEvent actionEvent) {
         // Get the user input
         String username = nameField.getText().trim();
         String phone = phoneField.getText().trim();
@@ -210,8 +200,8 @@ public class SignUpController {
         returnButton.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
         returnButton.setFont(Font.font("System Bold", 18));
 
-        returnButton.setOnMouseClicked(e -> {
-            loadHomePage();
+        returnButton.setOnAction(e -> {
+            loadNewRoot("LoginScene", e);
         });
 
         VBox successLayout = new VBox(10);
