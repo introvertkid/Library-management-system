@@ -17,14 +17,14 @@
       <ScrollPane fx:id="scroll" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent; -fx-border: transparent;" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0">
          <HBox fx:id="Signin" alignment="CENTER" spacing="0.0" style="-fx-padding: 20; -fx-background-color: #C0C0C0;">
             <!-- Login Pane -->
-            <AnchorPane fx:id="login" prefHeight="514.0" prefWidth="931.0" style="-fx-background-color: transparent;">
+            <AnchorPane fx:id="login" prefHeight="578.0" prefWidth="1182.0" style="-fx-background-color: transparent;">
                <children>
-                  <ImageView fx:id="imageView" fitHeight="500.0" fitWidth="704.0" layoutX="205.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="false">
+                  <ImageView fx:id="imageView" fitHeight="547.0" fitWidth="845.0" layoutX="290.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="false">
                      <image>
                         <Image url="@../image/pic.png" />
                      </image>
                   </ImageView>
-                  <VBox fx:id="loginBox" alignment="CENTER" layoutY="78.0" prefHeight="346.0" prefWidth="200.0" spacing="10.0">
+                  <VBox fx:id="loginBox" alignment="CENTER" layoutX="34.0" layoutY="77.0" prefHeight="346.0" prefWidth="200.0" spacing="10.0">
                      <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-font-family: 'Montserrat';" text="Sign In" />
                      <Label style="-fx-font-size: 14px; -fx-font-family: 'Montserrat';" text="Username" />
                      <TextField fx:id="usernameField" prefHeight="4.0" prefWidth="200.0" promptText="Username" style="-fx-font-size: 14px; -fx-background-color: white; -fx-border-color: #A0A0A0; -fx-border-radius: 5; -fx-prompt-text-fill: #A0A0A0;" />
@@ -33,13 +33,28 @@
                         <StackPane prefHeight="34.0" prefWidth="274.0">
                            <PasswordField fx:id="passwordField" prefHeight="31.0" promptText="Password" style="-fx-background-color: white; -fx-border-color: #A0A0A0; -fx-border-radius: 5; -fx-prompt-text-fill: #A0A0A0;" />
                            <TextField fx:id="passwordFieldHidden" prefHeight="31.0" promptText="Password" style="-fx-background-color: white; -fx-border-color: #A0A0A0; -fx-border-radius: 5; -fx-prompt-text-fill: #A0A0A0;" visible="false" />
-                           <Button fx:id="togglePasswordButton" minWidth="39.0" onAction="#togglePasswordVisibility" prefHeight="34.0" prefWidth="57.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: black; -fx-background-color: transparent;" text="👁" StackPane.alignment="CENTER_RIGHT" />
+                           <Button fx:id="togglePasswordButton" minWidth="35.0" onAction="#togglePasswordVisibility" prefHeight="26.0" prefWidth="35.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: black; -fx-background-color: white;-fx-cursor: hand;" text="👁" StackPane.alignment="CENTER_RIGHT" />
                         </StackPane>
                      </HBox>
-                     <Button fx:id="loginButton" onAction="#handleLogin" prefWidth="100.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: black; -fx-background-color: #3b5998; -fx-text-fill: white; -fx-font-weight: bold;" text="Log In" />
+                     <Button fx:id="loginButton" onAction="#handleLogin" onMouseEntered="#handleMouseEnter" onMouseExited="#handleMouseExit" prefWidth="100.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Log In" />
+
                      <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: transparent;">
-                        <Button fx:id="forgotPasswordButton" onAction="#handleForgotPassword" prefHeight="34.0" prefWidth="126.0" style="-fx-font-family: 'Montserrat';-fx-font-weight: bold; -fx-text-fill: black; -fx-background-color: transparent;" text="Forgot Password?" />
-                        <Button fx:id="createAccountButton" onAction="#handleCreateAccount" style="-fx-font-family: 'Montserrat';-fx-font-weight: bold; -fx-text-fill: black; -fx-background-color: transparent;" text="Create New Account" />
+                        <Button fx:id="forgotPasswordButton"
+                                onAction="#handleForgotPassword"
+                                onMouseEntered="#handleMouseEnterForgotPassword"
+                                onMouseExited="#handleMouseExitForgotPassword"
+                                prefHeight="34.0"
+                                prefWidth="126.0"
+                                style="-fx-font-family: 'Montserrat';-fx-font-weight: bold; -fx-text-fill: black; -fx-background-color: transparent;-fx-cursor: hand;"
+                                text="Forgot Password?" />
+
+                        <Button fx:id="createAccountButton"
+                                onAction="#handleCreateAccount"
+                                onMouseEntered="#handleMouseEnterCreateAccount"
+                                onMouseExited="#handleMouseExitCreateAccount"
+                                style="-fx-font-family: 'Montserrat';-fx-font-weight: bold; -fx-text-fill: black; -fx-background-color: transparent;-fx-cursor: hand;"
+                                text="Create New Account" />
+
                      </VBox>
                   </VBox>
                </children>
