@@ -1,5 +1,6 @@
 package main;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -16,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -147,8 +149,7 @@ public class SignUpController {
     }
 
     public boolean checkIfUserExists(String username, String phoneNumber, String email) {
-        DatabaseHelper.connectToDatabase(); // Ensure the database connection is established
-        String query = "SELECT COUNT(*) FROM users WHERE username = ? OR phoneNumber = ? OR gmail = ?";
+        String query = "SELECT COUNT(*) FROM users WHERE userName = ? OR phoneNumber = ? OR gmail = ?";
 
         try (PreparedStatement stmt = DatabaseHelper.getConnection().prepareStatement(query)) {
             stmt.setString(1, username);
@@ -180,6 +181,11 @@ public class SignUpController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void handleBack() {
+        loadHomePage();
     }
 
     public void handleSignUp() {
@@ -216,3 +222,4 @@ public class SignUpController {
         signUpHBox.setAlignment(Pos.CENTER);
     }
 }
+

@@ -108,13 +108,22 @@
 
                            <CheckBox fx:id="checkBox" mnemonicParsing="false" prefHeight="46.0" prefWidth="257.0" text="I have read and agree to all terms and services" underline="true" wrapText="true" />
                            <Text fx:id="checkboxError" fill="red" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
+                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+                              <children>
+                                 <Button fx:id="backButton" mnemonicParsing="false" onMouseClicked="#handleBack" prefHeight="39.0" prefWidth="86.0" text="Back">
+                                    <font>
+                                       <Font name="System Bold" size="18.0" />
+                                    </font>
+                                 </Button>
+                                 <Button fx:id="signUpButton" mnemonicParsing="false" onMouseClicked="#handleSignUp" style="-fx-background-color: blue;" text="Sign up" textFill="WHITE">
+                                    <font>
+                                       <Font name="System Bold" size="18.0" />
+                                    </font>
+                                 </Button>
+                              </children>
+                           </HBox>
                         </children>
                      </VBox>
-                     <Button fx:id="signUpButton" layoutX="408.0" layoutY="539.0" mnemonicParsing="false" onMouseClicked="#handleSignUp" style="-fx-background-color: blue;" text="Sign up" textFill="WHITE">
-                        <font>
-                           <Font name="System Bold" size="18.0" />
-                        </font>
-                     </Button>
                   </children>
                </AnchorPane>
             </children>
