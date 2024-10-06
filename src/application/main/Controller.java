@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class Controller implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {}
 
-    public void loadNewRoot(String name, ActionEvent actionEvent)
+    public void loadNewScene(String name, ActionEvent actionEvent)
     {
         String url = "/FXML/" + name + ".fxml";
         try {
@@ -41,6 +42,14 @@ public class Controller implements Initializable
             System.out.println("Can not load FXML from: " + url);
             e.printStackTrace();
         }
+    }
+
+    public static void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     public static Stage loadCurrentStage(ActionEvent mouseEvent) {

@@ -98,7 +98,7 @@ public class LoginController extends Controller
 //        }
         if (authenticate(username, password)) {
 //            showAlert("Success", "Login successful!");
-            loadNewRoot("BaseScene", actionEvent);
+            loadNewScene("BaseScene", actionEvent);
         } else {
             showAlert("Error", "Invalid username or password.");
         }
@@ -123,14 +123,6 @@ public class LoginController extends Controller
         }
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
     @FXML
     public void handleForgotPassword(ActionEvent actionEvent) {
         TextInputDialog dialog = new TextInputDialog();
@@ -149,6 +141,6 @@ public class LoginController extends Controller
 
     @FXML
     public void handleCreateAccount(ActionEvent actionEvent) {
-        loadNewRoot("SignUpScene", actionEvent);
+        loadNewScene("SignUpScene", actionEvent);
     }
 }

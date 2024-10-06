@@ -1,11 +1,5 @@
 package main;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
@@ -16,16 +10,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
-
-import java.awt.event.MouseEvent;
-import java.net.URL;
-import java.sql.Connection;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.net.URL;
 
 public class SignUpController extends Controller {
     @FXML
@@ -115,7 +107,6 @@ public class SignUpController extends Controller {
             passwordField.setManaged(false);
             passwordField.setVisible(false);
 
-            // Change flag
             isPasswordVisible = true;
         } else {
             // Hide the password (use PasswordField)
@@ -124,7 +115,6 @@ public class SignUpController extends Controller {
             passwordTextField.setManaged(false);
             passwordTextField.setVisible(false);
 
-            // Change flag
             isPasswordVisible = false;
         }
     }
@@ -138,7 +128,6 @@ public class SignUpController extends Controller {
             confirmPasswordField.setManaged(false);
             confirmPasswordField.setVisible(false);
 
-            // Change flag
             isConfirmPasswordVisible = true;
         } else {
             // Hide the password (use PasswordField)
@@ -147,7 +136,6 @@ public class SignUpController extends Controller {
             confirmPasswordTextField.setManaged(false);
             confirmPasswordTextField.setVisible(false);
 
-            // Change flag
             isConfirmPasswordVisible = false;
         }
     }
@@ -174,7 +162,7 @@ public class SignUpController extends Controller {
 
     @FXML
     void handleBack(ActionEvent actionEvent) {
-        loadNewRoot("LoginScene", actionEvent);
+        loadNewScene("LoginScene", actionEvent);
     }
 
     @FXML
@@ -201,7 +189,7 @@ public class SignUpController extends Controller {
         returnButton.setFont(Font.font("System Bold", 18));
 
         returnButton.setOnAction(e -> {
-            loadNewRoot("LoginScene", e);
+            loadNewScene("LoginScene", e);
         });
 
         VBox successLayout = new VBox(10);
