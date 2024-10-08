@@ -1,3 +1,4 @@
+//logincontroller
 package main;
 
 import javafx.event.ActionEvent;
@@ -19,73 +20,57 @@ public class LoginController extends Controller
     private TextField passwordFieldHidden;
 
     @FXML
-    private Button loginButton;
-
-    @FXML
-    private Button forgotPasswordButton;
-
-    @FXML
     private Button togglePasswordButton;
 
     @FXML
-    private Button createAccountButton;
-
-    public void handleMouseEnterForgotPassword() {
-        forgotPasswordButton.setStyle("-fx-background-color: transparent;" +
-                " -fx-text-fill: white;" +
-                " -fx-font-family: 'Montserrat';" +
-                " -fx-font-weight: bold; -fx-cursor: hand;");
-    }
-
-    public void handleMouseExitForgotPassword() {
-        forgotPasswordButton.setStyle("-fx-background-color: transparent;" +
-                " -fx-text-fill: black;" +
-                " -fx-font-family: 'Montserrat'; " +
-                "-fx-font-weight: bold; -fx-cursor: hand;");
-    }
-
-    public void handleMouseEnterCreateAccount() {
-        createAccountButton.setStyle("-fx-background-color: transparent;" +
-                " -fx-text-fill: white;" +
-                " -fx-font-family: 'Montserrat';" +
-                " -fx-font-weight: bold; -fx-cursor: hand;");
-    }
-
-    public void handleMouseExitCreateAccount() {
-        createAccountButton.setStyle("-fx-background-color: transparent;" +
-                " -fx-text-fill: black;" +
-                " -fx-font-family: 'Montserrat';" +
-                " -fx-font-weight: bold; -fx-cursor: hand;");
-    }
-
-    @FXML
-    public void handleMouseEnter() {
-        loginButton.setScaleX(1.05);
-        loginButton.setScaleY(1.05);
-        loginButton.setStyle("-fx-background-color: #4c70ba; " +
-                "-fx-font-family: 'Montserrat'; " +
-                "-fx-text-fill: white; " +
-                "-fx-background-radius: 5; " +
-                "-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 15, 0, 0, 4);" +
-                "-fx-cursor: hand;");
-    }
-
-    @FXML
-    public void handleMouseExit() {
-        loginButton.setScaleX(1.0);
-        loginButton.setScaleY(1.0);
-        loginButton.setStyle("-fx-background-color: #3b5998; " +
-                "-fx-font-family: 'Montserrat'; " +
-                "-fx-text-fill: white; " +
-                "-fx-background-radius: 5;" +
-                "-fx-cursor: hand;");
-    }
-
-    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         passwordField.setPromptText("Password");
         passwordField.setText("");
         passwordFieldHidden.setVisible(false);
+
+        usernameField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                usernameField.setPromptText("");
+                usernameField.setStyle("-fx-border-color: #4c70ba; -fx-border-radius: 5;");
+            } else {
+                usernameField.setPromptText("Username");
+                usernameField.setStyle("-fx-border-color: #A0A0A0; -fx-border-radius: 5;");
+            }
+        });
+        passwordField.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                passwordField.setPromptText("");
+                passwordField.setStyle("-fx-border-color: #4c70ba; -fx-border-radius: 5;");
+            } else {
+                passwordField.setPromptText("Password");
+                passwordField.setStyle("-fx-border-color: #A0A0A0; -fx-border-radius: 5;");
+            }
+        });
+        passwordFieldHidden.focusedProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal) {
+                passwordFieldHidden.setPromptText("");
+                passwordFieldHidden.setStyle("-fx-border-color: #4c70ba; -fx-border-radius: 5;");
+            } else {
+                passwordFieldHidden.setPromptText("Password");
+                passwordFieldHidden.setStyle("-fx-border-color: #A0A0A0; -fx-border-radius: 5;");
+            }
+        });
+    }
+
+    @FXML
+    private void togglePasswordVisibility(ActionEvent event) {
+        boolean isHiddenVisible = passwordFieldHidden.isVisible();
+        if (isHiddenVisible) {
+            passwordField.setText(passwordFieldHidden.getText());
+            passwordField.setVisible(true);
+            passwordFieldHidden.setVisible(false);
+            togglePasswordButton.setText("\uD83D\uDC41");
+        } else {
+            passwordFieldHidden.setText(passwordField.getText());
+            passwordField.setVisible(false);
+            passwordFieldHidden.setVisible(true);
+            togglePasswordButton.setText("\uD83D\uDC41");
+        }
     }
 
     @FXML
@@ -108,20 +93,6 @@ public class LoginController extends Controller
         return "".equals(username) && "".equals(password);
     }
 
-    @FXML
-    private void togglePasswordVisibility(ActionEvent event) {
-        boolean isHiddenVisible = passwordFieldHidden.isVisible();
-        if (isHiddenVisible) {
-            passwordField.setVisible(true);
-            passwordFieldHidden.setVisible(false);
-            togglePasswordButton.setText("\uD83D\uDC41");
-        } else {
-            passwordFieldHidden.setText(passwordField.getText());
-            passwordField.setVisible(false);
-            passwordFieldHidden.setVisible(true);
-            togglePasswordButton.setText("\uD83D\uDC41");
-        }
-    }
 
     @FXML
     public void handleForgotPassword(ActionEvent actionEvent) {
@@ -144,3 +115,4 @@ public class LoginController extends Controller
         loadNewScene("SignUpScene", actionEvent);
     }
 }
+
