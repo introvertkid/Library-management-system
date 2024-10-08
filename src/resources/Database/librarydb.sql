@@ -1,54 +1,60 @@
-use librarydb;
-CREATE TABLE IF NOT EXISTS categories (
-    categoryID INT AUTO_INCREMENT,
-    categoryName VARCHAR(100),
-    PRIMARY KEY (categoryID)
-);
+drop database if exists librarydb;
 
-CREATE TABLE IF NOT EXISTS authors (
-    authorID INT AUTO_INCREMENT,
-    authorName VARCHAR(255),
-    PRIMARY KEY (authorID)
+create database if not exists librarydb;
+
+use librarydb;
+
+CREATE TABLE IF NOT EXISTS categories (
+    categoryID INT AUTO_INCREMENT not null primary key,
+    categoryName VARCHAR(255) not null
 );
 
 CREATE TABLE IF NOT EXISTS documents (
-    documentID INT AUTO_INCREMENT,
-    documentName VARCHAR(255),
+    documentID INT AUTO_INCREMENT primary key,
+    documentName VARCHAR(255) not null,
     categoryID INT,
-    copies INT,
-    PRIMARY KEY (documentID),
+    authors longtext,
     FOREIGN KEY (categoryID) REFERENCES categories(categoryID) ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS document_authors (
-    documentID INT,
-    authorID INT,
-    PRIMARY KEY (documentID, authorID),
-    FOREIGN KEY (documentID) REFERENCES documents(documentID) ON UPDATE CASCADE,
-    FOREIGN KEY (authorID) REFERENCES authors(authorID) ON UPDATE CASCADE
-);
-CREATE TABLE IF NOT EXISTS borrowings (
-    borrowingID INT AUTO_INCREMENT,
-    userID INT,
-    documentID INT,
-    borrowDate DATETIME,
-    dueDate DATE,
-    returnDate DATETIME,
-    borrowingStatus VARCHAR(20),
-    PRIMARY KEY (borrowingID),
-    FOREIGN KEY (documentID) REFERENCES documents(documentID) ON UPDATE CASCADE
-);
-
 CREATE TABLE IF NOT EXISTS users (
-    userID INT AUTO_INCREMENT,
-    userName VARCHAR(100),
+    userID INT AUTO_INCREMENT primary key,
+    username varchar(255),
+    hashedPassword varchar(255),
+    userFullName VARCHAR(100),
+    role varchar(100),
     gmail VARCHAR(100),
-    phoneNumber VARCHAR(10),
-	borrowingID INT,
+    phoneNumber VARCHAR(15),
+-- 	borrowingID INT,
     accountID INT,
-    dateOfBirth DATE,
-    PRIMARY KEY (userID),
-    foreign key (borrowingID) references borrowings(borrowingID) on update cascade
+    dateOfBirth DATE
+--     foreign key (borrowingID) references borrowings(borrowingID) on update cascade
 );
 
+CREATE TABLE IF NOT EXISTS documentOwner (
+    documentID INT,
+    ownerID INT,
+    PRIMARY KEY (documentID, ownerID),
+    FOREIGN KEY (documentID) REFERENCES documents(documentID) ON UPDATE CASCADE,
+    FOREIGN KEY (ownerID) REFERENCES users(userID) ON UPDATE CASCADE
+);
 
+-- CREATE TABLE IF NOT EXISTS borrowings (
+--     borrowingID INT AUTO_INCREMENT,
+--     userID INT,
+--     documentID INT,
+--     borrowDate DATETIME,
+--     dueDate DATE,
+--     returnDate DATETIME,
+--     borrowingStatus VARCHAR(20),
+--     PRIMARY KEY (borrowingID),
+--     FOREIGN KEY (documentID) REFERENCES documents(documentID) ON UPDATE CASCADE
+-- );
+
+create table if not exists reports(
+	reportID int auto_increment primary key,
+	userID int,
+    title varchar(255),
+    content longtext,
+    foreign key (userID) references users(userID) on update cascade
+);
