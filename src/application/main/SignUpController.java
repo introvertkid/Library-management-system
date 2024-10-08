@@ -33,6 +33,12 @@ public class SignUpController extends Controller {
     private CheckBox checkBox;
 
     @FXML
+    private Button showPassword;
+
+    @FXML
+    private Button showConfirmPassword;
+
+    @FXML
     private TextField nameField, phoneField, emailField;
 
     @FXML
@@ -45,10 +51,7 @@ public class SignUpController extends Controller {
     private Text nameError, passwordError, checkboxError;
 
     @FXML
-    private Button signUpButton, showPassword, showConfirmPassword;
-
-    private boolean isPasswordVisible = false;
-    private boolean isConfirmPasswordVisible = false;
+    private Button signUpButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -105,44 +108,42 @@ public class SignUpController extends Controller {
     }
 
     @FXML
-    public void handleShowPassword(ActionEvent actionEvent) {
+    private void handleShowPassword(ActionEvent actionEvent) {
+        boolean isPasswordVisible = passwordField.isVisible();
         if (!isPasswordVisible) {
-            // Show the password (use TextField)
-            passwordTextField.setManaged(true);
-            passwordTextField.setVisible(true);
-            passwordField.setManaged(false);
-            passwordField.setVisible(false);
-
-            isPasswordVisible = true;
-        } else {
-            // Hide the password (use PasswordField)
-            passwordField.setManaged(true);
+            passwordField.setText(passwordTextField.getText());
             passwordField.setVisible(true);
-            passwordTextField.setManaged(false);
+            passwordField.setManaged(true);
             passwordTextField.setVisible(false);
-
-            isPasswordVisible = false;
+            passwordTextField.setManaged(false);
+            showPassword.setText("\uD83D\uDE48");
+        } else {
+            passwordField.setText(passwordTextField.getText());
+            passwordField.setVisible(false);
+            passwordField.setManaged(false);
+            passwordTextField.setVisible(true);
+            passwordTextField.setManaged(true);
+            showPassword.setText("\uD83D\uDE49");
         }
     }
 
     @FXML
     public void handleShowConfirmPassword(ActionEvent actionEvent) {
+        boolean isConfirmPasswordVisible = confirmPasswordField.isVisible();
         if (!isConfirmPasswordVisible) {
-            // Show the password (use TextField)
-            confirmPasswordTextField.setManaged(true);
-            confirmPasswordTextField.setVisible(true);
-            confirmPasswordField.setManaged(false);
-            confirmPasswordField.setVisible(false);
-
-            isConfirmPasswordVisible = true;
-        } else {
-            // Hide the password (use PasswordField)
-            confirmPasswordField.setManaged(true);
+            confirmPasswordField.setText(confirmPasswordTextField.getText());
             confirmPasswordField.setVisible(true);
-            confirmPasswordTextField.setManaged(false);
+            confirmPasswordField.setManaged(true);
             confirmPasswordTextField.setVisible(false);
-
-            isConfirmPasswordVisible = false;
+            confirmPasswordTextField.setManaged(false);
+            showConfirmPassword.setText("\uD83D\uDE48");
+        } else {
+            confirmPasswordField.setText(confirmPasswordTextField.getText());
+            confirmPasswordField.setVisible(false);
+            confirmPasswordField.setManaged(false);
+            confirmPasswordTextField.setVisible(true);
+            confirmPasswordTextField.setManaged(true);
+            showConfirmPassword.setText("\uD83D\uDE49");
         }
     }
 

@@ -7,9 +7,9 @@ import javafx.scene.control.*;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.awt.Image;
+public class LoginController extends Controller {
 
-public class LoginController extends Controller
-{
     @FXML
     private TextField usernameField;
 
@@ -28,7 +28,6 @@ public class LoginController extends Controller
         passwordField.setText("");
         passwordFieldHidden.setVisible(false);
 
-        // Thêm sự kiện focus cho usernameField
         usernameField.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 usernameField.setPromptText("");
@@ -39,7 +38,6 @@ public class LoginController extends Controller
             }
         });
 
-        // Thêm sự kiện focus cho passwordField
         passwordField.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 passwordField.setPromptText("");
@@ -50,7 +48,6 @@ public class LoginController extends Controller
             }
         });
 
-        // Thêm sự kiện focus cho passwordFieldHidden (trường hiển thị mật khẩu)
         passwordFieldHidden.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 passwordFieldHidden.setPromptText("");
@@ -69,12 +66,12 @@ public class LoginController extends Controller
             passwordField.setText(passwordFieldHidden.getText());
             passwordField.setVisible(true);
             passwordFieldHidden.setVisible(false);
-            togglePasswordButton.setText("\uD83D\uDC41");
+            togglePasswordButton.setText("\uD83D\uDE48");
         } else {
             passwordFieldHidden.setText(passwordField.getText());
             passwordField.setVisible(false);
             passwordFieldHidden.setVisible(true);
-            togglePasswordButton.setText("\uD83D\uDC41");
+            togglePasswordButton.setText("\uD83D\uDE49");
         }
     }
 
@@ -87,6 +84,7 @@ public class LoginController extends Controller
 //            showAlert("Error", "Username and password cannot be empty.");
 //            return;
 //        }
+
         if (authenticate(username, password)) {
 //            showAlert("Success", "Login successful!");
             loadNewScene("BaseScene", actionEvent);
@@ -107,6 +105,7 @@ public class LoginController extends Controller
         dialog.setHeaderText("Nhập địa chỉ email của bạn");
         dialog.setContentText("Email:");
         Optional<String> result = dialog.showAndWait();
+
         result.ifPresent(email -> {
             if (email.isEmpty()) {
                 showAlert("Error", "Email cannot be empty.");
