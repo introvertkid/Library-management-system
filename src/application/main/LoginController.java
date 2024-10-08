@@ -28,6 +28,7 @@ public class LoginController extends Controller
         passwordField.setText("");
         passwordFieldHidden.setVisible(false);
 
+        // Thêm sự kiện focus cho usernameField
         usernameField.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 usernameField.setPromptText("");
@@ -37,6 +38,8 @@ public class LoginController extends Controller
                 usernameField.setStyle("-fx-border-color: #A0A0A0; -fx-border-radius: 5;");
             }
         });
+
+        // Thêm sự kiện focus cho passwordField
         passwordField.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 passwordField.setPromptText("");
@@ -46,6 +49,8 @@ public class LoginController extends Controller
                 passwordField.setStyle("-fx-border-color: #A0A0A0; -fx-border-radius: 5;");
             }
         });
+
+        // Thêm sự kiện focus cho passwordFieldHidden (trường hiển thị mật khẩu)
         passwordFieldHidden.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
                 passwordFieldHidden.setPromptText("");
@@ -72,6 +77,7 @@ public class LoginController extends Controller
             togglePasswordButton.setText("\uD83D\uDC41");
         }
     }
+
 
     @FXML
     public void handleLogin(ActionEvent actionEvent) {

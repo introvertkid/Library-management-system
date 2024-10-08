@@ -1,5 +1,9 @@
+//signupcontroller
 package main;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
@@ -13,6 +17,8 @@ import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.stage.Stage;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -162,11 +168,24 @@ public class SignUpController extends Controller {
 
     @FXML
     void handleBack(ActionEvent actionEvent) {
-        loadNewScene("LoginScene", actionEvent);
+        loadHomePage();
+    }
+    void loadHomePage() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/LoginScene.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) signUpHBox.getScene().getWindow();
+            stage.setTitle("Library management system");
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    @FXML
-    public void handleSignUp(ActionEvent actionEvent) {
+    public void handleSigUp() {
         // Get the user input
         String username = nameField.getText().trim();
         String phone = phoneField.getText().trim();
@@ -188,8 +207,9 @@ public class SignUpController extends Controller {
         returnButton.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
         returnButton.setFont(Font.font("System Bold", 18));
 
-        returnButton.setOnAction(e -> {
-            loadNewScene("LoginScene", e);
+
+        returnButton.setOnMouseClicked(e -> {
+            loadHomePage();
         });
 
         VBox successLayout = new VBox(10);
