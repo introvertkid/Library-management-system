@@ -19,15 +19,15 @@ CREATE TABLE IF NOT EXISTS documents (
 
 CREATE TABLE IF NOT EXISTS users (
     userID INT AUTO_INCREMENT primary key,
-    username varchar(255),
-    hashedPassword varchar(255),
-    userFullName VARCHAR(100),
-    role varchar(100),
+    username varchar(255) not null,
+    hashedPassword varchar(255) not null,
+    userFullName VARCHAR(100) not null,
+    role varchar(100) default 'Normal user',
     gmail VARCHAR(100),
     phoneNumber VARCHAR(15),
 -- 	borrowingID INT,
-    accountID INT,
-    dateOfBirth DATE
+    dateOfBirth DATE,
+    avatar VARCHAR(255) default 'userAvatar.png'
 --     foreign key (borrowingID) references borrowings(borrowingID) on update cascade
 );
 
