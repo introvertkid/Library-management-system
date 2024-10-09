@@ -1,5 +1,6 @@
 package main;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
@@ -26,4 +27,7 @@ public class BaseSceneController extends Controller
         }
     }
 
+    public void Logout(ActionEvent actionEvent) {
+        loadNewScene("LoginScene", actionEvent);
+    }
 }

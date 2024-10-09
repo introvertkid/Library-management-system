@@ -14,9 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="Dashboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="620.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="@../CSS/BaseScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="main.BaseSceneController">
+<AnchorPane fx:id="Dashboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="@../CSS/BaseScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.BaseSceneController">
    <children>
       <!--      Anchor pane của navigation bar-->
       <AnchorPane prefHeight="620.0" prefWidth="200.0" style="-fx-background-color: #e95e50;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="40.0">
@@ -87,15 +85,6 @@
                      </graphic>
                   </Button>
                </VBox>
-
-               <VBox prefHeight="100" prefWidth="200" style="-fx-background-color: #ffc107; -fx-padding: 10; -fx-border-radius: 10; -fx-background-radius: 10;">
-                  <Label style="-fx-text-fill: white; -fx-font-size: 18px;" text="List Book Borrowed: 8" />
-                  <Button style="-fx-background-color: transparent; -fx-text-fill: white;" text="View Details">
-                     <graphic>
-                        <Label style="-fx-text-fill: white;" text="&gt;" />
-                     </graphic>
-                  </Button>
-               </VBox>
             </HBox>
 
             <!-- TableView for Top User Borrowed -->
@@ -121,7 +110,7 @@
             <MenuButton prefHeight="40.0" text="admin">
                <items>
                   <MenuItem text="Profile" />
-                  <MenuItem text="Logout" />
+                  <MenuItem text="Logout" onAction="#Logout"/>
                </items>
                <font>
                   <Font size="14.0" />

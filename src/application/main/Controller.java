@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.io.IOException;
@@ -34,8 +35,8 @@ public class Controller implements Initializable
             }
 
             root = (Parent) obj;
-            primaryStage = loadCurrentStage(actionEvent);
             scene = new Scene(root);
+            primaryStage = loadCurrentStage(actionEvent);
             primaryStage.setScene(scene);
             primaryStage.show();
         } catch (Exception e) {
@@ -52,7 +53,18 @@ public class Controller implements Initializable
         alert.showAndWait();
     }
 
-    public static Stage loadCurrentStage(ActionEvent mouseEvent) {
-        return (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+    public static Stage loadCurrentStage(ActionEvent actionEvent)
+    {
+        Object source = actionEvent.getSource();
+
+        if(source instanceof Node)
+        {
+            return (Stage) ((Node) source).getScene().getWindow();
+        }
+        else if(source instanceof MenuItem)
+        {
+            return (Stage) ((MenuItem) source).getParentPopup().getOwnerWindow();
+        }
+        return null;
     }
 }
