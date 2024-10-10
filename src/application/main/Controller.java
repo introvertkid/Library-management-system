@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import java.io.IOException;
@@ -66,5 +67,16 @@ public class Controller implements Initializable
             return (Stage) ((MenuItem) source).getParentPopup().getOwnerWindow();
         }
         return null;
+    }
+
+    public void loadFXMLtoAnchorPane(String fxml, AnchorPane pane) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/" + fxml + ".fxml"));
+            Node newContent = loader.load();
+            pane.getChildren().clear();
+            pane.getChildren().add(newContent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

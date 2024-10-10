@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
@@ -14,6 +15,9 @@ public class BaseSceneController extends Controller
 {
     @FXML
     private VBox navigationBar;
+
+    @FXML
+    private AnchorPane contentPane;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
@@ -25,6 +29,16 @@ public class BaseSceneController extends Controller
                 but.setOnMouseExited(event -> but.setCursor(Cursor.DEFAULT));
             }
         }
+        loadFXMLtoAnchorPane("Dashboard", contentPane);
+    }
+    @FXML
+    private void handleReportButtonAction(ActionEvent actionEvent) {
+        loadFXMLtoAnchorPane("ReportScene", contentPane);
+    }
+
+    @FXML
+    private void handleDashBoardButton() {
+        loadFXMLtoAnchorPane("Dashboard", contentPane);
     }
 
     public void Logout(ActionEvent actionEvent) {
