@@ -169,21 +169,7 @@ public class SignUpController extends Controller {
 
     @FXML
     void handleBack(ActionEvent actionEvent) {
-        loadHomePage();
-    }
-    void loadHomePage() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/LoginScene.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) signUpHBox.getScene().getWindow();
-            stage.setTitle("Library management system");
-            stage.setScene(scene);
-            stage.show();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        loadNewScene("LoginScene",actionEvent);
     }
 
     public void handleSigUp() {
@@ -210,7 +196,7 @@ public class SignUpController extends Controller {
 
 
         returnButton.setOnMouseClicked(e -> {
-            loadHomePage();
+            loadNewScene("LoginScene", new ActionEvent());
         });
 
         VBox successLayout = new VBox(10);

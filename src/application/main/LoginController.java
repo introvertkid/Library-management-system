@@ -4,10 +4,16 @@ package main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.awt.Image;
+
 public class LoginController extends Controller {
 
     @FXML
@@ -21,6 +27,9 @@ public class LoginController extends Controller {
 
     @FXML
     private Button togglePasswordButton;
+
+    private String username;
+    private String password;
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -75,34 +84,21 @@ public class LoginController extends Controller {
         }
     }
 
-
     @FXML
     public void handleLogin(ActionEvent actionEvent) {
         String username = usernameField.getText();
         String password = passwordField.isVisible() ? passwordField.getText() : passwordFieldHidden.getText();
-//        if (username.isEmpty() || password.isEmpty()) {
-//            showAlert("Error", "Username and password cannot be empty.");
-//            return;
-//        }
 
-        if (authenticate(username, password)) {
-//            showAlert("Success", "Login successful!");
+        if (login(username, password)) {
             loadNewScene("BaseScene", actionEvent);
-        } else {
-            showAlert("Error", "Invalid username or password.");
         }
     }
-
-    private boolean authenticate(String username, String password) {
-        return "".equals(username) && "".equals(password);
-    }
-
 
     @FXML
     public void handleForgotPassword(ActionEvent actionEvent) {
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Quên mật khẩu");
-        dialog.setHeaderText("Nhập địa chỉ email của bạn");
+        dialog.setTitle("Forgot password");
+        dialog.setHeaderText("Please enter your email!");
         dialog.setContentText("Email:");
         Optional<String> result = dialog.showAndWait();
 
@@ -114,6 +110,37 @@ public class LoginController extends Controller {
             }
         });
     }
+
+    public boolean login(String username, String password) {
+        DatabaseHelper.connectToDatabase();
+        try (Connection conn = DatabaseHelper.getConnection()) {
+            String query = "SELECT * FROM loginacc WHERE username = ?";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, username);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String storedPassword = resultSet.getString("password");
+
+                if (password.equals(storedPassword)) {
+                    System.out.println("Login Successful!");
+                    return true;
+                } else {
+                    showAlert("Error", "Incorrect Password");
+                    return false;
+                }
+
+            } else {
+                showAlert("Error", "User not found");
+                return false;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
 
     @FXML
     public void handleCreateAccount(ActionEvent actionEvent) {

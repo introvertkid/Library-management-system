@@ -10,21 +10,21 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable
-{
+public class Controller implements Initializable {
     private static Parent root;
     private static Scene scene;
     private static Stage primaryStage;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {}
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
 
-    public void loadNewScene(String name, ActionEvent actionEvent)
-    {
+    public void loadNewScene(String name, ActionEvent actionEvent) {
         String url = "/FXML/" + name + ".fxml";
         try {
             Object obj = null;
