@@ -75,7 +75,7 @@
             <!-- Dropdown menu -->
             <MenuButton prefHeight="40.0" text="admin">
                <items>
-                  <MenuItem text="Profile" />
+                  <MenuItem onAction="#UserProfile" text="Profile"  />
                   <MenuItem onAction="#Logout" text="Logout" />
                </items>
                <font>

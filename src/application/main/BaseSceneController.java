@@ -41,6 +41,11 @@ public class BaseSceneController extends Controller
         loadFXMLtoAnchorPane("Dashboard", contentPane);
     }
 
+    @FXML
+    private void UserProfile() {
+        loadFXMLtoAnchorPane("ProfileScene", contentPane);
+    }
+
     public void Logout(ActionEvent actionEvent) {
         loadNewScene("LoginScene", actionEvent);
     }
