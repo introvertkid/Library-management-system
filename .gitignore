@@ -4,6 +4,8 @@ out/
 !**/src/test/**/out/
 .idea/
 *.iml
+target/
+*.log
 
 ### Eclipse ###
 .apt_generated
