@@ -25,7 +25,7 @@
                   </FXCollections>
                </items>
             </ComboBox>
-            <TextField accessibleText="Title" prefHeight="25.0" prefWidth="543.0" promptText="Title" style="-fx-focus-color: transparent; -fx-faint-focus-color: transparent;" />
+            <TextField fx:id="textField" accessibleText="Title" prefHeight="25.0" prefWidth="543.0" promptText="Title" style="-fx-focus-color: transparent; -fx-faint-focus-color: transparent;" />
             <TextArea fx:id="textArea" prefHeight="216.0" prefWidth="557.0" style="-fx-focus-color: transparent; -fx-faint-focus-color: transparent;" />
          </children>
          <padding>

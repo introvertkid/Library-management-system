@@ -1,28 +1,30 @@
 package library;
 
+import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionModel;
+import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 import java.awt.*;
+import javafx.scene.control.TextField;
 import java.io.File;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
 
 public class ReportController extends Controller {
 
     @FXML
     private ComboBox<String> choice;
+
+    @FXML
+    private TextField textField;
+
+    @FXML
+    private TextArea textArea;
 
     @FXML
     private ListView<String> selectedFile;
@@ -32,8 +34,8 @@ public class ReportController extends Controller {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         selectedFile.setVisible(false);
-        String[] choices = { "Bug", "Document", "User" };
-        choice.setItems(FXCollections.observableArrayList(choices));
+        initializeComboBox();
+
         selectedFile.setCellFactory(new Callback<>() {
             @Override
             public ListCell<String> call(ListView<String> param) {
@@ -58,23 +60,46 @@ public class ReportController extends Controller {
         selectedFile.setOnKeyPressed(this::removeSelectedFile);
     }
 
+    private void initializeComboBox() {
+        String[] choices = {"Bug", "Document", "User"};
+        choice.setItems(FXCollections.observableArrayList(choices));
+        choice.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(choice.getPromptText());
+                } else {
+                    setText(item);
+                }
+            }
+        });
+
+        choice.setPromptText("Choice");
+    }
+
     @FXML
     private void sendReport() {
         if (choice.getValue() == null) {
             showAlert("Can't create report!!!", "Please select an option first");
-            return;
+        } else if (textArea.getText().trim().isEmpty()) {
+            showAlert("Can't create report!!!", "Content cannot be empty. Please enter some information!");
+        } else {
+            showAlert("Notification", "Sent successfully!");
+            textArea.clear();
+            textField.clear();
+            choice.setValue(null);
         }
-        System.out.println("Report sent");
     }
 
     @FXML
     public void setFileChooser() {
         FileChooser fc = new FileChooser();
-        fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+       // fc.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
         List<File> selectedFiles = fc.showOpenMultipleDialog(null);
         if (selectedFiles != null) {
             for (File file : selectedFiles) {
-                String fileName = file.getName().trim(); 
+                String fileName = file.getName().trim();
                 String filePath = file.getParent();
                 if (!fileName.isEmpty() && !selectedFile.getItems().contains(fileName)) {
                     this.selectedFile.getItems().add(fileName);
@@ -111,4 +136,5 @@ public class ReportController extends Controller {
             e.printStackTrace();
         }
     }
+
 }
