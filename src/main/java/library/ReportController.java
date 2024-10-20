@@ -29,7 +29,7 @@ public class ReportController extends Controller {
     @FXML
     private ListView<String> selectedFile;
 
-    private Map<String, String> fileDirectoryMap = new HashMap<>();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -48,8 +48,10 @@ public class ReportController extends Controller {
                         if (empty || item == null) {
                             setGraphic(null);
                         } else {
-                            hyperlink.setText(item);
-                            hyperlink.setOnAction(event -> openFile(item));
+                            String name = new File(item).getName();
+                            hyperlink.setText(name);
+                            String finalItem = item;
+                            hyperlink.setOnAction(event -> openFile(finalItem)); 
                             setGraphic(hyperlink);
                         }
                     }
@@ -89,6 +91,8 @@ public class ReportController extends Controller {
             textArea.clear();
             textField.clear();
             choice.setValue(null);
+            selectedFile.getItems().clear();
+            selectedFile.setVisible(false);
         }
     }
 
@@ -99,11 +103,9 @@ public class ReportController extends Controller {
         List<File> selectedFiles = fc.showOpenMultipleDialog(null);
         if (selectedFiles != null) {
             for (File file : selectedFiles) {
-                String fileName = file.getName().trim();
-                String filePath = file.getParent();
-                if (!fileName.isEmpty() && !selectedFile.getItems().contains(fileName)) {
-                    this.selectedFile.getItems().add(fileName);
-                    fileDirectoryMap.put(fileName, filePath);
+                String filePath = file.getAbsolutePath();
+                if (!filePath.isEmpty() && !selectedFile.getItems().contains(filePath)) {
+                    this.selectedFile.getItems().add(filePath);
                 }
             }
             selectedFile.setVisible(!selectedFile.getItems().isEmpty());
@@ -117,17 +119,16 @@ public class ReportController extends Controller {
             String selectedFileName = selectionModel.getSelectedItem();
             if (selectedFileName != null) {
                 this.selectedFile.getItems().remove(selectedFileName);
-                fileDirectoryMap.remove(selectedFileName);
+
             }
             selectedFile.setVisible(!selectedFile.getItems().isEmpty());
         }
     }
 
-    private void openFile(String fileName) {
+    private void openFile(String directoryPath) {
         try {
-            String directoryPath = fileDirectoryMap.get(fileName);
             if (directoryPath != null) {
-                File file = new File(directoryPath, fileName);
+                File file = new File(directoryPath);
                 Desktop.getDesktop().open(file);
             } else {
                 System.out.println("File not found");
