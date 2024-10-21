@@ -2,20 +2,22 @@ package library;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
-import javafx.util.Pair;
+import javafx.util.StringConverter;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -24,15 +26,18 @@ public class ProfileController extends Controller {
     private Circle avatar;
 
     @FXML
-    private Label userId;
+    private Label fullNameLabel;
 
     @FXML
-    private Button setAvatar, backButton, changeProfileButton, resetPasswordButton;
+    private DatePicker dateOfBirthField;
 
     @FXML
-    private TextField usernameField, fullNameField, dateOfBirthField, emailField, phoneField, roleField;
+    private Button setAvatar, changeProfileButton;
 
-    private final String DEFAULT_AVATAR = "src/resources/image/UserAvatar/userAvatar.png";
+    @FXML
+    private TextField usernameField, fullNameField, emailField, phoneField, roleField;
+
+    private final String DEFAULT_AVATAR = "src/main/resources/image/UserAvatar/userAvatar.png";
     private boolean isEditing = false;
 
     private int getCurrentUserId() {
@@ -53,22 +58,33 @@ public class ProfileController extends Controller {
 
             if (resultSet.next()) {
                 // Set field with data from the database
+                configureDateOfBirthField();
+
                 usernameField.setText(resultSet.getString("username"));
                 fullNameField.setText(resultSet.getString("userFullName"));
                 roleField.setText(resultSet.getString("role"));
                 emailField.setText(resultSet.getString("gmail"));
                 phoneField.setText(resultSet.getString("phoneNumber"));
-                dateOfBirthField.setText(resultSet.getDate("dateOfBirth").toString());
-                this.userId.setText(String.valueOf(resultSet.getInt("userID")));
 
+                //Set dateOfBirth field
+                Date dateOfBirth = resultSet.getDate("DateOfBirth");
+                if (dateOfBirth != null) {
+                    dateOfBirthField.setValue(dateOfBirth.toLocalDate());
+                }
+                dateOfBirthField.getEditor().setStyle("-fx-alignment: center;");
+                dateOfBirthField.getStyleClass().add("date-picker-disabled");
+
+                this.fullNameLabel.setText(resultSet.getString("userFullName"));
+
+                //Load user's avatar
                 String avatarName = resultSet.getString("avatar");
                 String avatarPath;
 
                 // If no custom avatar is set, load the default avatar
-                if (avatarName == null || avatarName.isEmpty() || avatarName.equals("userAvatar")) {
+                if (avatarName == null || avatarName.isEmpty() || avatarName.equals("userAvatar.png")) {
                     avatarPath = DEFAULT_AVATAR;
                 } else {
-                    avatarPath = "src/resources/image/UserAvatar/" + avatarName;
+                    avatarPath = "src/main/resources/image/UserAvatar/" + avatarName;
                 }
 
                 // Set the avatar image
@@ -85,8 +101,56 @@ public class ProfileController extends Controller {
     }
 
     @FXML
-    void handleBack(ActionEvent actionEvent) {
-        loadNewScene("LoginScene", actionEvent);
+    private void handleChangeProfile(ActionEvent actionEvent) {
+
+        if (!isEditing) {
+            // Enable editing of the fields
+            fullNameField.setEditable(true);
+            phoneField.setEditable(true);
+            emailField.setEditable(true);
+            dateOfBirthField.setDisable(false);
+            dateOfBirthField.getEditor().setDisable(true);
+            changeProfileButton.setText("Save"); // Change button text to 'Save'
+            isEditing = true;
+        } else {
+            // Save the updated fields to the database
+            saveProfileChanges();
+            changeProfileButton.setText("Change profile"); // Change back to 'Change profile'
+            isEditing = false;
+
+            // Disable fields again after saving
+            fullNameField.setEditable(false);
+            phoneField.setEditable(false);
+            emailField.setEditable(false);
+            dateOfBirthField.setDisable(true);
+        }
+    }
+
+    private void saveProfileChanges() {
+        DatabaseHelper.connectToDatabase();
+        try (Connection conn = DatabaseHelper.getConnection()) {
+            int userId = getCurrentUserId(); // Retrieve this from the session or login logic
+            String updateQuery = "UPDATE users SET userFullName = ?, phoneNumber = ?, gmail = ?, dateOfBirth = ? WHERE userID = ?";
+
+            PreparedStatement statement = conn.prepareStatement(updateQuery);
+
+            statement.setString(1, fullNameField.getText());
+            statement.setString(2, phoneField.getText());
+            statement.setString(3, emailField.getText());
+            LocalDate newDateOfBirth = dateOfBirthField.getValue();
+            if (newDateOfBirth != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String formattedDate = newDateOfBirth.format(formatter);
+                statement.setString(4, formattedDate);
+            } else {
+                statement.setString(4, null);
+            }
+            statement.setInt(5, userId);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // Method to handle setting the avatar
@@ -99,7 +163,7 @@ public class ProfileController extends Controller {
         if (selectedFile != null) {
             try {
                 // Define the directory to store user avatars
-                String destinationPath = "src/resources/image/UserAvatar/";
+                String destinationPath = "src/main/resources/image/UserAvatar/";
 
                 // Create destination directory if it doesn't exist
                 File directory = new File(destinationPath);
@@ -133,183 +197,122 @@ public class ProfileController extends Controller {
     }
 
     @FXML
-    private void handleChangeProfile(ActionEvent actionEvent) {
-        if (!isEditing) {
-            // Enable editing of the fields
-            fullNameField.setEditable(true);
-            phoneField.setEditable(true);
-            emailField.setEditable(true);
-            dateOfBirthField.setEditable(true);
-            changeProfileButton.setText("Save"); // Change button text to 'Save'
-            isEditing = true;
-        } else {
-            // Save the updated fields to the database
-            saveProfileChanges();
-            changeProfileButton.setText("Change profile"); // Change back to 'Change profile'
-            isEditing = false;
+    public void handleChangePassword() {
 
-            // Disable fields again after saving
-            fullNameField.setEditable(false);
-            phoneField.setEditable(false);
-            emailField.setEditable(false);
-            dateOfBirthField.setEditable(false);
-        }
-    }
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Reset Password");
 
-    private void saveProfileChanges() {
-        DatabaseHelper.connectToDatabase();
-        try (Connection conn = DatabaseHelper.getConnection()) {
-            int userId = getCurrentUserId(); // Retrieve this from the session or login logic
-            String updateQuery = "UPDATE users SET userFullName = ?, phoneNumber = ?, gmail = ?, dateOfBirth = ? WHERE userID = ?";
-
-            PreparedStatement statement = conn.prepareStatement(updateQuery);
-            statement.setString(1, fullNameField.getText());
-            statement.setString(2, phoneField.getText());
-            statement.setString(3, emailField.getText());
-            statement.setDate(4, Date.valueOf(dateOfBirthField.getText())); // Ensure the date format is correct
-            statement.setInt(5, userId);
-
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void handleResetPassword() {
-        // Step 1: Create custom dialog for username and current password input
-        Dialog<Pair<String, String>> loginDialog = new Dialog<>();
-        loginDialog.setTitle("Reset Password");
-        loginDialog.setHeaderText("Enter your username and current password");
-
-        // Create username and password fields
-        TextField usernameField = new TextField();
-        usernameField.setPromptText("Username");
+        // Create labels and password fields
+        Label currentPasswordLabel = new Label("Current Password:");
         PasswordField currentPasswordField = new PasswordField();
-        currentPasswordField.setPromptText("Current Password");
 
-        // Layout the fields in a GridPane
+        Label newPasswordLabel = new Label("New Password:");
+        PasswordField newPasswordField = new PasswordField();
+
+        Label confirmPasswordLabel = new Label("Confirm Password:");
+        PasswordField confirmPasswordField = new PasswordField();
+
+        // Create a grid pane to organize fields
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(20, 150, 10, 10));
+        gridPane.add(currentPasswordLabel, 0, 0);
+        gridPane.add(currentPasswordField, 1, 0);
+        gridPane.add(newPasswordLabel, 0, 1);
+        gridPane.add(newPasswordField, 1, 1);
+        gridPane.add(confirmPasswordLabel, 0, 2);
+        gridPane.add(confirmPasswordField, 1, 2);
 
-        gridPane.add(new Label("Username:"), 0, 0);
-        gridPane.add(usernameField, 1, 0);
-        gridPane.add(new Label("Current Password:"), 0, 1);
-        gridPane.add(currentPasswordField, 1, 1);
-
-        loginDialog.getDialogPane().setContent(gridPane);
+        // Add the gridPane to the dialog
+        dialog.getDialogPane().setContent(gridPane);
 
         // Add OK and Cancel buttons
-        ButtonType okButtonType = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-        loginDialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
+        ButtonType okButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(okButton, ButtonType.CANCEL);
 
-        // Handle button click
-        loginDialog.setResultConverter(dialogButton -> {
-            if (dialogButton == okButtonType) {
-                return new Pair<>(usernameField.getText(), currentPasswordField.getText());
+        // Show the dialog and wait for the response
+        Optional<ButtonType> result = dialog.showAndWait();
+
+        if (result.isPresent() && result.get() == okButton) {
+            // Validate fields
+            String currentPassword = currentPasswordField.getText();
+            String newPassword = newPasswordField.getText();
+            String confirmPassword = confirmPasswordField.getText();
+
+            if (currentPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
+                showAlert("Error", "All fields are required.");
+                return;
             }
-            return null;
-        });
 
-        // Show the dialog and get result
-        Optional<Pair<String, String>> loginResult = loginDialog.showAndWait();
-
-        if (loginResult.isPresent()) {
-            String username = loginResult.get().getKey();
-            String currentPassword = loginResult.get().getValue();
-
-            // Step 2: Check if username and password match
-            try (Connection connection = DatabaseHelper.getConnection()) {
-                String query = "SELECT * FROM users WHERE username = ? AND hashedPassword = ?";
-                PreparedStatement statement = connection.prepareStatement(query);
-                statement.setString(1, username);
-                statement.setString(2, currentPassword);
-
-                ResultSet resultSet = statement.executeQuery();
-
-                if (resultSet.next()) {
-                    // Step 3: Show dialog for new password and confirm password
-                    Dialog<Pair<String, String>> passwordDialog = new Dialog<>();
-                    passwordDialog.setTitle("New Password");
-                    passwordDialog.setHeaderText("Enter new password and confirm password");
-
-                    // Create new password and confirm password fields
-                    PasswordField newPasswordField = new PasswordField();
-                    newPasswordField.setPromptText("New Password");
-                    PasswordField confirmPasswordField = new PasswordField();
-                    confirmPasswordField.setPromptText("Confirm Password");
-
-                    // Layout the fields in a GridPane
-                    GridPane passwordGrid = new GridPane();
-                    passwordGrid.setHgap(10);
-                    passwordGrid.setVgap(10);
-                    passwordGrid.setPadding(new Insets(20, 150, 10, 10));
-
-                    passwordGrid.add(new Label("New Password:"), 0, 0);
-                    passwordGrid.add(newPasswordField, 1, 0);
-                    passwordGrid.add(new Label("Confirm Password:"), 0, 1);
-                    passwordGrid.add(confirmPasswordField, 1, 1);
-
-                    passwordDialog.getDialogPane().setContent(passwordGrid);
-
-                    // Add OK and Cancel buttons
-                    ButtonType passwordOkButton = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
-                    passwordDialog.getDialogPane().getButtonTypes().addAll(passwordOkButton, ButtonType.CANCEL);
-
-                    // Handle button click
-                    passwordDialog.setResultConverter(dialogButton -> {
-                        if (dialogButton == passwordOkButton) {
-                            return new Pair<>(newPasswordField.getText(), confirmPasswordField.getText());
-                        }
-                        return null;
-                    });
-
-                    // Show the dialog and get result
-                    Optional<Pair<String, String>> passwordResult = passwordDialog.showAndWait();
-
-                    if (passwordResult.isPresent()) {
-                        String newPassword = passwordResult.get().getKey();
-                        String confirmPassword = passwordResult.get().getValue();
-
-                        // Step 4: Validate new password and confirm password
-                        if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
-                            showAlert(Alert.AlertType.ERROR, "Error", "Password fields cannot be empty!");
-                        } else if (!newPassword.equals(confirmPassword)) {
-                            showAlert(Alert.AlertType.ERROR, "Error", "Passwords do not match!");
-                        } else {
-                            // Step 5: Update the password in the database
-                            String updateQuery = "UPDATE users SET hashedPassword = ? WHERE username = ?";
-                            PreparedStatement updateStatement = connection.prepareStatement(updateQuery);
-                            updateStatement.setString(1, newPassword);
-                            updateStatement.setString(2, username);
-
-                            int rowsUpdated = updateStatement.executeUpdate();
-
-                            if (rowsUpdated > 0) {
-                                showAlert(Alert.AlertType.INFORMATION, "Success", "Password reset successfully!");
-                            } else {
-                                showAlert(Alert.AlertType.ERROR, "Error", "Failed to reset password!");
-                            }
-                        }
-                    }
-                } else {
-                    showAlert(Alert.AlertType.ERROR, "Error", "Invalid username or password!");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to reset password!");
+            if (!newPassword.equals(confirmPassword)) {
+                showAlert("Error", "New password and confirm password do not match.");
+                return;
             }
+
+            // Perform the password change operation
+            changePasswordInDatabase(currentPassword, newPassword);
         }
     }
 
-    // Show alert dialog
-    private void showAlert(Alert.AlertType alertType, String title, String message) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    private void changePasswordInDatabase(String currentPassword, String newPassword) {
+        int currentUserId = getCurrentUserId();
+        // Check if the current password matches the database record
+        DatabaseHelper.connectToDatabase();
+        try (Connection conn = DatabaseHelper.getConnection()) {
+            String query = "SELECT hashedPassword FROM users WHERE userID = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setInt(1, currentUserId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String dbPasswordHash = rs.getString("hashedPassword");
+
+                // Assuming you have a method to check hashed passwords
+                if (currentPassword.equals(dbPasswordHash)) {
+                    // Update the password if the current password is valid
+                    String updateQuery = "UPDATE users SET hashedPassword = ? WHERE userID = ?";
+                    PreparedStatement updatePs = conn.prepareStatement(updateQuery);
+
+                    updatePs.setString(1, newPassword);
+                    updatePs.setInt(2, currentUserId);
+
+                    int updated = updatePs.executeUpdate();
+                    if (updated > 0) {
+                        showAlert("Success", "Password updated successfully.");
+                    } else {
+                        showAlert("Error", "Failed to update the password.");
+                    }
+                } else {
+                    showAlert("Error", "Current password is incorrect.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "An error occurred while accessing the database.");
+        }
+    }
+
+    // Method to configure the DatePicker to use "dd/MM/yyyy" format
+    public void configureDateOfBirthField() {
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        dateOfBirthField.setConverter(new StringConverter<LocalDate>() {
+            @Override
+            public String toString(LocalDate date) {
+                if (date != null) {
+                    return date.format(dateFormatter);
+                } else {
+                    return "";
+                }
+            }
+
+            @Override
+            public LocalDate fromString(String string) {
+                if (string != null && !string.isEmpty()) {
+                    return LocalDate.parse(string, dateFormatter);
+                } else {
+                    return null;
+                }
+            }
+        });
     }
 }
