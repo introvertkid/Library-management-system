@@ -22,6 +22,7 @@ public class BaseSceneController extends Controller
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+        DatabaseHelper.connectToDatabase();
         for (Node node : navigationBar.getChildren()) {
             if (node instanceof Button) {
                 Button but = (Button) node;
@@ -32,7 +33,7 @@ public class BaseSceneController extends Controller
         loadFXMLtoAnchorPane("Dashboard", contentPane);
     }
     @FXML
-    private void handleReportButtonAction(ActionEvent actionEvent) {
+    private void handleReportButtonAction() {
         loadFXMLtoAnchorPane("ReportScene", contentPane);
     }
 
