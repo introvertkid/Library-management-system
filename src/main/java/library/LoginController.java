@@ -3,7 +3,6 @@ package library;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,33 +31,20 @@ public class LoginController extends Controller {
         passwordField.setText("");
         passwordFieldHidden.setVisible(false);
 
-        usernameField.focusedProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal) {
-                usernameField.setPromptText("");
-                usernameField.setStyle("-fx-border-color: #4c70ba; -fx-border-radius: 5;");
-            } else {
-                usernameField.setPromptText("Username");
-                usernameField.setStyle("-fx-border-color: #A0A0A0; -fx-border-radius: 5;");
-            }
-        });
+        setupFieldFocusListener(usernameField, "Username");
+        setupFieldFocusListener(passwordField, "Password");
+        setupFieldFocusListener(passwordFieldHidden, "Password");
 
-        passwordField.focusedProperty().addListener((obs, oldVal, newVal) -> {
-            if (newVal) {
-                passwordField.setPromptText("");
-                passwordField.setStyle("-fx-border-color: #4c70ba; -fx-border-radius: 5;");
-            } else {
-                passwordField.setPromptText("Password");
-                passwordField.setStyle("-fx-border-color: #A0A0A0; -fx-border-radius: 5;");
-            }
-        });
+    }
 
-        passwordFieldHidden.focusedProperty().addListener((obs, oldVal, newVal) -> {
+    public void setupFieldFocusListener(TextInputControl a, String p) {
+        a.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
-                passwordFieldHidden.setPromptText("");
-                passwordFieldHidden.setStyle("-fx-border-color: #4c70ba; -fx-border-radius: 5;");
+                a.setPromptText("");
+                a.setStyle("-fx-border-color: #4c70ba; -fx-border-radius: 5;");
             } else {
-                passwordFieldHidden.setPromptText("Password");
-                passwordFieldHidden.setStyle("-fx-border-color: #A0A0A0; -fx-border-radius: 5;");
+                a.setPromptText(p);
+                a.setStyle("-fx-border-color: #A0A0A0; -fx-border-radius: 5;");
             }
         });
     }
@@ -124,6 +110,16 @@ public class LoginController extends Controller {
                     showAlert("Error", "Incorrect username or password");
                     return false;
                 }
+
+            } else if (username.isEmpty() && password.isEmpty()) {
+                showAlert("Error", "Please enter your username and password!");
+                return false;
+            } else if (username.isEmpty()) {
+                showAlert("Error", "Please enter your username!");
+                return false;
+            } else if (password.isEmpty()) {
+                showAlert("Error", "Please enter your password!");
+                return false;
             } else {
                 showAlert("Error", "User not found");
                 return false;

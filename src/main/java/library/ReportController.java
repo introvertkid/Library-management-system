@@ -32,8 +32,6 @@ public class ReportController extends Controller {
     @FXML
     private ListView<String> selectedFile;
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         selectedFile.setVisible(false);

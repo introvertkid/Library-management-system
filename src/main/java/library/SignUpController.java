@@ -1,23 +1,10 @@
 package library;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.stage.Stage;
-
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,8 +12,6 @@ import java.util.ResourceBundle;
 import java.net.URL;
 
 public class SignUpController extends Controller {
-    @FXML
-    private HBox signUpHBox;
 
     @FXML
     private CheckBox checkBox;
@@ -51,6 +36,9 @@ public class SignUpController extends Controller {
 
     @FXML
     private Button signUpButton;
+
+    @FXML
+    private TextField FullName;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -103,7 +91,9 @@ public class SignUpController extends Controller {
         }
 
         // Enable the sign-up button only when all inputs are valid
-        signUpButton.setDisable(isNameEmpty || isPasswordEmpty || isConfirmPasswordEmpty || !isCheckBoxSelected || !passwordField.getText().equals(confirmPasswordField.getText()));
+        signUpButton.setDisable(isNameEmpty || isPasswordEmpty ||
+                isConfirmPasswordEmpty || !isCheckBoxSelected ||
+                !passwordField.getText().equals(confirmPasswordField.getText()));
     }
 
     @FXML
@@ -168,42 +158,55 @@ public class SignUpController extends Controller {
 
     @FXML
     void handleBack(ActionEvent actionEvent) {
-        loadNewScene("LoginScene",actionEvent);
+        loadNewScene("LoginScene", actionEvent);
     }
 
-    public void handleSigUp() {
+    @FXML
+    public void handleSignUp(ActionEvent actionEvent) {
         // Get the user input
         String username = nameField.getText().trim();
         String phone = phoneField.getText().trim();
         String email = emailField.getText().trim();
+        String password = passwordField.getText().trim();
+        String userfullname = FullName.getText().trim();
 
         // Check if user exists in the database
         if (checkIfUserExists(username, phone, email)) {
             nameError.setText("Username, phone, or email already exists!");
-            return;
         }
 
-        signUpHBox.getChildren().clear();
+        if (registerUser(userfullname, username, password, phone, email)) {
+            showAlert("Success", "Sign up successfully");
+            loadNewScene("LoginScene", actionEvent);
+        }
+    }
 
-        Text successMessage = new Text("Sign up successfully");
-        successMessage.setFont(Font.font("System", FontWeight.BOLD, 20));
-        successMessage.setFill(Color.GREEN);
+    public boolean registerUser(String userFullName, String username, String password, String phoneNumber, String email) {
+        if (checkIfUserExists(username, phoneNumber, email)) {
+            System.out.println("User already exists.");
+            return false;
+        }
 
-        Button returnButton = new Button("Return to Login Page");
-        returnButton.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
-        returnButton.setFont(Font.font("System Bold", 18));
+        String insertQuery = "INSERT INTO users (userFullName, username, hashedPassword, phoneNumber, gmail) VALUES (?, ?, ?, ?, ?)";
 
+        try (Connection connection = DatabaseHelper.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(insertQuery)) {
+            String hashedPassword = PasswordEncoder.hashedpassword(password);
 
-        returnButton.setOnMouseClicked(e -> {
-            loadNewScene("LoginScene", new ActionEvent());
-        });
-
-        VBox successLayout = new VBox(10);
-        successLayout.setAlignment(Pos.CENTER);
-        successLayout.getChildren().addAll(successMessage, returnButton);
-
-        signUpHBox.getChildren().add(successLayout);
-        signUpHBox.setAlignment(Pos.CENTER);
+            stmt.setString(1, userFullName);
+            stmt.setString(2, username);
+            stmt.setString(3, hashedPassword);
+            stmt.setString(4, phoneNumber);
+            stmt.setString(5, email);
+            int rowsInserted = stmt.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("User registered successfully.");
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
 

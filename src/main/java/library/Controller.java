@@ -20,6 +20,12 @@ public class Controller implements Initializable {
     private static Scene scene;
     private static Stage primaryStage;
 
+    public void setPrimaryStage(Stage primaryStage) {
+        if (this.primaryStage == null) {
+            this.primaryStage = primaryStage;
+        }
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
@@ -46,6 +52,7 @@ public class Controller implements Initializable {
         }
     }
 
+
     public static void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -54,16 +61,12 @@ public class Controller implements Initializable {
         alert.showAndWait();
     }
 
-    public static Stage loadCurrentStage(ActionEvent actionEvent)
-    {
+    public static Stage loadCurrentStage(ActionEvent actionEvent) {
         Object source = actionEvent.getSource();
 
-        if(source instanceof Node)
-        {
+        if (source instanceof Node) {
             return (Stage) ((Node) source).getScene().getWindow();
-        }
-        else if(source instanceof MenuItem)
-        {
+        } else if (source instanceof MenuItem) {
             return (Stage) ((MenuItem) source).getParentPopup().getOwnerWindow();
         }
         return null;
