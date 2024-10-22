@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS documents (
 
 CREATE TABLE IF NOT EXISTS users (
     userID INT AUTO_INCREMENT primary key,
-    username varchar(255) not null,
+    username varchar(255) not null unique,
     hashedPassword varchar(255) not null,
     userFullName VARCHAR(100) not null,
     role varchar(100) default 'Normal user',
@@ -58,3 +58,5 @@ create table if not exists reports(
     content longtext,
     foreign key (userID) references users(userID) on update cascade
 );
+
+insert into users(username, hashedPassword, userFullName) value('admin', 'admin', 'admin');

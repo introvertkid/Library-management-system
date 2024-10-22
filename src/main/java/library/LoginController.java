@@ -26,9 +26,6 @@ public class LoginController extends Controller {
     @FXML
     private Button togglePasswordButton;
 
-    private String username;
-    private String password;
-
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         passwordField.setPromptText("Password");
@@ -87,9 +84,9 @@ public class LoginController extends Controller {
         String username = usernameField.getText();
         String password = passwordField.isVisible() ? passwordField.getText() : passwordFieldHidden.getText();
 
-//        if (login(username, password)) {
+        if (login(username, password)) {
             loadNewScene("BaseScene", actionEvent);
-//        }
+        }
     }
 
     @FXML
@@ -112,33 +109,30 @@ public class LoginController extends Controller {
     public boolean login(String username, String password) {
         DatabaseHelper.connectToDatabase();
         try (Connection conn = DatabaseHelper.getConnection()) {
-            String query = "SELECT * FROM librarydb WHERE username = ?";
+            String query = "SELECT * FROM users WHERE username = ?";
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                String storedPassword = resultSet.getString("password");
+                String storedPassword = resultSet.getString("hashedPassword");
 
                 if (password.equals(storedPassword)) {
                     System.out.println("Login Successful!");
+                    User.loadUserData(resultSet);
                     return true;
                 } else {
-                    showAlert("Error", "Incorrect Password");
+                    showAlert("Error", "Incorrect username or password");
                     return false;
                 }
-
             } else {
                 showAlert("Error", "User not found");
                 return false;
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
-
 
     @FXML
     public void handleCreateAccount(ActionEvent actionEvent) {

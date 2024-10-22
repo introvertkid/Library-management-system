@@ -28,6 +28,7 @@ public class DashboardController extends Controller
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
+        DatabaseHelper.connectToDatabase();
         try (Connection connection=DatabaseHelper.getConnection())
         {
             String bookQuery = "select count(*) from documents";
