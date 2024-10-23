@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS documentOwner (
 create table if not exists reports(
 	reportID int auto_increment primary key,
 	userID int,
+    reportType varchar(10),
     title varchar(255),
     content longtext,
     foreign key (userID) references users(userID) on update cascade

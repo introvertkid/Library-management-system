@@ -31,67 +31,67 @@ public class User
         }
     }
 
-    public int getID() {
+    public static int getID() {
         return ID;
     }
 
-    public void setID(int newID) {
+    public static void setID(int newID) {
         ID = newID;
     }
 
-    public String getUsername() {
+    public static String getUsername() {
         return username;
     }
 
-    public void setUsername(String newUsername) {
+    public static void setUsername(String newUsername) {
         username = newUsername;
     }
 
-    public String getPassword() {
+    public static String getPassword() {
         return password;
     }
 
-    public void setPassword(String newPassword) {
+    public static void setPassword(String newPassword) {
         password = newPassword;
     }
 
-    public String getUserFullName() {
+    public static String getUserFullName() {
         return userFullName;
     }
 
-    public void setUserFullName(String newFullName) {
+    public static void setUserFullName(String newFullName) {
         userFullName = newFullName;
     }
 
-    public String getRole() {
+    public static String getRole() {
         return role;
     }
 
-    public void setRole(String newRole) {
+    public static void setRole(String newRole) {
         role = newRole;
     }
 
-    public String getGmail() {
+    public static String getGmail() {
         return gmail;
     }
 
-    public void setGmail(String newGmail) {
+    public static void setGmail(String newGmail) {
         gmail = newGmail;
     }
 
-    public String getPhoneNumber() {
+    public static String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String newPhoneNumber) {
+    public static void setPhoneNumber(String newPhoneNumber) {
         phoneNumber = newPhoneNumber;
     }
 
-    public String getAvatar() {
+    public static String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String newAvatar) {
+    public static void setAvatar(String newAvatar) {
         avatar = newAvatar;
     }
 }

@@ -12,6 +12,9 @@ import java.awt.*;
 import javafx.scene.control.TextField;
 import java.io.File;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.List;
 
@@ -40,7 +43,7 @@ public class ReportController extends Controller {
             @Override
             public ListCell<String> call(ListView<String> param) {
                 return new ListCell<>() {
-                    private Hyperlink hyperlink = new Hyperlink();
+                    private final Hyperlink hyperlink = new Hyperlink();
 
                     @Override
                     protected void updateItem(String item, boolean empty) {
@@ -58,7 +61,6 @@ public class ReportController extends Controller {
                 };
             }
         });
-
         selectedFile.setOnKeyPressed(this::removeSelectedFile);
     }
 
@@ -76,7 +78,6 @@ public class ReportController extends Controller {
                 }
             }
         });
-
         choice.setPromptText("Choice");
     }
 
@@ -87,7 +88,7 @@ public class ReportController extends Controller {
         } else if (textArea.getText().trim().isEmpty()) {
             showAlert("Can't create report!!!", "Content cannot be empty. Please enter some information!");
         } else {
-            showAlert("Notification", "Sent successfully!");
+            insertData();
             textArea.clear();
             textField.clear();
             choice.setValue(null);
@@ -138,4 +139,35 @@ public class ReportController extends Controller {
         }
     }
 
+    public void insertData() {
+        String query = "INSERT INTO reports (userID, reportType, title, content) VALUES (?, ?, ?, ?)";
+
+        DatabaseHelper.connectToDatabase();
+        try (Connection conn = DatabaseHelper.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(query);
+            int userID = User.getID();
+
+            String title = textField.getText();
+            if (title.isEmpty()) {
+                title = "none";
+            }
+
+            String content = textArea.getText();
+            String type = choice.getValue();
+
+            stmt.setInt(1, userID);
+            stmt.setString(2, type);
+            stmt.setString(3, title);
+            stmt.setString(4, content);
+
+            int rowsInserted = stmt.executeUpdate();
+            if (rowsInserted > 0) {
+                showAlert("Notification", "Report inserted successfully!");
+            } else {
+                showAlert("Notification", "Failed to insert report.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
