@@ -68,6 +68,12 @@
             <version>21.0.4</version>
         </dependency>
         <!--    END DEPENDENCIES FOR JAVAFX-->
+        <!-- mail -->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
     </dependencies>
-    
+
 </project>

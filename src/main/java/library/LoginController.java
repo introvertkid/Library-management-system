@@ -3,12 +3,19 @@ package library;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.Properties;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class LoginController extends Controller {
@@ -26,6 +33,9 @@ public class LoginController extends Controller {
     private Button togglePasswordButton;
 
     @FXML
+    private Button loginButton;
+
+    @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
         passwordField.setPromptText("Password");
         passwordField.setText("");
@@ -35,6 +45,11 @@ public class LoginController extends Controller {
         setupFieldFocusListener(passwordField, "Password");
         setupFieldFocusListener(passwordFieldHidden, "Password");
 
+        passwordField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                loginButton.fire();
+            }
+        });
     }
 
     public void setupFieldFocusListener(TextInputControl a, String p) {
@@ -75,6 +90,48 @@ public class LoginController extends Controller {
         }
     }
 
+    public String generateRandomPassword(int length) {
+        String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder password = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            password.append(chars.charAt(random.nextInt(chars.length())));
+        }
+        return password.toString();
+    }
+
+    //todo: đang cần  App Passwords của gmail.
+    public void sendEmail(String recipientEmail, String newPassword) {
+        String host = "smtp.gmail.com";
+        String from = "phandangnhat6a2005@gmail.com";
+        String password = "abcxyz"; // App Passwords.
+
+        Properties properties = System.getProperties();
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", "465");
+        properties.put("mail.smtp.ssl.enable", "true");
+        properties.put("mail.smtp.auth", "true");
+
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from, password);
+            }
+        });
+
+        try {
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(recipientEmail));
+            message.setSubject("Your New Password");
+            message.setText("Here is your new password: " + newPassword);
+
+            Transport.send(message);
+            System.out.println("Email sent successfully.");
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+    }
+
     @FXML
     public void handleForgotPassword(ActionEvent actionEvent) {
         TextInputDialog dialog = new TextInputDialog();
@@ -87,7 +144,27 @@ public class LoginController extends Controller {
             if (email.isEmpty()) {
                 showAlert("Error", "Email cannot be empty.");
             } else {
-                showAlert("Success", "Password reset link sent to: " + email);
+                String newPassword = generateRandomPassword(8);
+                String updatequery = "UPDATE users SET hashedPassword = ? WHERE gmail = ?";
+
+                try (Connection connection = DatabaseHelper.getConnection()) {
+                    PreparedStatement stmt = connection.prepareStatement(updatequery);
+                    String hashedPassword = PasswordEncoder.hashedpassword(newPassword);
+                    stmt.setString(1, hashedPassword);
+                    stmt.setString(2, email);
+
+                    int rowsUpdated = stmt.executeUpdate();
+                    if (rowsUpdated > 0) {
+                        sendEmail(email, newPassword);
+                        showAlert("Success", "A new password has been sent to: " + email);
+                        showAlert("pass", newPassword);
+                    } else {
+                        showAlert("Error", "No user found with that email address.");
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    showAlert("Error", "An error occurred while updating the password.");
+                }
             }
         });
     }
@@ -102,12 +179,12 @@ public class LoginController extends Controller {
             if (resultSet.next()) {
                 String storedPassword = resultSet.getString("hashedPassword");
 
-                if (password.equals(storedPassword)) {
+                if (PasswordEncoder.hashedpassword(password).equals(storedPassword)) {
                     System.out.println("Login Successful!");
                     User.loadUserData(resultSet);
                     return true;
                 } else {
-                    showAlert("Error", "Incorrect username or password");
+                    showAlert("Error", "Incorrect Password!");
                     return false;
                 }
 
@@ -121,7 +198,7 @@ public class LoginController extends Controller {
                 showAlert("Error", "Please enter your password!");
                 return false;
             } else {
-                showAlert("Error", "User not found");
+                showAlert("Error", "User not found!");
                 return false;
             }
         } catch (SQLException e) {
