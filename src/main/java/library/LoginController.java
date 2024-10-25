@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -85,7 +84,7 @@ public class LoginController extends Controller {
         String username = usernameField.getText();
         String password = passwordField.isVisible() ? passwordField.getText() : passwordFieldHidden.getText();
 
-        if (login(username, password)) {
+        if (Login(username, password)) {
             loadNewScene("BaseScene", actionEvent);
         }
     }
@@ -100,11 +99,10 @@ public class LoginController extends Controller {
         return password.toString();
     }
 
-    //todo: đang cần  App Passwords của gmail.
     public void sendEmail(String recipientEmail, String newPassword) {
         String host = "smtp.gmail.com";
         String from = "phandangnhat6a2005@gmail.com";
-        String password = "abcxyz"; // App Passwords.
+        String password = "pwjs stnv htll zcrb";
 
         Properties properties = System.getProperties();
         properties.put("mail.smtp.host", host);
@@ -157,7 +155,7 @@ public class LoginController extends Controller {
                     if (rowsUpdated > 0) {
                         sendEmail(email, newPassword);
                         showAlert("Success", "A new password has been sent to: " + email);
-                        showAlert("pass", newPassword);
+//                        showAlert("pass", newPassword);
                     } else {
                         showAlert("Error", "No user found with that email address.");
                     }
@@ -169,7 +167,7 @@ public class LoginController extends Controller {
         });
     }
 
-    public boolean login(String username, String password) {
+    public boolean Login(String username, String password) {
         DatabaseHelper.connectToDatabase();
         try (Connection conn = DatabaseHelper.getConnection()) {
             String query = "SELECT * FROM users WHERE username = ?";
