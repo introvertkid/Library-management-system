@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.DocumentController">
+   <children>
+      <Button fx:id="openDocumentButton" layoutX="94.0" layoutY="69.0" mnemonicParsing="false" onAction="#openDocument" text="Show" />
+
+      <TableView fx:id="documentTable" layoutX="50.0" layoutY="150.0" prefHeight="200.0" prefWidth="700.0">
+         <columns>
+            <TableColumn fx:id="documentIDColumn" text="Document ID">
+               <cellValueFactory>
+                  <PropertyValueFactory property="documentID"/>
+               </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="documentNameColumn" text="Document Name">
+               <cellValueFactory>
+                  <PropertyValueFactory property="documentName"/>
+               </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="categoryIDColumn" text="Category ID">
+               <cellValueFactory>
+                  <PropertyValueFactory property="categoryID"/>
+               </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="authorsColumn" text="Authors">
+               <cellValueFactory>
+                  <PropertyValueFactory property="authors"/>
+               </cellValueFactory>
+            </TableColumn>
+
+            <TableColumn fx:id="actionColum" text="Action">
+
+            </TableColumn>
+         </columns>
+      </TableView>
+   </children>
+</AnchorPane>

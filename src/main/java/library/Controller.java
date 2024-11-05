@@ -15,22 +15,17 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
+public class Controller implements Initializable
+{
     private static Parent root;
     private static Scene scene;
     private static Stage primaryStage;
 
-    public void setPrimaryStage(Stage primaryStage) {
-        if (this.primaryStage == null) {
-            this.primaryStage = primaryStage;
-        }
-    }
-
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-    }
+    public void initialize(URL url, ResourceBundle resourceBundle) {}
 
-    public void loadNewScene(String name, ActionEvent actionEvent) {
+    public void loadNewScene(String name, ActionEvent actionEvent)
+    {
         String url = "/FXML/" + name + ".fxml";
         try {
             Object obj = null;
@@ -52,7 +47,6 @@ public class Controller implements Initializable {
         }
     }
 
-
     public static void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -61,18 +55,23 @@ public class Controller implements Initializable {
         alert.showAndWait();
     }
 
-    public static Stage loadCurrentStage(ActionEvent actionEvent) {
+    public static Stage loadCurrentStage(ActionEvent actionEvent)
+    {
         Object source = actionEvent.getSource();
 
-        if (source instanceof Node) {
+        if(source instanceof Node)
+        {
             return (Stage) ((Node) source).getScene().getWindow();
-        } else if (source instanceof MenuItem) {
+        }
+        else if(source instanceof MenuItem)
+        {
             return (Stage) ((MenuItem) source).getParentPopup().getOwnerWindow();
         }
         return null;
     }
 
-    public void loadFXMLtoAnchorPane(String fxml, AnchorPane pane) {
+    public void loadFXMLtoAnchorPane(String fxml, AnchorPane pane)
+    {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/" + fxml + ".fxml"));
             Node newContent = loader.load();
@@ -81,5 +80,13 @@ public class Controller implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage=primaryStage;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 }

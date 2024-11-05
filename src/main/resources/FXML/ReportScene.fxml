@@ -34,7 +34,7 @@
       </VBox>
       <HBox layoutX="393.0" layoutY="324.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#setFileChooser" prefHeight="25.0" prefWidth="76.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;" text="Attach" />
+            <Button text="Attach" mnemonicParsing="false" onAction="#setFileChooser" prefHeight="25.0" prefWidth="76.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;"/>
             <Button fx:id="SendReport" alignment="BOTTOM_RIGHT" mnemonicParsing="false" onAction="#sendReport" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand; -fx-faint-focus-color: transparent; -fx-focus-color: transparent;" text="Send Report" />
          </children>
          <padding>

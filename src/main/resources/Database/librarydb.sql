@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS documents (
     documentName VARCHAR(255) not null,
     categoryID INT,
     authors longtext,
+    fileName varchar(255) not null unique,
     FOREIGN KEY (categoryID) REFERENCES categories(categoryID) ON UPDATE CASCADE
 );
 

@@ -32,6 +32,13 @@ public class BaseSceneController extends Controller
         }
         loadFXMLtoAnchorPane("Dashboard", contentPane);
     }
+
+    @FXML
+    private void handleAddDocumentButton()
+    {
+        loadFXMLtoAnchorPane("AddDocumentScene", contentPane);
+    }
+
     @FXML
     private void handleReportButtonAction() {
         loadFXMLtoAnchorPane("ReportScene", contentPane);
@@ -40,6 +47,12 @@ public class BaseSceneController extends Controller
     @FXML
     private void handleDashBoardButton() {
         loadFXMLtoAnchorPane("Dashboard", contentPane);
+    }
+
+    @FXML
+    private void handleDocumentButton()
+    {
+        loadFXMLtoAnchorPane("DocumentScene", contentPane);
     }
 
     @FXML

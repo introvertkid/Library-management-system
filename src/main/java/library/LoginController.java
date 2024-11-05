@@ -84,9 +84,9 @@ public class LoginController extends Controller {
         String username = usernameField.getText();
         String password = passwordField.isVisible() ? passwordField.getText() : passwordFieldHidden.getText();
 
-        if (Login(username, password)) {
+//        if (login(username, password)) {
             loadNewScene("BaseScene", actionEvent);
-        }
+//        }
     }
 
     public String generateRandomPassword(int length) {
