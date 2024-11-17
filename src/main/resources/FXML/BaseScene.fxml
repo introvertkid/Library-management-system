@@ -11,6 +11,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.geometry.Insets?>
 <AnchorPane fx:id="Dashboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1200.0" style="-fx-background-color: silver;" stylesheets="@../CSS/BaseScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.BaseSceneController">
    <children>
       <!-- User info section -->
@@ -88,6 +91,18 @@
                         <Font size="18.0" />
                      </font>
                   </Button>
+                  <Button fx:id="showReportButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleShowReportButtonAction" prefHeight="42.0" prefWidth="200.0" styleClass="dashboardButton" text="Show Reports" visible="false">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../image/report.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
                </children>
             </VBox>
             <!-- Logout button -->
@@ -129,6 +144,28 @@
                <Font size="18.0" />
             </font>
          </Button>
+            <Button fx:id="addDocumentButton" layoutX="0.0" layoutY="0.0" mnemonicParsing="false" onAction="#handleAddDocumentButton" text="+" />
+
+            <ImageView fitHeight="20" fitWidth="20" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/user.png" />
+               </image>
+            </ImageView>
+
+            <!-- Dropdown menu -->
+            <MenuButton prefHeight="40.0" text="admin">
+               <items>
+                  <MenuItem onAction="#UserProfile" text="Profile" />
+                  <MenuItem onAction="#Logout" text="Logout" />
+               </items>
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </MenuButton>
+         </HBox>
       </AnchorPane>
    </children>
 </AnchorPane>

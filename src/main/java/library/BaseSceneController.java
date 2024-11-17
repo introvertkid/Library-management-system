@@ -27,6 +27,9 @@ public class BaseSceneController extends Controller {
     private AnchorPane contentPane;
 
     @FXML
+    private Button showReportButton;
+
+    @FXML
     private Button dashboardButton;
 
     @FXML
@@ -72,6 +75,10 @@ public class BaseSceneController extends Controller {
             }
         }
         loadFXMLtoAnchorPane("Dashboard", contentPane);
+
+        if (User.getRole().equals("Admin")) {
+            showReportButton.setVisible(true);
+        }
     }
 
     @FXML
@@ -152,6 +159,11 @@ public class BaseSceneController extends Controller {
     private void handleReportButtonAction() {
         loadFXMLtoAnchorPane("ReportScene", contentPane);
         setStyleForSelectedButton(reportButton);
+    }
+
+    @FXML
+    private void handleShowReportButtonAction() {
+        loadFXMLtoAnchorPane("ShowReportScene", contentPane);
     }
 
     @FXML

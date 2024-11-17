@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.ShowReportController">
+   <children>
+      <Button fx:id="openReportButton" layoutX="94.0" layoutY="69.0" mnemonicParsing="false" onAction="#openReport" text="Show" />
+      <TableView fx:id="reportTable" layoutX="50.0" layoutY="150.0" prefHeight="200.0" prefWidth="700.0">
+         <columns>
+            <TableColumn fx:id="reportIDColumn" text="Report ID">
+               <cellValueFactory>
+                  <PropertyValueFactory property="documentID" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="userIDColumn" text="User ID">
+               <cellValueFactory>
+                  <PropertyValueFactory property="documentName" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="reportTypeColumn" text="Report Type">
+               <cellValueFactory>
+                  <PropertyValueFactory property="categoryID" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="titleColumn" prefWidth="151.3333740234375" text="Title">
+               <cellValueFactory>
+                  <PropertyValueFactory property="authors" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="statusColumn" prefWidth="61.3333740234375" text="Status" />
+         </columns>
+      </TableView>
+      <ComboBox fx:id="statusChoice" layoutX="197.0" layoutY="69.0" prefWidth="150.0" promptText="Status">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="All" />
+               <String fx:value="Pending" />
+               <String fx:value="Handled" />
+            </FXCollections>
+         </items>
+      </ComboBox>
+   </children>
+</AnchorPane>
