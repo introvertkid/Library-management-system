@@ -59,6 +59,7 @@ create table if not exists reports(
     reportType varchar(10),
     title varchar(255),
     content longtext,
+    status varchar(45) default 'Pending',
     foreign key (userID) references users(userID) on update cascade
 );
 
