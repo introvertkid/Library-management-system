@@ -12,15 +12,15 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="985.0" style="-fx-background-color: transparent;" stylesheets="@../CSS/ProfileScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.ProfileController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="985.0" style="-fx-background-color: silver;" stylesheets="@../CSS/ProfileScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.ProfileController">
    <children>
-      <ScrollPane fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent; -fx-border: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="496.0" prefWidth="985.0" style="-fx-background-color: silver; -fx-border: transparent;" AnchorPane.bottomAnchor="-7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane prefHeight="605.0" prefWidth="984.0" style="-fx-background-color: silver;">
                <children>
                   <SplitPane dividerPositions="0.5" layoutY="253.0" prefHeight="337.0" prefWidth="1197.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                      <items>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="294.0" prefWidth="480.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="294.0" prefWidth="480.0" style="-fx-background-color: silver;">
                            <children>
                               <VBox alignment="TOP_CENTER" layoutX="88.0" prefHeight="387.0" prefWidth="303.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
@@ -29,7 +29,7 @@
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="usernameField" alignment="CENTER" editable="false">
+                                    <TextField fx:id="usernameField" alignment="CENTER" editable="false" promptText="Username">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -39,7 +39,7 @@
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="fullNameField" alignment="CENTER" editable="false">
+                                    <TextField fx:id="fullNameField" alignment="CENTER" editable="false" promptText="Fullname">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -49,7 +49,7 @@
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="roleField" alignment="CENTER" editable="false">
+                                    <TextField fx:id="roleField" alignment="CENTER" editable="false" promptText="Role">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -59,7 +59,7 @@
                               </VBox>
                            </children>
                         </AnchorPane>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="488.0" style="-fx-background-color: silver;">
                            <children>
                               <VBox alignment="TOP_CENTER" layoutX="88.0" prefHeight="332.0" prefWidth="303.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
@@ -68,13 +68,13 @@
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <DatePicker fx:id="dateOfBirthField" disable="true" prefHeight="32.0" prefWidth="303.0" />
+                                    <DatePicker fx:id="dateOfBirthField" disable="true" prefHeight="32.0" prefWidth="303.0" style="-fx-cursor: hand;" />
                                     <Label text="Email">
                                        <font>
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="emailField" alignment="CENTER" editable="false">
+                                    <TextField fx:id="emailField" alignment="CENTER" editable="false" promptText="Email">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -84,7 +84,7 @@
                                           <Font size="20.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="phoneField" alignment="CENTER" editable="false">
+                                    <TextField fx:id="phoneField" alignment="CENTER" editable="false" promptText="Phone">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
@@ -96,7 +96,7 @@
                         </AnchorPane>
                      </items>
                   </SplitPane>
-                  <AnchorPane prefHeight="253.0" prefWidth="1197.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane prefHeight="253.0" prefWidth="1197.0" style="-fx-background-color: silver;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label fx:id="fullNameLabel" alignment="CENTER" layoutX="352.0" layoutY="185.0" prefHeight="30.0" prefWidth="266.0" wrapText="true">
                            <font>

@@ -109,6 +109,7 @@ public class ReportController extends Controller {
             }
             selectedFile.setVisible(!selectedFile.getItems().isEmpty());
         }
+
     }
 
     @FXML

@@ -3,14 +3,16 @@ package library;
 public class Document {
     private int documentID;
     private String documentName;
-    private int categoryID;
+    private String category;
     private String authors;
+    private int quantity;
 
-    public Document(int documentID, String documentName, int categoryID, String authors) {
+    public Document(int documentID, String documentName, String authors, String category, int quantity) {
         this.documentID = documentID;
         this.documentName = documentName;
-        this.categoryID = categoryID;
+        this.category = category;
         this.authors = authors;
+        this.quantity = quantity;
     }
 
     public int getDocumentID() {
@@ -21,11 +23,19 @@ public class Document {
         return documentName;
     }
 
-    public int getCategoryID() {
-        return categoryID;
+    public String getCategory() {
+        return category;
     }
 
     public String getAuthors() {
         return authors;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

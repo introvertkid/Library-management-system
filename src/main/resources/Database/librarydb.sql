@@ -12,9 +12,10 @@ CREATE TABLE IF NOT EXISTS categories (
 CREATE TABLE IF NOT EXISTS documents (
     documentID INT AUTO_INCREMENT primary key,
     documentName VARCHAR(255) not null,
-    categoryID INT,
+    categoryID INT NOT NULL,
     authors longtext,
     fileName varchar(255) not null unique,
+    quantity INT DEFAULT 1,
     FOREIGN KEY (categoryID) REFERENCES categories(categoryID) ON UPDATE CASCADE
 );
 
@@ -61,4 +62,4 @@ create table if not exists reports(
     foreign key (userID) references users(userID) on update cascade
 );
 
-insert into users(username, hashedPassword, userFullName) value('admin', 'admin', 'admin');
+insert into users(username, hashedPassword, userFullName) value('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin');

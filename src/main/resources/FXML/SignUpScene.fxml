@@ -60,7 +60,7 @@
                                  </children>
                               </StackPane>
                               <Text fx:id="passwordError" fill="red" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
-                              <CheckBox fx:id="checkBox" mnemonicParsing="false" prefHeight="55.0" prefWidth="258.0" style="-fx-cursor: hand;" text="I have read and agree to all terms and services" underline="true" wrapText="true" />
+                              <CheckBox fx:id="checkBox" mnemonicParsing="false" prefHeight="81.0" prefWidth="243.0" style="-fx-cursor: hand;" text="I have read and agree to all terms and services" underline="true" wrapText="true" />
                               <Text fx:id="checkboxError" fill="red" strokeType="OUTSIDE" strokeWidth="0.0" text="" />
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                                  <children>

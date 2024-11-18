@@ -1,46 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.DocumentController">
+<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="528.0" prefWidth="977.0" style="-fx-background-color: silver;" stylesheets="@../CSS/Document.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.DocumentController">
    <children>
-      <Button fx:id="openDocumentButton" layoutX="94.0" layoutY="69.0" mnemonicParsing="false" onAction="#openDocument" text="Show" />
+      <AnchorPane layoutX="15.0" layoutY="61.0" prefHeight="46.0" prefWidth="948.0">
+         <children>
+            <HBox layoutY="5.0" prefHeight="36.0" prefWidth="302.0">
+               <children>
+                  <Label prefHeight="18.0" prefWidth="39.0" text="Books" />
+                  <TextField fx:id="searchField" prefHeight="13.0" prefWidth="206.0" promptText="Search by Title, Author, or Category" />
+                  <Button fx:id="findBookButton" mnemonicParsing="false" prefHeight="12.0" prefWidth="55.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Find" />
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <Button fx:id="openDocumentButton" layoutX="829.0" layoutY="469.0" mnemonicParsing="false" onAction="#openDocument" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />
 
-      <TableView fx:id="documentTable" layoutX="50.0" layoutY="150.0" prefHeight="200.0" prefWidth="700.0">
-         <columns>
-            <TableColumn fx:id="documentIDColumn" text="Document ID">
-               <cellValueFactory>
-                  <PropertyValueFactory property="documentID"/>
-               </cellValueFactory>
-            </TableColumn>
-
-            <TableColumn fx:id="documentNameColumn" text="Document Name">
-               <cellValueFactory>
-                  <PropertyValueFactory property="documentName"/>
-               </cellValueFactory>
-            </TableColumn>
-
-            <TableColumn fx:id="categoryIDColumn" text="Category ID">
-               <cellValueFactory>
-                  <PropertyValueFactory property="categoryID"/>
-               </cellValueFactory>
-            </TableColumn>
-
-            <TableColumn fx:id="authorsColumn" text="Authors">
-               <cellValueFactory>
-                  <PropertyValueFactory property="authors"/>
-               </cellValueFactory>
-            </TableColumn>
-
-            <TableColumn fx:id="actionColum" text="Action">
-
-            </TableColumn>
-         </columns>
-      </TableView>
+      <TableView fx:id="documentTable" layoutX="19.0" layoutY="107.0" prefHeight="346.0" prefWidth="940.0" style="-fx-background-color: transparent;" />
+      <Label layoutX="55.0" layoutY="14.0" style="-fx-font-size: 30px; -fx-font-weight: bold;" text="Books">
+         <font>
+            <Font name="Berlin Sans FB" size="24.0" />
+         </font>
+      </Label>
+      <Line endX="1052.69287109375" endY="-1.1444091796875E-5" layoutX="105.0" layoutY="60.0" startX="-105.00001525878906" startY="-7.62939453125E-6" />
+      <Button fx:id="deleteBookButton" layoutX="728.0" layoutY="469.0" mnemonicParsing="false" onAction="#openDocument" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Delete" />
+      <Button fx:id="editBookButton" layoutX="632.0" layoutY="469.0" mnemonicParsing="false" onAction="#openDocument" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Edit" />
    </children>
 </AnchorPane>

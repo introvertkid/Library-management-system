@@ -40,8 +40,8 @@ public class ProfileController extends Controller {
     private final String DEFAULT_AVATAR = "src/main/resources/image/UserAvatar/userAvatar.png";
     private boolean isEditing = false;
 
-    private int getCurrentUserId() {
-        return 1000; // Replace with actual user session management
+    static int getCurrentUserId() {
+        return User.getID();
     }
 
     @Override
@@ -268,12 +268,12 @@ public class ProfileController extends Controller {
                 String dbPasswordHash = rs.getString("hashedPassword");
 
                 // Assuming you have a method to check hashed passwords
-                if (currentPassword.equals(dbPasswordHash)) {
+                if (PasswordEncoder.hashedpassword(currentPassword).equals(dbPasswordHash)) {
                     // Update the password if the current password is valid
                     String updateQuery = "UPDATE users SET hashedPassword = ? WHERE userID = ?";
                     PreparedStatement updatePs = conn.prepareStatement(updateQuery);
 
-                    updatePs.setString(1, newPassword);
+                    updatePs.setString(1, PasswordEncoder.hashedpassword(newPassword));
                     updatePs.setInt(2, currentUserId);
 
                     int updated = updatePs.executeUpdate();

@@ -51,6 +51,10 @@ public class LoginController extends Controller {
         });
     }
 
+    public class UserSession {
+        public static String currentUser;
+    }
+
     public void setupFieldFocusListener(TextInputControl a, String p) {
         a.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
@@ -167,7 +171,7 @@ public class LoginController extends Controller {
         });
     }
 
-    public boolean Login(String username, String password) {
+    public boolean login(String username, String password) {
         DatabaseHelper.connectToDatabase();
         try (Connection conn = DatabaseHelper.getConnection()) {
             String query = "SELECT * FROM users WHERE username = ?";
@@ -180,6 +184,7 @@ public class LoginController extends Controller {
                 if (PasswordEncoder.hashedpassword(password).equals(storedPassword)) {
                     System.out.println("Login Successful!");
                     User.loadUserData(resultSet);
+                    UserSession.currentUser = username;
                     return true;
                 } else {
                     showAlert("Error", "Incorrect Password!");

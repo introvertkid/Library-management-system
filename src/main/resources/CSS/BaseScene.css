@@ -2,12 +2,91 @@
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-text-fill: white;
+    -fx-font-size: 18px;
 }
 
-.dashboardButton:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.2);
+.dashboardButton:hover, .dashboardButton:focused, .dashboardButton.selected {
+    -fx-background-color: #4c70ba;
+    -fx-font-family: 'Montserrat';
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+.accountButton {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
 }
 
+.accountButton:hover, .accountButton:focused, .accountButton.selected {
+    -fx-background-color: #4c70ba;
+    -fx-font-family: 'Montserrat';
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.addbookButton {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+}
+
+.addbookButton:hover, .addbookButton:focused {
+    -fx-background-color: #4c70ba;
+    -fx-font-family: 'Montserrat';
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+.documentButton {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+}
+
+.documentButton:hover, .documentButton:focused, .documentButton.selected {
+    -fx-background-color: #4c70ba;
+    -fx-font-family: 'Montserrat';
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+.reportButton {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+}
+
+.reportButton:hover, .reportButton:focused, .reportButton.selected {
+    -fx-background-color: #4c70ba;
+    -fx-font-family: 'Montserrat';
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+}
+
+#logoutButton:hover #logoutImage {
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+    -fx-font-weight: bold;
+}
+
+#logoutButton #logoutImage {
+    -fx-effect: null;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-font-weight: bold;
+}
 .menu-button {
     -fx-background-color: transparent;
     -fx-text-fill: white;

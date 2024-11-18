@@ -4,29 +4,35 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="container" fx:controller="library.AddDocumentController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588" prefWidth="985.3333740234375" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588" prefWidth="985.3333740234375" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.AddDocumentController">
    <children>
       <!-- Label for Title -->
-      <Label layoutX="50.0" layoutY="30.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="Add New Book" />
+      <Label layoutX="44.0" layoutY="14.0" style="-fx-font-size: 30px; -fx-font-weight: bold;" text="Add New Book">
+         <font>
+            <Font name="Berlin Sans FB" size="24.0" />
+         </font></Label>
 
       <!-- Book Name -->
-      <Label layoutX="50.0" layoutY="80.0" text="Book Name:" />
-      <TextField fx:id="bookNameField" layoutX="150.0" layoutY="75.0" prefWidth="200.0" />
+      <Label layoutX="69.0" layoutY="79.0" text="Book Name:" />
+      <TextField fx:id="bookNameField" layoutX="150.0" layoutY="75.0" prefWidth="200.0" promptText="Name" />
 
       <!-- Category -->
-      <Label layoutX="50.0" layoutY="130.0" text="Category:" />
-      <TextField fx:id="categoryField" layoutX="150.0" layoutY="125.0" prefWidth="200.0" />
+      <Label layoutX="54.0" layoutY="129.0" text="Book Category:" />
+      <TextField fx:id="categoryField" layoutX="150.0" layoutY="125.0" prefWidth="200.0" promptText="Category" />
 
       <!-- Author -->
-      <Label layoutX="50.0" layoutY="180.0" text="Author:" />
-      <TextField fx:id="authorField" layoutX="150.0" layoutY="175.0" prefWidth="200.0" />
+      <Label layoutX="66.0" layoutY="179.0" prefHeight="18.0" prefWidth="76.0" text="Book Author:" />
+      <TextField fx:id="authorField" layoutX="150.0" layoutY="175.0" prefHeight="26.0" prefWidth="200.0" promptText="Author" />
 
       <!-- Submit Button -->
-      <Button fx:id="submitButton" onAction="#submit" layoutX="250.0" layoutY="268.0" prefWidth="100.0" text="Submit" />
-      <Button fx:id="selectFileButton" layoutX="284.0" layoutY="222.0" mnemonicParsing="false" onAction="#addDocument" text="Select file" />
-      <Label layoutX="50.0" layoutY="226.0" text="File:" />
-      <Text fx:id="chosenFileName" text="No file chosen" layoutX="150.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
+      <Button fx:id="submitButton" layoutX="190.0" layoutY="252.0" onAction="#submit" prefHeight="8.0" prefWidth="65.0" style="-fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand; -fx-text-fill: white;" text="Submit" />
+      <Button fx:id="selectFileButton" layoutX="278.0" layoutY="252.0" mnemonicParsing="false" onAction="#addDocument" style="-fx-font-weight: bold; -fx-background-color: #3b5998; -fx-text-fill: white; -fx-cursor: hand;" text="Select file" />
+      <Label layoutX="114.0" layoutY="226.0" text="File:" />
+      <Text fx:id="chosenFileName" layoutX="150.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No file chosen" />
+      <Line endX="1173.5" endY="-7.62939453125E-6" layoutX="94.0" layoutY="60.0" startX="-94.00001525878906" startY="-7.62939453125E-6" />
    </children>
 </AnchorPane>

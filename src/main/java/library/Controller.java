@@ -22,7 +22,9 @@ public class Controller implements Initializable
     private static Stage primaryStage;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {}
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
 
     public void loadNewScene(String name, ActionEvent actionEvent)
     {
