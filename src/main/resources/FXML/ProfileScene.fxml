@@ -18,9 +18,9 @@
          <content>
             <AnchorPane prefHeight="605.0" prefWidth="984.0" style="-fx-background-color: silver;">
                <children>
-                  <SplitPane dividerPositions="0.5" layoutY="253.0" prefHeight="337.0" prefWidth="1197.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <SplitPane dividerPositions="0.5020358306188925" layoutX="0.8" layoutY="225.0" prefHeight="371.0" prefWidth="969.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="0.0">
                      <items>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="294.0" prefWidth="480.0" style="-fx-background-color: silver;">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="294.0" prefWidth="480.0" style="-fx-background-color: white;">
                            <children>
                               <VBox alignment="TOP_CENTER" layoutX="88.0" prefHeight="387.0" prefWidth="303.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
@@ -59,7 +59,7 @@
                               </VBox>
                            </children>
                         </AnchorPane>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="488.0" style="-fx-background-color: silver;">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="368.0" prefWidth="486.0" style="-fx-background-color: white;">
                            <children>
                               <VBox alignment="TOP_CENTER" layoutX="88.0" prefHeight="332.0" prefWidth="303.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
@@ -96,7 +96,7 @@
                         </AnchorPane>
                      </items>
                   </SplitPane>
-                  <AnchorPane prefHeight="253.0" prefWidth="1197.0" style="-fx-background-color: silver;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane prefHeight="225.0" prefWidth="984.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Label fx:id="fullNameLabel" alignment="CENTER" layoutX="352.0" layoutY="185.0" prefHeight="30.0" prefWidth="266.0" wrapText="true">
                            <font>

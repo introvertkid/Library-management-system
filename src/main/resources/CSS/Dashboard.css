@@ -1,0 +1,6 @@
+.table-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0.5px;
+    -fx-alignment: center;
+}

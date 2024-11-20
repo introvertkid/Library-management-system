@@ -7,19 +7,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="546.0" prefWidth="906.0" style="-fx-background-color: silver;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.DashboardController">
+<AnchorPane prefHeight="546.0" prefWidth="906.0" style="-fx-background-color: white;" stylesheets="@../CSS/Dashboard.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.DashboardController">
    <children>
-      <VBox fx:id="contentVbox" alignment="CENTER" layoutX="36.0" layoutY="74.0" prefHeight="416.0" prefWidth="490.0" spacing="20" style="-fx-padding: 20;">
+      <VBox fx:id="contentVbox" alignment="CENTER" layoutX="24.0" layoutY="-10.0" prefHeight="530.0" prefWidth="578.0" spacing="20" style="-fx-padding: 20;">
          <children>
             <HBox alignment="CENTER" spacing="20">
                <children>
                   <VBox fx:id="VBoxTotalBooks" prefHeight="102.0" prefWidth="201.0" style="-fx-background-color: #007bff; -fx-padding: 10; -fx-border-radius: 10; -fx-background-radius: 10;">
                      <children>
                         <Label fx:id="labelTotalBooks" style="-fx-text-fill: white; -fx-font-size: 18px;" />
-                        <Button style="-fx-background-color: transparent; -fx-text-fill: white;" text="View Details">
+                        <Button style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;" text="View Details">
                            <graphic>
                               <Label style="-fx-text-fill: white;" text="&gt;" />
                            </graphic>
@@ -29,7 +27,7 @@
                   <VBox fx:id="VBoxTotalUsers" prefHeight="102.0" prefWidth="201.0" style="-fx-background-color: #28a745; -fx-padding: 10; -fx-border-radius: 10; -fx-background-radius: 10;">
                      <children>
                         <Label fx:id="labelTotalUsers" style="-fx-text-fill: white; -fx-font-size: 18px;" text="Total users: 5" />
-                        <Button style="-fx-background-color: transparent; -fx-text-fill: white;" text="View Details">
+                        <Button style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;" text="View Details">
                            <graphic>
                               <Label style="-fx-text-fill: white;" text="&gt;" />
                            </graphic>
@@ -38,19 +36,13 @@
                   </VBox>
                </children>
             </HBox>
-            <TableView fx:id="categoryTable" prefHeight="222.0" prefWidth="593.0">
+            <TableView fx:id="categoryTable" prefHeight="354.0" prefWidth="526.0">
                <columns>
-                  <TableColumn fx:id="categoryColumn" prefWidth="215.2000389099121" text="Category" />
-                  <TableColumn fx:id="totalBooksColumn" prefWidth="218.39996337890625" text="Total Books" />
+                  <TableColumn fx:id="categoryColumn" prefWidth="273.5999641418457" text="Category" />
+                  <TableColumn fx:id="totalBooksColumn" prefWidth="243.20001220703125" text="Total Books" />
                </columns>
             </TableView>
          </children>
       </VBox>
-      <Label layoutX="45.0" layoutY="14.0" style="-fx-font-size: 30px; -fx-font-weight: bold;" text="Dashboard">
-         <font>
-            <Font name="Berlin Sans FB" size="24.0" />
-         </font>
-      </Label>
-      <Line endX="1113.300048828125" layoutX="95.0" layoutY="60.0" startX="-95.00001525878906" />
    </children>
 </AnchorPane>

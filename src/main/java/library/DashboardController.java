@@ -5,7 +5,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +31,6 @@ public class DashboardController extends Controller {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DatabaseHelper.connectToDatabase();
-
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
         totalBooksColumn.setCellValueFactory(new PropertyValueFactory<>("totalBooks"));
         loadTotalBooksAndUsers();

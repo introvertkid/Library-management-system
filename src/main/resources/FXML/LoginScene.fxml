@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ProgressIndicator?>
 <AnchorPane fx:id="loginScene" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1200.0" style="-fx-background-color: transparent;" stylesheets="@../CSS/LoginScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.LoginController">
     <children>
         <ScrollPane fx:id="scroll" fitToHeight="true" fitToWidth="true" style="-fx-background-color: transparent; -fx-border: transparent;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -23,6 +24,7 @@
                                 <Image url="@../image/pic.png" />
                             </image>
                         </ImageView>
+                        <ProgressIndicator fx:id="loadingIndicator" visible="false" />
                         <VBox fx:id="loginBox" alignment="CENTER" layoutX="34.0" layoutY="77.0" prefHeight="346.0" prefWidth="200.0" spacing="10.0">
                             <Label prefHeight="60.0" prefWidth="129.0" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-font-family: 'Montserrat';" text="    Sign in" />
                             <Label style="-fx-font-size: 14px; -fx-font-family: 'Montserrat';" text="Username" />

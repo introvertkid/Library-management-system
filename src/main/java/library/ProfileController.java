@@ -188,8 +188,19 @@ public class ProfileController extends Controller {
                 pstmt.executeUpdate();
 
                 // Set the new avatar in the Circle
-                avatar.setFill(new ImagePattern(new Image(destinationFile.toURI().toString())));
-
+//                avatar.setFill(new ImagePattern(new Image(destinationFile.toURI().toString())));
+                if (selectedFile != null && selectedFile.exists()) {
+                    Image avatarImage = new Image(selectedFile.toURI().toString());
+                    if (!avatarImage.isError()) {
+                        System.out.println(avatarImage.getUrl());
+                        avatar.setFill(new ImagePattern(avatarImage));
+                    } else {
+                        System.out.println("Error loading image.");
+                        System.out.println(avatarImage);
+                    }
+                } else {
+                    System.out.println("Selected file is invalid or does not exist.");
+                }
             } catch (IOException | SQLException e) {
                 e.printStackTrace();
             }

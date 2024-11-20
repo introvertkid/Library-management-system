@@ -27,9 +27,6 @@ public class BaseSceneController extends Controller {
     private AnchorPane contentPane;
 
     @FXML
-    private Button showReportButton;
-
-    @FXML
     private Button dashboardButton;
 
     @FXML
@@ -54,19 +51,19 @@ public class BaseSceneController extends Controller {
     private Button selectedButton;
 
     @FXML
+    private Button addBookButton;
+
+    @FXML
     private final Image defaultAvatar = new Image("/image/UserAvatar/userAvatar.png");
+
+    @FXML
+    private Button showReportButton;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DatabaseHelper.connectToDatabase();
-        String userFullName = getUserNameFromDatabase(LoginController.UserSession.currentUser);
-        userNameText.setText(userFullName);
-        userAvatar.setImage(changeAvatar(LoginController.UserSession.currentUser));
-        double centerX = (userAvatar.getFitWidth() - 6) / 2;
-        double centerY = (userAvatar.getFitHeight()) / 2;
-        double radius = Math.min(userAvatar.getFitWidth(), userAvatar.getFitHeight()) / 2;
-        Circle clip = new Circle(centerX, centerY, radius);
-        userAvatar.setClip(clip);
+        setCircularAvatar();
         for (Node node : navigationBar.getChildren()) {
             if (node instanceof Button) {
                 Button but = (Button) node;
@@ -80,6 +77,18 @@ public class BaseSceneController extends Controller {
             showReportButton.setVisible(true);
         }
     }
+
+    public void setCircularAvatar() {
+        String userFullName = getUserNameFromDatabase(LoginController.UserSession.currentUser);
+        userNameText.setText(userFullName);
+        userAvatar.setImage(changeAvatar(LoginController.UserSession.currentUser));
+        double centerX = userAvatar.getFitWidth() / 2;
+        double centerY = userAvatar.getFitHeight() / 2;
+        double radius = Math.min(userAvatar.getFitWidth(), userAvatar.getFitHeight()) / 2;
+        Circle clip = new Circle(centerX, centerY, radius);
+        userAvatar.setClip(clip);
+    }
+
 
     @FXML
     private Image changeAvatar(String username) {

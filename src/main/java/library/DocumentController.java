@@ -9,8 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -35,35 +35,47 @@ public class DocumentController extends Controller {
     @FXML
     private TextField searchField;
 
+    @FXML
+    private AnchorPane contentPane;
+
+    @FXML
+    private TableColumn<Document, String> titleColumn;
+
+    @FXML
+    private TableColumn<Document, String> authorColumn;
+
+    @FXML
+    private Label currentPageLabel;
+
+    @FXML
+    private TableColumn<Document, String> categoryColumn;
+
+    @FXML
+    private TableColumn<Document, Integer> quantityColumn;
+
     private ObservableList<Document> documentList;
+    private int currentPage = 0;
+    private static final int ROWS_PER_PAGE = 18;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadDocumentData();
-        TableColumn<Document, Integer> documentIDColumn = new TableColumn<>("ID");
-        documentIDColumn.setCellValueFactory(new PropertyValueFactory<>("documentID"));
-
-        TableColumn<Document, String> titleColumn = new TableColumn<>("Title");
+        currentPage = 0;
+        updateTable(currentPage);
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("documentName"));
-
-        TableColumn<Document, String> categoryColumn = new TableColumn<>("Category");
-        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
-
-        TableColumn<Document, Integer> quantityColumn = new TableColumn<>("Quantity");
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-
-        TableColumn<Document, String> authorColumn = new TableColumn<>("Author");
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
-
-        documentTable.getColumns().addAll(documentIDColumn, titleColumn, authorColumn, categoryColumn, quantityColumn);
+        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         findBookButton.setOnAction(event -> handleFindBook());
         editBookButton.setOnAction(event -> handleEditBook());
         deleteBookButton.setOnAction(event -> handleDeleteBook());
+        contentPane.setOnMouseClicked(event -> {
+            searchField.getParent().requestFocus();
+        });
     }
 
     private void loadDocumentData() {
         documentList = FXCollections.observableArrayList();
-
         DatabaseHelper.connectToDatabase();
         try (Connection connection = DatabaseHelper.getConnection();
              Statement statement = connection.createStatement();
@@ -73,18 +85,76 @@ public class DocumentController extends Controller {
             while (resultSet.next()) {
                 int documentID = resultSet.getInt("documentID");
                 String documentName = resultSet.getString("documentName");
-                String category = (resultSet.getString("categoryName"));
+                String category = resultSet.getString("categoryName");
                 String authors = resultSet.getString("authors");
                 int quantity = resultSet.getInt("quantity");
 
-                Document document = new Document(documentID, documentName, authors, category, quantity);
-                System.out.println(documentID + " " + documentName + " " + category + " " + authors + " " + quantity);
+                Document document = new Document(documentName, authors, category, quantity, documentID);
                 documentList.add(document);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        int totalPages = (int) Math.ceil((double) documentList.size() / ROWS_PER_PAGE);
+        if (currentPage > totalPages) {
+            System.out.println(currentPage);
+            currentPage = totalPages;
+        }
+        updateTable(currentPage);
         documentTable.setItems(documentList);
+        setupPagination();
+        updatePage();
+    }
+
+    private void updatePage() {
+        int totalPages = (int) Math.ceil((double) documentList.size() / ROWS_PER_PAGE);
+        currentPageLabel.setText(String.valueOf(currentPage + 1 + "/" + totalPages));
+        int fromIndex = currentPage * ROWS_PER_PAGE;
+        int toIndex = Math.min(fromIndex + ROWS_PER_PAGE, documentList.size());
+        ObservableList<Document> paginatedList = FXCollections.observableArrayList(documentList.subList(fromIndex, toIndex));
+        documentTable.setItems(paginatedList);
+    }
+
+    @FXML
+    private void handleNextPage() {
+        int totalPages = (int) Math.ceil((double) documentList.size() / ROWS_PER_PAGE);
+        if (currentPage < totalPages - 1) {
+            currentPage++;
+            updatePage();
+        }
+    }
+
+    @FXML
+    private void handlePrevPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            updatePage();
+        }
+    }
+
+    private void updateTable(int pageIndex) {
+        int fromIndex = pageIndex * ROWS_PER_PAGE;
+        int toIndex = Math.min(fromIndex + ROWS_PER_PAGE, documentList.size());
+        ObservableList<Document> paginatedList = FXCollections.observableArrayList(documentList.subList(fromIndex, toIndex));
+        documentTable.setItems(paginatedList);
+    }
+
+    private void setupPagination() {
+        String countQuery = "SELECT COUNT(*) AS total FROM documents";
+        try (Connection connection = DatabaseHelper.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(countQuery)) {
+
+            if (resultSet.next()) {
+                int totalRecords = resultSet.getInt("total");
+                int pageCount = (int) Math.ceil((double) totalRecords / ROWS_PER_PAGE);
+                if (totalRecords > 0) {
+                    updateTable(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -116,8 +186,43 @@ public class DocumentController extends Controller {
         }
     }
 
+    private String getFileNameFromDatabase(String fileName) {
+        String fileNamee = "";
+        String query = "SELECT fileName FROM documents WHERE documentName = ?";
+
+        try (Connection conn = DatabaseHelper.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, fileName);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                fileNamee = rs.getString("fileName");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(fileNamee);
+        return fileNamee;
+    }
+
     public void openDocument() {
-        load1("CUTE.pdf");
+        Document selectedDocument = documentTable.getSelectionModel().getSelectedItem();
+        if (selectedDocument == null) {
+            showAlert("Error", "No document selected. Please select a document to open.");
+            return;
+        }
+        String documentName = selectedDocument.getDocumentName();
+        if (documentName != null) {
+            String fileName = getFileNameFromDatabase(documentName);
+            if (fileName != null) {
+                load1(fileName);
+            } else {
+                System.out.println("File not found.");
+                showAlert("Error", "File not found.");
+            }
+        } else {
+            showAlert("Error", "File not found.");
+        }
     }
 
     //todo: change file of document
@@ -152,8 +257,8 @@ public class DocumentController extends Controller {
                     showAlert("Input Error", "Please fill in all fields.");
                     return null;
                 }
-                return new Document(selectedBook.getDocumentID(), titleField.getText(), authorField.getText(),
-                        categoryField.getText(), Integer.parseInt(quantityField.getText()));
+                return new Document(titleField.getText(), authorField.getText(),
+                        categoryField.getText(), Integer.parseInt(quantityField.getText()), selectedBook.getDocumentID());
             }
             return null;
         });
@@ -163,20 +268,52 @@ public class DocumentController extends Controller {
     }
 
     private void updateBookInDatabase(Document updatedBook) {
-        String updateQuery = "UPDATE documents SET documentName = ?, authors = ?, categoryID = ?, quantity = ? WHERE documentID = ?";
-        try (Connection conn = DatabaseHelper.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
-            pstmt.setString(1, updatedBook.getDocumentName());
-            pstmt.setString(2, updatedBook.getAuthors());
-            pstmt.setInt(3, getCategoryIdByName(updatedBook.getCategory()));
-            pstmt.setInt(4, updatedBook.getQuantity());
-            pstmt.setInt(5, updatedBook.getDocumentID());
-            pstmt.executeUpdate();
+        String updateBookQuery = "UPDATE documents SET documentName = ?, authors = ?, quantity = ? WHERE documentID = ?";
+        String getCategoryIdQuery = "SELECT categoryID FROM categories WHERE categoryName = ?";
+        String insertCategoryQuery = "INSERT INTO categories (categoryName) VALUES (?)";
+
+        try (Connection conn = DatabaseHelper.getConnection()) {
+            try (PreparedStatement pstmt = conn.prepareStatement(updateBookQuery)) {
+                pstmt.setString(1, updatedBook.getDocumentName());
+                pstmt.setString(2, updatedBook.getAuthors());
+                pstmt.setInt(3, updatedBook.getQuantity());
+                pstmt.setInt(4, updatedBook.getDocumentID());
+                pstmt.executeUpdate();
+            }
+            int categoryId = -1;
+            try (PreparedStatement pstmtGetCategoryId = conn.prepareStatement(getCategoryIdQuery)) {
+                pstmtGetCategoryId.setString(1, updatedBook.getCategory());
+                ResultSet rs = pstmtGetCategoryId.executeQuery();
+                if (rs.next()) {
+                    categoryId = rs.getInt("categoryID");
+                }
+            }
+            if (categoryId == -1) {
+                try (PreparedStatement pstmtInsertCategory = conn.prepareStatement(insertCategoryQuery, Statement.RETURN_GENERATED_KEYS)) {
+                    pstmtInsertCategory.setString(1, updatedBook.getCategory());
+                    pstmtInsertCategory.executeUpdate();
+                    ResultSet rs = pstmtInsertCategory.getGeneratedKeys();
+                    if (rs.next()) {
+                        categoryId = rs.getInt(1);
+                    }
+                }
+            }
+            if (categoryId != -1) {
+                String updateDocumentCategoryQuery = "UPDATE documents SET categoryID = ? WHERE documentID = ?";
+                try (PreparedStatement pstmtUpdateCategory = conn.prepareStatement(updateDocumentCategoryQuery)) {
+                    pstmtUpdateCategory.setInt(1, categoryId);
+                    pstmtUpdateCategory.setInt(2, updatedBook.getDocumentID());
+                    pstmtUpdateCategory.executeUpdate();
+                }
+            }
             loadDocumentData();
+            updateTable(currentPage);
+            updatePage();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     private void handleDeleteBook() {
@@ -201,29 +338,14 @@ public class DocumentController extends Controller {
         String deleteQuery = "DELETE FROM documents WHERE documentID = ?";
         try (Connection conn = DatabaseHelper.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(deleteQuery)) {
-
             pstmt.setInt(1, documentID);
             pstmt.executeUpdate();
             loadDocumentData();
+            updateTable(currentPage);
+            updatePage();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    private int getCategoryIdByName(String categoryName) {
-        String query = "SELECT categoryID FROM categories WHERE categoryName = ?";
-        try (Connection conn = DatabaseHelper.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-            pstmt.setString(1, String.valueOf(categoryName));
-            ResultSet rs = pstmt.executeQuery();
-            if (rs.next()) {
-                return rs.getInt("categoryID");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return -1;
     }
     //this approach is using pdf.js
 //    public void load2()

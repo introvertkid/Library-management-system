@@ -7,13 +7,14 @@ public class Document {
     private String authors;
     private int quantity;
 
-    public Document(int documentID, String documentName, String authors, String category, int quantity) {
+    public Document(String documentName, String authors, String category, int quantity, int documentID) {
         this.documentID = documentID;
         this.documentName = documentName;
         this.category = category;
         this.authors = authors;
         this.quantity = quantity;
     }
+
 
     public int getDocumentID() {
         return documentID;

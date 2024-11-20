@@ -1,5 +1,6 @@
 package library;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -12,12 +13,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Optional;
-import java.util.Properties;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class LoginController extends Controller {
+    @FXML
+    private ProgressIndicator loadingIndicator;
 
     @FXML
     private TextField usernameField;
@@ -148,25 +148,38 @@ public class LoginController extends Controller {
             } else {
                 String newPassword = generateRandomPassword(8);
                 String updatequery = "UPDATE users SET hashedPassword = ? WHERE gmail = ?";
+                Alert loadingAlert = new Alert(Alert.AlertType.INFORMATION);
+                loadingAlert.setTitle("Processing");
+                loadingAlert.setHeaderText("Please wait...");
+                loadingAlert.setContentText("Sending email...");
+                loadingAlert.show();
 
-                try (Connection connection = DatabaseHelper.getConnection()) {
-                    PreparedStatement stmt = connection.prepareStatement(updatequery);
-                    String hashedPassword = PasswordEncoder.hashedpassword(newPassword);
-                    stmt.setString(1, hashedPassword);
-                    stmt.setString(2, email);
+                new Thread(() -> {
+                    try (Connection connection = DatabaseHelper.getConnection()) {
+                        PreparedStatement stmt = connection.prepareStatement(updatequery);
+                        String hashedPassword = PasswordEncoder.hashedpassword(newPassword);
+                        stmt.setString(1, hashedPassword);
+                        stmt.setString(2, email);
 
-                    int rowsUpdated = stmt.executeUpdate();
-                    if (rowsUpdated > 0) {
-                        sendEmail(email, newPassword);
-                        showAlert("Success", "A new password has been sent to: " + email);
-//                        showAlert("pass", newPassword);
-                    } else {
-                        showAlert("Error", "No user found with that email address.");
+                        int rowsUpdated = stmt.executeUpdate();
+                        if (rowsUpdated > 0) {
+                            sendEmail(email, newPassword);
+                            Platform.runLater(() -> {
+                                loadingAlert.setTitle("Success");
+                                loadingAlert.setHeaderText("Password Reset Successfully");
+                                loadingAlert.setContentText("A new password has been sent to: " + email);
+                            });
+                        } else {
+                            Platform.runLater(() -> {
+                                loadingAlert.setTitle("Error");
+                                loadingAlert.setHeaderText("User Not Found");
+                                loadingAlert.setContentText("No user found with that email address.");
+                            });
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    showAlert("Error", "An error occurred while updating the password.");
-                }
+                }).start();
             }
         });
     }
