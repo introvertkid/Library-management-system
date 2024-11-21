@@ -4,19 +4,26 @@ create database if not exists librarydb;
 
 use librarydb;
 
-CREATE TABLE IF NOT EXISTS categories (
-    categoryID INT AUTO_INCREMENT not null primary key,
-    categoryName VARCHAR(255) not null
+CREATE TABLE IF NOT EXISTS tags (
+    tagID INT AUTO_INCREMENT primary key,
+    tagName VARCHAR(255) not null unique
 );
 
 CREATE TABLE IF NOT EXISTS documents (
     documentID INT AUTO_INCREMENT primary key,
     documentName VARCHAR(255) not null,
-    categoryID INT NOT NULL,
+    tagID INT,
     authors longtext,
     fileName varchar(255) not null unique,
-    quantity INT DEFAULT 1,
-    FOREIGN KEY (categoryID) REFERENCES categories(categoryID) ON UPDATE CASCADE
+    FOREIGN KEY (tagID) REFERENCES tags(tagID) ON UPDATE CASCADE
+);
+
+create table if not exists document_tag_bridge(
+	documentID int not null,
+    tagID int not null,
+    primary key(documentID, tagID),
+    foreign key(documentID) references documents(documentID) on update cascade,
+	foreign key(tagID) references tags(tagID) on update cascade
 );
 
 CREATE TABLE IF NOT EXISTS users (
@@ -59,8 +66,12 @@ create table if not exists reports(
     reportType varchar(10),
     title varchar(255),
     content longtext,
-    status varchar(45) default 'Pending',
     foreign key (userID) references users(userID) on update cascade
 );
 
-insert into users(username, hashedPassword, userFullName) value('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin');
+#insert value for users
+insert into users(username, hashedPassword, userFullName) value('admin', 'admin', 'admin');
+
+#insert value for tags
+insert into tags(tagName)
+values ('javafx'), ('java'), ('c'), ('cpp'), ('c++'), ('regex'), ('document');
