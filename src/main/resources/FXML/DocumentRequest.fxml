@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="contentPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.DocumentRequestController">
+   <children>
+      <Button layoutX="66.0" layoutY="83.0" mnemonicParsing="false" onAction="#openSelectedRequest" text="Show" />
+      <ComboBox fx:id="statusChoice" layoutX="283.0" layoutY="96.0" prefWidth="150.0" promptText="Status" />
+      <TableView fx:id="requestTable" layoutY="143.0" prefHeight="200.0" prefWidth="909.0">
+        <columns>
+          <TableColumn fx:id="documentIDColumn" prefWidth="83.0" text="DocumentID" />
+            <TableColumn fx:id="documentNameColumn" prefWidth="217.0" text="DocumentName" />
+            <TableColumn fx:id="categoryColumn" prefWidth="104.5" text="Category" />
+            <TableColumn fx:id="authorColumn" prefWidth="91.5" text="Author" />
+            <TableColumn fx:id="statusColumn" prefWidth="122.5" text="Status" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

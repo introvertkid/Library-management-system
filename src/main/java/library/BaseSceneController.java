@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -19,7 +20,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class BaseSceneController extends Controller {
+public class BaseSceneController extends Controller
+{
     @FXML
     private VBox navigationBar;
 
@@ -59,9 +61,12 @@ public class BaseSceneController extends Controller {
     @FXML
     private Button showReportButton;
 
+    @FXML
+    private Button showDocRequests;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle)
+    {
         DatabaseHelper.connectToDatabase();
         setCircularAvatar();
         for (Node node : navigationBar.getChildren()) {
@@ -75,6 +80,7 @@ public class BaseSceneController extends Controller {
 
         if (User.getRole().equals("Admin")) {
             showReportButton.setVisible(true);
+            showDocRequests.setVisible(true);
         }
     }
 
@@ -186,6 +192,9 @@ public class BaseSceneController extends Controller {
         loadFXMLtoAnchorPane("DocumentScene", contentPane);
         setStyleForSelectedButton(documentButton);
     }
+
+    @FXML
+    private void handleDocRequestsButton() {loadFXMLtoAnchorPane("DocumentRequest", contentPane);}
 
     @FXML
     private void UserProfile() {
