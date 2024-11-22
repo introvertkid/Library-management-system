@@ -1,7 +1,9 @@
 package library;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class User
 {
@@ -13,6 +15,7 @@ public class User
     private static String gmail;
     private static String phoneNumber;
     //todo: how about date of birth ?
+    private static LocalDate dateOfBirth;
     private static String avatar;
 
     public static void loadUserData(ResultSet resultSet)
@@ -25,7 +28,12 @@ public class User
             role = resultSet.getString("role");
             gmail = resultSet.getString("gmail");
             phoneNumber = resultSet.getString("phoneNumber");
+            Date date = resultSet.getDate("dateOfBirth");
             avatar = resultSet.getString("avatar");
+
+            if (date != null) {
+                dateOfBirth = date.toLocalDate();
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -85,6 +93,14 @@ public class User
 
     public static void setPhoneNumber(String newPhoneNumber) {
         phoneNumber = newPhoneNumber;
+    }
+
+    public static LocalDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public static void setDateOfBirth(LocalDate dateOfBirth) {
+        User.dateOfBirth = dateOfBirth;
     }
 
     public static String getAvatar() {
