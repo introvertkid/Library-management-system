@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -64,6 +65,9 @@ public class BaseSceneController extends Controller
     @FXML
     private Button showDocRequests;
 
+    @FXML
+    private Accordion userRequest;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
@@ -81,6 +85,7 @@ public class BaseSceneController extends Controller
         if (User.getRole().equals("Admin")) {
             showReportButton.setVisible(true);
             showDocRequests.setVisible(true);
+            userRequest.setVisible(true);
         }
     }
 
@@ -195,6 +200,9 @@ public class BaseSceneController extends Controller
 
     @FXML
     private void handleDocRequestsButton() {loadFXMLtoAnchorPane("DocumentRequest", contentPane);}
+
+    @FXML
+    private void handleButton() {loadFXMLtoAnchorPane("Accordition",contentPane);}
 
     @FXML
     private void UserProfile() {
