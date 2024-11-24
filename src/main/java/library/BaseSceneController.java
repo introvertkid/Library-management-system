@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -184,6 +183,7 @@ public class BaseSceneController extends Controller
     @FXML
     private void handleShowReportButtonAction() {
         loadFXMLtoAnchorPane("ShowReportScene", contentPane);
+        setStyleForSelectedButton(showReportButton);
     }
 
     @FXML
@@ -199,10 +199,11 @@ public class BaseSceneController extends Controller
     }
 
     @FXML
-    private void handleDocRequestsButton() {loadFXMLtoAnchorPane("DocumentRequest", contentPane);}
+    private void handleDocRequestsButton() {
+        loadFXMLtoAnchorPane("DocumentRequest", contentPane);
+        setStyleForSelectedButton(showDocRequests);
+    }
 
-    @FXML
-    private void handleButton() {loadFXMLtoAnchorPane("Accordition",contentPane);}
 
     @FXML
     private void UserProfile() {

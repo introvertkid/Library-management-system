@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -10,11 +14,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.control.Accordion?>
-<?import javafx.scene.control.TitledPane?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.geometry.Insets?>
 <AnchorPane fx:id="Dashboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1200.0" style="-fx-background-color: silver;" stylesheets="@../CSS/BaseScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.BaseSceneController">
    <!-- Navigation bar section -->
    <AnchorPane layoutY="46.4" prefHeight="574.0" prefWidth="200.0" style="-fx-background-color: #3b5998;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="46.0">
@@ -77,59 +77,51 @@
                   </font>
                </Button>
 
-               <!--                  accordion for drop down menu for user request-->
-               <Accordion fx:id="userRequest" visible="false">
+               <!--accordion for drop down menu for user request-->
+               <Accordion fx:id="userRequest">
                   <panes>
                      <TitledPane prefWidth="184.0" text="User Request">
                         <content>
-                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="84.0" prefWidth="198.0"
-                                       style="-fx-background-color: #e95e50; -fx-border-color: #e95e50; -fx-padding: 0; -fx-border-width: 0; -fx-margin: 0;">
+                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="84.0" prefWidth="198.0" style="-fx-background-color: #3b5998; -fx-border-color: #3b5998; -fx-padding: 0; -fx-border-width: 0; -fx-margin: 0;">
                               <children>
-                                 <Button fx:id="showDocRequests" alignment="BASELINE_LEFT" mnemonicParsing="false"
-                                         onAction="#handleDocRequestsButton" prefHeight="42.0" prefWidth="200.0"
-                                         styleClass="dashboardButton" text="Doc Request" visible="false">
+                                 <Button fx:id="showDocRequests" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleDocRequestsButton" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="accountButton" text="Doc Request" visible="false">
                                     <font>
-                                       <Font size="18.0"/>
+                                       <Font size="18.0" />
                                     </font>
                                     <graphic>
-                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
-                                                  preserveRatio="true">
+                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                           <image>
-                                             <Image url="@../image/book.png"/>
+                                             <Image url="@../image/book.png" />
                                           </image>
                                        </ImageView>
                                     </graphic>
                                     <padding>
-                                       <Insets left="40.0"/>
+                                       <Insets left="40.0" />
                                     </padding>
                                  </Button>
-                                 <Button fx:id="showReportButton" alignment="BASELINE_LEFT" layoutY="42.0"
-                                         mnemonicParsing="false" onAction="#handleShowReportButtonAction"
-                                         prefHeight="42.0" prefWidth="200.0" styleClass="dashboardButton"
-                                         text="Show Reports" visible="false">
+                                 <Button fx:id="showReportButton" alignment="BASELINE_LEFT" layoutY="42.0" mnemonicParsing="false" onAction="#handleShowReportButtonAction" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="accountButton" text="Show Reports" visible="false">
                                     <graphic>
-                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
-                                                  preserveRatio="true">
+                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                           <image>
-                                             <Image url="@../image/report.png"/>
+                                             <Image url="@../image/report.png" />
                                           </image>
                                        </ImageView>
                                     </graphic>
                                     <font>
-                                       <Font size="18.0"/>
+                                       <Font size="18.0" />
                                     </font>
                                     <padding>
-                                       <Insets left="35.0"/>
+                                       <Insets left="35.0" />
                                     </padding>
                                  </Button>
                               </children>
                            </AnchorPane>
                         </content>
                         <font>
-                           <Font size="18.0"/>
+                           <Font size="18.0" />
                         </font>
                         <opaqueInsets>
-                           <Insets/>
+                           <Insets />
                         </opaqueInsets>
                      </TitledPane>
                   </panes>

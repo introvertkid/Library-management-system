@@ -16,6 +16,7 @@
     -fx-scale-y: 1;
     -fx-font-weight: bold;
 }
+
 .menu-button {
     -fx-background-color: transparent;
     -fx-text-fill: white;
@@ -37,19 +38,27 @@
 }
 
 .titled-pane {
-    -fx-background-color: #e95e50;
+    -fx-background-color: transparent;
     -fx-text-fill: white;
     -fx-border-color: transparent;
+    -fx-border-width: 0;
+    -fx-skin: "library.CustomTitledPaneSkin";
+    -fx-arrow-side: right;
 }
 
 .titled-pane > .title {
-    -fx-background-color: #e95e50;
+    -fx-background-color: transparent;
     -fx-text-fill: white;
-    -fx-font-size: 16px;
+    -fx-font-size: 14px;
+    -fx-border-width: 0;
+    -fx-pref-height: 42px;
+    -fx-alignment: baseline-left;
+    -fx-padding: 0px 0px 0px 45px;
 }
 
 .titled-pane > .content {
-    -fx-background-color: #ecf0f5;
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
 }
 
 .anchor-pane-inside {
@@ -59,45 +68,14 @@
 
 .accordion {
     -fx-padding: 0;
-    -fx-border-width: 0;
 }
 
-.titled-pane {
-    -fx-background-color: #e95e50;
-    -fx-text-fill: white;
-    -fx-border-color: transparent;
-    -fx-border-width: 0;
-    -fx-padding: 0;
-}
-
-.titled-pane > .title {
-    -fx-background-color: #e95e50;
-    -fx-text-fill: white;
-    -fx-font-size: 16px;
-    -fx-border-width: 0;
-}
-
-.titled-pane > .content {
-    -fx-background-color: #ecf0f5;
-    -fx-border-width: 0;
-}
-
-.titled-pane {
-    -fx-skin: "library.CustomTitledPaneSkin";
-    -fx-arrow-side: right;
-}
-
-.titled-pane .title {
-    -fx-padding: 0px 0px 0px 37px;
-}
-
-
-.menuItem:hover{
+.menuItem:hover {
     -fx-border-color: #660099;
     -fx-border-width: 0px 0px 3px 0px;
 }
 
-.sidebarItem:hover{
+.sidebarItem:hover {
     -fx-background-color: #146886;
     -fx-border-color: WHITE;
     -fx-border-width: 0px 0px 0px 3px;
