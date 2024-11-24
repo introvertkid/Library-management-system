@@ -67,7 +67,7 @@ public class DocumentController extends Controller {
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         findBookButton.setOnAction(event -> handleFindBook());
-        editBookButton.setOnAction(event -> handleEditBook());
+//        editBookButton.setOnAction(event -> handleEditBook());
         deleteBookButton.setOnAction(event -> handleDeleteBook());
         contentPane.setOnMouseClicked(event -> {
             searchField.getParent().requestFocus();
@@ -166,8 +166,8 @@ public class DocumentController extends Controller {
         } else {
             FilteredList<Document> filteredList = new FilteredList<>(documentList, book ->
                     book.getDocumentName().toLowerCase().contains(searchQuery.toLowerCase()) ||
-                            book.getAuthors().toLowerCase().contains(searchQuery.toLowerCase()) ||
-                            book.getCategory().toLowerCase().contains(searchQuery.toLowerCase())
+                            book.getAuthors().toLowerCase().contains(searchQuery.toLowerCase())
+//                          || book.getCategory().toLowerCase().contains(searchQuery.toLowerCase())
             );
             documentTable.setItems(filteredList);
 
@@ -226,94 +226,93 @@ public class DocumentController extends Controller {
     }
 
     //todo: change file of document
-    @FXML
-    private void handleEditBook() {
-        Document selectedBook = documentTable.getSelectionModel().getSelectedItem();
-        if (selectedBook == null) {
-            showAlert("No Selection", "Please select a book to edit.");
-            return;
-        }
+//    @FXML
+//    private void handleEditBook() {
+//        Document selectedBook = documentTable.getSelectionModel().getSelectedItem();
+//        if (selectedBook == null) {
+//            showAlert("No Selection", "Please select a book to edit.");
+//            return;
+//        }
+//
+//        javafx.scene.control.Dialog<Document> dialog = new javafx.scene.control.Dialog<>();
+//        dialog.setTitle("Edit Book");
+//
+//        ButtonType editButtonType = new ButtonType("Edit", ButtonBar.ButtonData.OK_DONE);
+//        dialog.getDialogPane().getButtonTypes().addAll(editButtonType, ButtonType.CANCEL);
+//
+//        TextField titleField = new TextField(selectedBook.getDocumentName());
+//        TextField authorField = new TextField(selectedBook.getAuthors());
+//        TextField categoryField = new TextField(String.valueOf(selectedBook.getCategory()));
+//        TextField quantityField = new TextField(String.valueOf(selectedBook.getQuantity()));
+//
+//        VBox vbox = new VBox(10);
+//        vbox.getChildren().addAll(new javafx.scene.control.Label("Title:"), titleField, new javafx.scene.control.Label("Author:"), authorField,
+//                new javafx.scene.control.Label("Category:"), categoryField, new Label("Quantity:"), quantityField);
+//        dialog.getDialogPane().setContent(vbox);
+//
+//        dialog.setResultConverter(dialogButton -> {
+//            if (dialogButton == editButtonType) {
+//                if (titleField.getText().isEmpty() || authorField.getText().isEmpty() ||
+//                        categoryField.getText().isEmpty() || quantityField.getText().isEmpty()) {
+//                    showAlert("Input Error", "Please fill in all fields.");
+//                    return null;
+//                }
+//                return new Document(titleField.getText(), authorField.getText(),
+//                        categoryField.getText(), Integer.parseInt(quantityField.getText()), selectedBook.getDocumentID());
+//            }
+//            return null;
+//        });
+//
+//        Optional<Document> result = dialog.showAndWait();
+//        result.ifPresent(this::updateBookInDatabase);
+//    }
 
-        javafx.scene.control.Dialog<Document> dialog = new javafx.scene.control.Dialog<>();
-        dialog.setTitle("Edit Book");
-
-        ButtonType editButtonType = new ButtonType("Edit", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(editButtonType, ButtonType.CANCEL);
-
-        TextField titleField = new TextField(selectedBook.getDocumentName());
-        TextField authorField = new TextField(selectedBook.getAuthors());
-        TextField categoryField = new TextField(String.valueOf(selectedBook.getCategory()));
-        TextField quantityField = new TextField(String.valueOf(selectedBook.getQuantity()));
-
-        VBox vbox = new VBox(10);
-        vbox.getChildren().addAll(new javafx.scene.control.Label("Title:"), titleField, new javafx.scene.control.Label("Author:"), authorField,
-                new javafx.scene.control.Label("Category:"), categoryField, new Label("Quantity:"), quantityField);
-        dialog.getDialogPane().setContent(vbox);
-
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == editButtonType) {
-                if (titleField.getText().isEmpty() || authorField.getText().isEmpty() ||
-                        categoryField.getText().isEmpty() || quantityField.getText().isEmpty()) {
-                    showAlert("Input Error", "Please fill in all fields.");
-                    return null;
-                }
-                return new Document(titleField.getText(), authorField.getText(),
-                        categoryField.getText(), Integer.parseInt(quantityField.getText()), selectedBook.getDocumentID());
-            }
-            return null;
-        });
-
-        Optional<Document> result = dialog.showAndWait();
-        result.ifPresent(this::updateBookInDatabase);
-    }
-
-    private void updateBookInDatabase(Document updatedBook) {
-        String updateBookQuery = "UPDATE documents SET documentName = ?, authors = ?, quantity = ? WHERE documentID = ?";
-        String getCategoryIdQuery = "SELECT categoryID FROM categories WHERE categoryName = ?";
-        String insertCategoryQuery = "INSERT INTO categories (categoryName) VALUES (?)";
-
-        try (Connection conn = DatabaseHelper.getConnection()) {
-            try (PreparedStatement pstmt = conn.prepareStatement(updateBookQuery)) {
-                pstmt.setString(1, updatedBook.getDocumentName());
-                pstmt.setString(2, updatedBook.getAuthors());
-                pstmt.setInt(3, updatedBook.getQuantity());
-                pstmt.setInt(4, updatedBook.getDocumentID());
-                pstmt.executeUpdate();
-            }
-            int categoryId = -1;
-            try (PreparedStatement pstmtGetCategoryId = conn.prepareStatement(getCategoryIdQuery)) {
-                pstmtGetCategoryId.setString(1, updatedBook.getCategory());
-                ResultSet rs = pstmtGetCategoryId.executeQuery();
-                if (rs.next()) {
-                    categoryId = rs.getInt("categoryID");
-                }
-            }
-            if (categoryId == -1) {
-                try (PreparedStatement pstmtInsertCategory = conn.prepareStatement(insertCategoryQuery, Statement.RETURN_GENERATED_KEYS)) {
-                    pstmtInsertCategory.setString(1, updatedBook.getCategory());
-                    pstmtInsertCategory.executeUpdate();
-                    ResultSet rs = pstmtInsertCategory.getGeneratedKeys();
-                    if (rs.next()) {
-                        categoryId = rs.getInt(1);
-                    }
-                }
-            }
-            if (categoryId != -1) {
-                String updateDocumentCategoryQuery = "UPDATE documents SET categoryID = ? WHERE documentID = ?";
-                try (PreparedStatement pstmtUpdateCategory = conn.prepareStatement(updateDocumentCategoryQuery)) {
-                    pstmtUpdateCategory.setInt(1, categoryId);
-                    pstmtUpdateCategory.setInt(2, updatedBook.getDocumentID());
-                    pstmtUpdateCategory.executeUpdate();
-                }
-            }
-            loadDocumentData();
-            updateTable(currentPage);
-            updatePage();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
+//    private void updateBookInDatabase(Document updatedBook) {
+//        String updateBookQuery = "UPDATE documents SET documentName = ?, authors = ?, quantity = ? WHERE documentID = ?";
+//        String getCategoryIdQuery = "SELECT categoryID FROM categories WHERE categoryName = ?";
+//        String insertCategoryQuery = "INSERT INTO categories (categoryName) VALUES (?)";
+//
+//        try (Connection conn = DatabaseHelper.getConnection()) {
+//            try (PreparedStatement pstmt = conn.prepareStatement(updateBookQuery)) {
+//                pstmt.setString(1, updatedBook.getDocumentName());
+//                pstmt.setString(2, updatedBook.getAuthors());
+//                pstmt.setInt(3, updatedBook.getQuantity());
+//                pstmt.setInt(4, updatedBook.getDocumentID());
+//                pstmt.executeUpdate();
+//            }
+//            int categoryId = -1;
+//            try (PreparedStatement pstmtGetCategoryId = conn.prepareStatement(getCategoryIdQuery)) {
+//                pstmtGetCategoryId.setString(1, updatedBook.getCategory());
+//                ResultSet rs = pstmtGetCategoryId.executeQuery();
+//                if (rs.next()) {
+//                    categoryId = rs.getInt("categoryID");
+//                }
+//            }
+//            if (categoryId == -1) {
+//                try (PreparedStatement pstmtInsertCategory = conn.prepareStatement(insertCategoryQuery, Statement.RETURN_GENERATED_KEYS)) {
+//                    pstmtInsertCategory.setString(1, updatedBook.getCategory());
+//                    pstmtInsertCategory.executeUpdate();
+//                    ResultSet rs = pstmtInsertCategory.getGeneratedKeys();
+//                    if (rs.next()) {
+//                        categoryId = rs.getInt(1);
+//                    }
+//                }
+//            }
+//            if (categoryId != -1) {
+//                String updateDocumentCategoryQuery = "UPDATE documents SET categoryID = ? WHERE documentID = ?";
+//                try (PreparedStatement pstmtUpdateCategory = conn.prepareStatement(updateDocumentCategoryQuery)) {
+//                    pstmtUpdateCategory.setInt(1, categoryId);
+//                    pstmtUpdateCategory.setInt(2, updatedBook.getDocumentID());
+//                    pstmtUpdateCategory.executeUpdate();
+//                }
+//            }
+//            loadDocumentData();
+//            updateTable(currentPage);
+//            updatePage();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @FXML
     private void handleDeleteBook() {

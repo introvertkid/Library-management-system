@@ -46,10 +46,6 @@ public class AddDocumentController extends Controller
     public void initialize(URL url, ResourceBundle resourceBundle) {
         suggestionList.setVisible(false);
         suggestions = getAllTagsFromDB();
-        for(String s:suggestions)
-        {
-            System.out.println(s);
-        }
 
         //
         tagField.textProperty().addListener((observableValue, oldValue, newValue) -> {
