@@ -1,4 +1,11 @@
-package library;
+package library.entity;
+
+import library.helper.DatabaseHelper;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Map;
 
 public class Document {
     private int documentID;
@@ -25,6 +32,24 @@ public class Document {
         this.status = status;
     }
 
+    public static int getSpecificDocumentIDFromDB(String documentName) {
+        int ans = 0;
+        String query = "select * from documents where documentName = ?";
+
+        try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
+            statement.setString(1, documentName);
+
+            ResultSet res = statement.executeQuery();
+            if (res.next()) {
+                ans = res.getInt("documentID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ans;
+    }
+
     public int getDocumentID() {
         return documentID;
     }
@@ -41,9 +66,13 @@ public class Document {
         return authors;
     }
 
-    public String getStatus() {return status;}
+    public String getStatus() {
+        return status;
+    }
 
-    public String getFileName() {return fileName;}
+    public String getFileName() {
+        return fileName;
+    }
 
     public int getQuantity() {
         return quantity;

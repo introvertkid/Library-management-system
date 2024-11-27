@@ -6,7 +6,8 @@
 <?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.ShowReportController">
+<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400" prefWidth="600" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="library.controller.ShowReportController">
    <children>
       <Button fx:id="openReportButton" layoutX="94.0" layoutY="69.0" mnemonicParsing="false" onAction="#openReport" text="Show" />
       <TableView fx:id="reportTable" layoutX="50.0" layoutY="150.0" prefHeight="200.0" prefWidth="531.0">

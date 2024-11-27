@@ -1,4 +1,7 @@
-package library;
+package library.controller;
+
+import library.entity.Document;
+import library.helper.DatabaseHelper;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,13 +23,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class AddDocumentController extends Controller
-{
-    private final String DEFAULT_FILE_NAME="No file chosen";
-    private final String DEFAULT_PATH="src\\main\\resources\\Document\\";
+public class AddDocumentController extends Controller {
+    private final String DEFAULT_FILE_NAME = "No file chosen";
+    private final String DEFAULT_PATH = "src\\main\\resources\\Document\\";
 
     ObservableList<String> suggestions = FXCollections.observableArrayList();
     ObservableList<String> selectedTags = FXCollections.observableArrayList();
+
+    Map<String, Integer> tags = new HashMap<>();
 
     @FXML
     ListView<String> suggestionList = new ListView<>();
@@ -45,7 +49,12 @@ public class AddDocumentController extends Controller
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         suggestionList.setVisible(false);
-        suggestions = getAllTagsFromDB();
+        getAllTagsFromDB();
+        for (String str : suggestions) {
+            System.out.println(str);
+        }
+        System.out.println();
+        System.out.println(Collections.singletonList(tags));
 
         //
         tagField.textProperty().addListener((observableValue, oldValue, newValue) -> {
@@ -82,26 +91,21 @@ public class AddDocumentController extends Controller
         });
     }
 
-    private ObservableList<String> getAllTagsFromDB()
-    {
-        DatabaseHelper.connectToDatabase();
-        ObservableList<String>ans = FXCollections.observableArrayList();
-        String query="select tagName from tags";
-        try(PreparedStatement statement=DatabaseHelper.getConnection().prepareStatement(query))
-        {
+    private void getAllTagsFromDB() {
+        String query = "select * from tags";
+
+        try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
-            while(resultSet.next())
-            {
-                String tmp=resultSet.getString("tagName");
-                ans.add(tmp);
+            while (resultSet.next()) {
+                String name = resultSet.getString("tagName");
+                int id = resultSet.getInt("tagID");
+
+                tags.put(name, id);
+                suggestions.add(name);
             }
-        }
-        catch (SQLException e)
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return ans;
     }
 
     public void addDocument() {
@@ -140,15 +144,11 @@ public class AddDocumentController extends Controller
     public void submit() {
         if (bookNameField.getText().isEmpty()) {
             showAlert("Error", "Book's name can't be null");
-        }
-        else if(selectedFile==null)
-        {
+        } else if (selectedFile == null) {
             showAlert("Error", "Selected file can't be null");
-        }
-        else
-        {
+        } else {
             File dest = new File(DEFAULT_PATH + selectedFile.getName());
-            
+
             try {
                 FileUtils.copyFile(selectedFile.getAbsoluteFile(), dest);
                 System.out.println("File copied successfully");
@@ -157,14 +157,28 @@ public class AddDocumentController extends Controller
             }
 
             insertDocumentIntoDB();
+            insertDocument_TagIntoDB();
         }
     }
 
-    private void insertDocumentIntoDB()
-    {
+    private void insertDocument_TagIntoDB() {
+        String query = "insert into document_tag (documentID, tagID) " + "values(?, ?)";
+
+        for (String str : selectedTags) {
+            try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
+                statement.setInt(1, Document.getSpecificDocumentIDFromDB(bookNameField.getText()));
+                statement.setInt(2, tags.get(str));
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void insertDocumentIntoDB() {
         String query = "INSERT INTO documents (documentName, authors, fileName) " +
                 "VALUES (?, ?, ?)";
-        DatabaseHelper.connectToDatabase();
+
         try (PreparedStatement stmt = DatabaseHelper.getConnection().prepareStatement(query)) {
             stmt.setString(1, bookNameField.getText());
             stmt.setString(2, authorField.getText());

@@ -16,7 +16,6 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        DatabaseHelper.connectToDatabase();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Library Management System");
         loadScene("/FXML/LoginScene.fxml");

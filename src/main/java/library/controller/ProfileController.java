@@ -1,4 +1,7 @@
-package library;
+package library.controller;
+
+import library.helper.*;
+import library.entity.User;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

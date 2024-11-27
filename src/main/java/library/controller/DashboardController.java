@@ -1,4 +1,6 @@
-package library;
+package library.controller;
+
+import library.helper.DatabaseHelper;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -19,23 +21,23 @@ public class DashboardController extends Controller {
     @FXML
     private Label labelTotalUsers;
 
-    @FXML
-    private TableView<CategoryBookCount> categoryTable;
-
-    @FXML
-    private TableColumn<CategoryBookCount, String> categoryColumn;
-
-    @FXML
-    private TableColumn<CategoryBookCount, Integer> totalBooksColumn;
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        DatabaseHelper.connectToDatabase();
-        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
-        totalBooksColumn.setCellValueFactory(new PropertyValueFactory<>("totalBooks"));
-        loadTotalBooksAndUsers();
-        loadCategoryBookCounts();
-    }
+//    @FXML
+//    private TableView<CategoryBookCount> categoryTable;
+//
+//    @FXML
+//    private TableColumn<CategoryBookCount, String> categoryColumn;
+//
+//    @FXML
+//    private TableColumn<CategoryBookCount, Integer> totalBooksColumn;
+//
+//    @Override
+//    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        DatabaseHelper.connectToDatabase();
+//        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
+//        totalBooksColumn.setCellValueFactory(new PropertyValueFactory<>("totalBooks"));
+//        loadTotalBooksAndUsers();
+//        loadCategoryBookCounts();
+//    }
 
     private void loadTotalBooksAndUsers() {
         try (Connection connection = DatabaseHelper.getConnection()) {
@@ -77,7 +79,7 @@ public class DashboardController extends Controller {
             while (resultSet.next()) {
                 String categoryName = resultSet.getString("categoryName");
                 int totalBooks = resultSet.getInt("totalBooks");
-                categoryTable.getItems().add(new CategoryBookCount(categoryName, totalBooks));
+//                categoryTable.getItems().add(new CategoryBookCount(categoryName, totalBooks));
             }
 
         } catch (SQLException e) {

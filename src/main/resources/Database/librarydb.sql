@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS documents (
     FOREIGN KEY (tagID) REFERENCES tags(tagID) ON UPDATE CASCADE
 );
 
-create table if not exists document_tag_bridge(
+create table if not exists document_tag(
 	documentID int not null,
     tagID int not null,
     primary key(documentID, tagID),
@@ -70,7 +70,8 @@ create table if not exists reports(
 );
 
 #insert value for users
-insert into users(username, hashedPassword, userFullName) value('admin', 'admin', 'admin');
+insert into users(username, hashedPassword, userFullName, role) 
+value('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin', 'Admin');
 
 #insert value for tags
 insert into tags(tagName)

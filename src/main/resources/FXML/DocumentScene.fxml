@@ -11,7 +11,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="contentPane" prefHeight="567.0" prefWidth="990.0" style="-fx-background-color: white;" stylesheets="@../CSS/Document.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.DocumentController">
+<AnchorPane fx:id="contentPane" prefHeight="567.0" prefWidth="990.0" style="-fx-background-color: white;" stylesheets="@../CSS/Document.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="library.controller.DocumentController">
     <children>
         <AnchorPane layoutX="8.0" prefHeight="46.0" prefWidth="948.0">
             <children>
@@ -28,7 +29,9 @@
                         <Font size="18.0" />
                     </font>
                 </Button>
-                <Button fx:id="editBookButton" alignment="BASELINE_LEFT" layoutX="888.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleEditBook" prefHeight="24.0" prefWidth="10.0" style="-fx-cursor: hand; -fx-background-color: transparent;" styleClass="accountButton">
+<!--                todo:-->
+                <Button fx:id="editBookButton" alignment="BASELINE_LEFT" layoutX="888.0" layoutY="11.0" mnemonicParsing="false"
+                        onAction="#handleEditBook" prefHeight="24.0" prefWidth="10.0" style="-fx-cursor: hand; -fx-background-color: transparent;" styleClass="accountButton">
                     <graphic>
                         <ImageView fitHeight="20.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                             <image>
