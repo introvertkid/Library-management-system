@@ -1,4 +1,7 @@
-package library;
+package library.controller;
+
+import library.entity.Report;
+import library.helper.DatabaseHelper;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

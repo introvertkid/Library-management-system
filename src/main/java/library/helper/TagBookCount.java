@@ -1,4 +1,4 @@
-package library;
+package library.helper;
 
 public class TagBookCount {
     private final String tagName;

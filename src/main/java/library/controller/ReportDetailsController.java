@@ -1,4 +1,6 @@
-package library;
+package library.controller;
+
+import library.helper.DatabaseHelper;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

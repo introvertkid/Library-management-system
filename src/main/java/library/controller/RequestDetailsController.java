@@ -1,4 +1,6 @@
-package library;
+package library.controller;
+
+import library.helper.DatabaseHelper;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;

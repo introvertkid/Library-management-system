@@ -1,4 +1,6 @@
-package library;
+package library.entity;
+
+import library.helper.DatabaseHelper;
 
 public class Document {
     private int documentID;

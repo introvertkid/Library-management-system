@@ -1,4 +1,7 @@
-package library;
+package library.controller;
+
+import library.helper.DatabaseHelper;
+import library.helper.TagBookCount;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
