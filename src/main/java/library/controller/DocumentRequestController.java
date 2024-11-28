@@ -1,7 +1,4 @@
-package library.controller;
-
-import library.helper.DatabaseHelper;
-import library.entity.Document;
+package library;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,7 +24,7 @@ public class DocumentRequestController extends Controller {
     @FXML
     private TableColumn<Document, String> documentNameColumn;
     @FXML
-    private TableColumn<Document, String> categoryColumn;
+    private TableColumn<Document, String> tagColumn;
     @FXML
     private TableColumn<Document, String> authorColumn;
     @FXML
@@ -46,21 +43,18 @@ public class DocumentRequestController extends Controller {
         // Set up cell value factories
         documentIDColumn.setCellValueFactory(new PropertyValueFactory<>("documentID"));
         documentNameColumn.setCellValueFactory(new PropertyValueFactory<>("documentName"));
-
-        //  categoryColumn.setCellValueFactory(new PropertyValueFactory<>("categoryID"));
-
+        tagColumn.setCellValueFactory(new PropertyValueFactory<>("tagName"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-
         // Load data from database
         loadRequestData();
     }
 
     private void loadRequestData() {
         documentList.clear();
-
-        String query = "SELECT * FROM documents" +
-                " WHERE status = 'Pending'";
+        String query = "SELECT d.*, c.tagName FROM documents d " +
+                "JOIN tags c ON d.tagID = c.tagID " +
+                "WHERE d.status = 'Pending'";
         DatabaseHelper.connectToDatabase();
         try (Connection connection = DatabaseHelper.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
@@ -71,7 +65,8 @@ public class DocumentRequestController extends Controller {
                         resultSet.getString("documentName"),
                         resultSet.getString("authors"),
                         resultSet.getString("fileName"),
-                        resultSet.getString("status")
+                        resultSet.getString("status"),
+                        resultSet.getString("tagName")
                 );
                 documentList.add(document);
             }
@@ -80,7 +75,9 @@ public class DocumentRequestController extends Controller {
             e.printStackTrace();
         }
     }
-   @FXML
+
+
+    @FXML
     private void openSelectedRequest() {
         selectedDocument = requestTable.getSelectionModel().getSelectedItem();
         if (selectedDocument != null) {

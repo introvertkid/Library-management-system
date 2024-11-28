@@ -1,4 +1,4 @@
-package library.entity;
+package library;
 
 public class Report {
     private int reportID;

@@ -1,6 +1,4 @@
-package library.controller;
-
-import library.helper.*;
+package library;
 
 import javafx.scene.control.*;
 import javafx.scene.text.Text;

@@ -1,25 +1,19 @@
-package library.entity;
-
-import library.helper.DatabaseHelper;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Map;
+package library;
 
 public class Document {
     private int documentID;
     private String documentName;
-    private int categoryID;
+    private int tagID;
+    private String tagName;
     private String authors;
     private String status;
     private String fileName;
     private int quantity;
 
-    public Document(String documentName, String authors, String category, int quantity, int documentID) {
+    public Document(String documentName, String authors, String tagName, int quantity, int documentID) {
         this.documentID = documentID;
         this.documentName = documentName;
-        this.categoryID = categoryID;
+        this.tagName = tagName;
         this.authors = authors;
         this.quantity = quantity;
     }
@@ -32,22 +26,13 @@ public class Document {
         this.status = status;
     }
 
-    public static int getSpecificDocumentIDFromDB(String documentName) {
-        int ans = 0;
-        String query = "select * from documents where documentName = ?";
-
-        try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
-            statement.setString(1, documentName);
-
-            ResultSet res = statement.executeQuery();
-            if (res.next()) {
-                ans = res.getInt("documentID");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return ans;
+    public Document(int documentID, String documentName, String authors, String fileName, String status, String tagName) {
+        this.documentID = documentID;
+        this.documentName = documentName;
+        this.fileName = fileName;
+        this.authors = authors;
+        this.status = status;
+        this.tagName = tagName;
     }
 
     public int getDocumentID() {
@@ -58,12 +43,16 @@ public class Document {
         return documentName;
     }
 
-    public int getCategoryID() {
-        return categoryID;
+    public int getTagID() {
+        return tagID;
     }
 
     public String getAuthors() {
         return authors;
+    }
+
+    public String getTagName() {
+        return tagName;
     }
 
     public String getStatus() {

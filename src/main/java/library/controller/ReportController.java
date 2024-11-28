@@ -1,7 +1,4 @@
-package library.controller;
-
-import library.helper.DatabaseHelper;
-import library.entity.User;
+package library;
 
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;

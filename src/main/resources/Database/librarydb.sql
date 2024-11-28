@@ -15,10 +15,11 @@ CREATE TABLE IF NOT EXISTS documents (
     tagID INT,
     authors longtext,
     fileName varchar(255) not null unique,
+    quantity INT NOT NULL DEFAULT 1,
     FOREIGN KEY (tagID) REFERENCES tags(tagID) ON UPDATE CASCADE
 );
 
-create table if not exists document_tag(
+create table if not exists document_tag_bridge(
 	documentID int not null,
     tagID int not null,
     primary key(documentID, tagID),
@@ -70,9 +71,10 @@ create table if not exists reports(
 );
 
 #insert value for users
-insert into users(username, hashedPassword, userFullName, role) 
-value('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin', 'Admin');
+insert into users(username, hashedPassword, userFullName) value('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin');
 
 #insert value for tags
 insert into tags(tagName)
 values ('javafx'), ('java'), ('c'), ('cpp'), ('c++'), ('regex'), ('document');
+
+UPDATE users SET role = "Admin" WHERE userID = 1;

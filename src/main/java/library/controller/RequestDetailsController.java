@@ -1,9 +1,8 @@
-package library.controller;
-
-import library.helper.DatabaseHelper;
+package library;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 import java.awt.*;
@@ -23,7 +22,10 @@ public class RequestDetailsController extends Controller{
     private TextField authorField;
 
     @FXML
-    private TextField categoryField;
+    private TextField tagField;
+
+    @FXML
+    private AnchorPane contentPane;
 
     @FXML
     private Text chosenFileName;
@@ -31,13 +33,13 @@ public class RequestDetailsController extends Controller{
     private int documentID = DocumentRequestController.selectedDocument.getDocumentID();
     private String bookName = DocumentRequestController.selectedDocument.getDocumentName();
     private String author = DocumentRequestController.selectedDocument.getAuthors();
-    private int category = DocumentRequestController.selectedDocument.getCategoryID();
+    private int tag = DocumentRequestController.selectedDocument.getTagID();
     private String fileName = DocumentRequestController.selectedDocument.getFileName();
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         bookNameField.setText(bookName);
         authorField.setText(author);
-        categoryField.setText(Integer.toString(category));
+        tagField.setText(Integer.toString(tag));
         chosenFileName.setText(fileName);
     }
 
@@ -60,7 +62,7 @@ public class RequestDetailsController extends Controller{
             showAlert("Update", "Delete document successfully!");
             bookNameField.clear();
             authorField.clear();
-            categoryField.clear();
+            tagField.clear();
             chosenFileName.setText("");
             File file = new File("src/main/resources/Document/" + fileName);
             file.delete();
@@ -78,6 +80,7 @@ public class RequestDetailsController extends Controller{
             statement.setInt(1, documentID);
             statement.executeUpdate();
             showAlert("Update", "Add document successfully!");
+            loadFXMLtoAnchorPane("DocumentRequest", contentPane);
         }
         catch (SQLException e) {
             e.printStackTrace();

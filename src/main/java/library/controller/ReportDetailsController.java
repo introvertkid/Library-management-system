@@ -1,10 +1,9 @@
-package library.controller;
-
-import library.helper.DatabaseHelper;
+package library;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -21,6 +20,9 @@ public class ReportDetailsController extends Controller {
 
     @FXML
     private TextField titleField;
+
+    @FXML
+    private AnchorPane contentPane;
 
     @FXML
     private TextArea contentField;
@@ -58,6 +60,7 @@ public class ReportDetailsController extends Controller {
         if (updateReportStatusInDatabase()) {
             // Show a confirmation dialog
             showAlert("Status Updated", "Report status has been updated to " + status + ".");
+            loadFXMLtoAnchorPane("ShowReportScene", contentPane);
 
             // Update the button text
             updateButtonText();

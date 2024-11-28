@@ -1,7 +1,4 @@
-package library.controller;
-
-import library.helper.*;
-import library.entity.User;
+package library;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;

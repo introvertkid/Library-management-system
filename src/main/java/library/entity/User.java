@@ -1,4 +1,4 @@
-package library.entity;
+package library;
 
 import java.sql.Date;
 import java.sql.ResultSet;

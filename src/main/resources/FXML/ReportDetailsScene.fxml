@@ -8,10 +8,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588" prefWidth="985.3333740234375" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="library.controller.ReportDetailsController">
+<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588" prefWidth="985.3333740234375" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.ReportDetailsController">
    <children>
-      <VBox prefHeight="317.0" prefWidth="600.0" spacing="20.0">
+      <VBox layoutX="39.0" layoutY="25.0" prefHeight="317.0" prefWidth="600.0" spacing="20.0">
          <padding>
             <Insets left="10.0" right="10.0" top="10.0" />
          </padding>
@@ -25,7 +24,7 @@
             <TextArea fx:id="contentField" editable="false" prefHeight="216.0" prefWidth="557.0" style="-fx-focus-color: transparent; -fx-faint-focus-color: transparent;" />
          </children>
       </VBox>
-      <HBox layoutX="393.0" layoutY="324.0" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
+      <HBox layoutX="469.0" layoutY="354.0" prefHeight="44.0" prefWidth="160.0" spacing="20.0">
          <children>
             <Button fx:id="handledOrPendingButton" alignment="CENTER" mnemonicParsing="false" onAction="#handledOrPending" prefHeight="25.0" prefWidth="147.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand; -fx-faint-focus-color: transparent; -fx-focus-color: transparent;" textAlignment="CENTER" />
          </children>

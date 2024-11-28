@@ -1,7 +1,4 @@
-package library.controller;
-
-import library.helper.DatabaseHelper;
-import library.entity.User;
+package library;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -23,10 +21,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class BaseSceneController extends Controller
-{
+public class BaseSceneController extends Controller {
     @FXML
     private VBox navigationBar;
+
+    @FXML
+    private Button addBookButton;
 
     @FXML
     private AnchorPane contentPane;
@@ -35,7 +35,7 @@ public class BaseSceneController extends Controller
     private Button dashboardButton;
 
     @FXML
-    private Button documentButton;
+    public static Button documentButton;
 
     @FXML
     private Button reportButton;
@@ -53,12 +53,6 @@ public class BaseSceneController extends Controller
     private ImageView userAvatar;
 
     @FXML
-    private Button selectedButton;
-
-    @FXML
-    private Button addBookButton;
-
-    @FXML
     private final Image defaultAvatar = new Image("/image/UserAvatar/userAvatar.png");
 
     @FXML
@@ -71,8 +65,7 @@ public class BaseSceneController extends Controller
     private Accordion userRequest;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)
-    {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         DatabaseHelper.connectToDatabase();
         setCircularAvatar();
         for (Node node : navigationBar.getChildren()) {
@@ -96,7 +89,7 @@ public class BaseSceneController extends Controller
         userNameText.setText(userFullName);
         userAvatar.setImage(changeAvatar(LoginController.UserSession.currentUser));
         double centerX = userAvatar.getFitWidth() / 2;
-        double centerY = userAvatar.getFitHeight() / 2;
+        double centerY =( userAvatar.getFitHeight() -1.75)/ 2;
         double radius = Math.min(userAvatar.getFitWidth(), userAvatar.getFitHeight()) / 2;
         Circle clip = new Circle(centerX, centerY, radius);
         userAvatar.setClip(clip);
@@ -158,23 +151,12 @@ public class BaseSceneController extends Controller
         return userFullName;
     }
 
-    private void setStyleForSelectedButton(Button button) {
-        if (selectedButton != null) {
-            selectedButton.setStyle("");
-        }
-        selectedButton = button;
-        selectedButton.setStyle(
-                "    -fx-background-color: #4c70ba;\n" +
-                        "    -fx-font-family: 'Montserrat';\n" +
-                        "    -fx-text-fill: white;\n" +
-                        "    -fx-background-radius: 5;\n" +
-                        "    -fx-font-weight: bold;\n" +
-                        "    -fx-cursor: hand;");
-    }
 
     @FXML
     private void handleAddDocumentButton() {
         loadFXMLtoAnchorPane("AddDocumentScene", contentPane);
+        setStyleForSelectedButton(addBookButton);
+
     }
 
     @FXML
@@ -198,7 +180,7 @@ public class BaseSceneController extends Controller
     @FXML
     private void handleDocumentButton() {
         loadFXMLtoAnchorPane("DocumentScene", contentPane);
-        setStyleForSelectedButton(documentButton);
+//        setStyleForSelectedButton(documentButton);
     }
 
     @FXML
@@ -207,6 +189,10 @@ public class BaseSceneController extends Controller
         setStyleForSelectedButton(showDocRequests);
     }
 
+    @FXML
+    private void handleButton() {
+        loadFXMLtoAnchorPane("Accordition", contentPane);
+    }
 
     @FXML
     private void UserProfile() {

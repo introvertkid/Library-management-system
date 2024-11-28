@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="546.0" prefWidth="906.0" style="-fx-background-color: white;" stylesheets="@../CSS/Dashboard.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="library.controller.DashboardController">
+<AnchorPane fx:id="content" prefHeight="546.0" prefWidth="906.0" style="-fx-background-color: white;" stylesheets="@../CSS/Dashboard.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.DashboardController">
    <children>
       <VBox fx:id="contentVbox" alignment="CENTER" layoutX="24.0" layoutY="-10.0" prefHeight="530.0" prefWidth="578.0" spacing="20" style="-fx-padding: 20;">
          <children>
@@ -18,7 +12,7 @@
                   <VBox fx:id="VBoxTotalBooks" prefHeight="102.0" prefWidth="201.0" style="-fx-background-color: #007bff; -fx-padding: 10; -fx-border-radius: 10; -fx-background-radius: 10;">
                      <children>
                         <Label fx:id="labelTotalBooks" style="-fx-text-fill: white; -fx-font-size: 18px;" />
-                        <Button style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;" text="View Details">
+                        <Button fx:id="documentview" onAction="#document" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;" text="View Details">
                            <graphic>
                               <Label style="-fx-text-fill: white;" text="&gt;" />
                            </graphic>
@@ -37,9 +31,9 @@
                   </VBox>
                </children>
             </HBox>
-            <TableView fx:id="categoryTable" prefHeight="354.0" prefWidth="526.0">
+            <TableView fx:id="tagTable" prefHeight="354.0" prefWidth="526.0">
                <columns>
-                  <TableColumn fx:id="categoryColumn" prefWidth="273.5999641418457" text="Category" />
+                  <TableColumn fx:id="tagColumn" prefWidth="273.5999641418457" text="Tag" />
                   <TableColumn fx:id="totalBooksColumn" prefWidth="243.20001220703125" text="Total Books" />
                </columns>
             </TableView>

@@ -1,11 +1,13 @@
-package library.controller;
+package library;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -17,6 +19,8 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable
 {
+    @FXML
+    private Button selectedButton;
     private static Parent root;
     private static Scene scene;
     private static Stage primaryStage;
@@ -82,6 +86,20 @@ public class Controller implements Initializable
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    void setStyleForSelectedButton(Button button) {
+        if (selectedButton != null) {
+            selectedButton.setStyle("");
+        }
+        selectedButton = button;
+        selectedButton.setStyle(
+                "    -fx-background-color: #4c70ba;\n" +
+                        "    -fx-font-family: 'Montserrat';\n" +
+                        "    -fx-text-fill: white;\n" +
+                        "    -fx-background-radius: 5;\n" +
+                        "    -fx-font-weight: bold;\n" +
+                        "    -fx-cursor: hand;");
     }
 
     public void setPrimaryStage(Stage primaryStage) {

@@ -1,4 +1,4 @@
-package library.helper;
+package library;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
