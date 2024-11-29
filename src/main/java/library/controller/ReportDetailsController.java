@@ -18,7 +18,7 @@ public class ReportDetailsController extends Controller {
     private Button handledOrPendingButton;
 
     @FXML
-    private TextField typeField;
+    private Label typeLabel, statusLabel;
 
     @FXML
     private TextField titleField;
@@ -38,7 +38,8 @@ public class ReportDetailsController extends Controller {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        typeField.setText(reportType);
+        typeLabel.setText("Type: " + reportType);
+        statusLabel.setText("Status: " + status);
         titleField.setText(title);
         contentField.setText(content);
 

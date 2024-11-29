@@ -61,12 +61,6 @@ public class ProfileController extends Controller {
         phoneField.setText(User.getPhoneNumber());
         dateOfBirthField.setValue(User.getDateOfBirth());
 
-        //todo: det of bird... lmao bruh dark dark
-        //Set dateOfBirth field
-//                Date dateOfBirth = resultSet.getDate("DateOfBirth");
-//                if (dateOfBirth != null) {
-//                    dateOfBirthField.setValue(dateOfBirth.toLocalDate());
-//                }
         dateOfBirthField.getEditor().setStyle("-fx-alignment: center;");
         dateOfBirthField.getStyleClass().add("date-picker-disabled");
 
@@ -237,6 +231,7 @@ public class ProfileController extends Controller {
 
                 updatePs.setString(1, PasswordEncoder.hashedpassword(newPassword));
                 updatePs.setInt(2, User.getID());
+                User.setPassword(PasswordEncoder.hashedpassword(newPassword));
 
                 int updated = updatePs.executeUpdate();
                 if (updated > 0) {

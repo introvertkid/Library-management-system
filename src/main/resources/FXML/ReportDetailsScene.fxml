@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -18,7 +19,8 @@
          <children>
             <AnchorPane prefHeight="19.0" prefWidth="580.0">
                <children>
-                  <TextField fx:id="typeField" editable="false" layoutY="1.0" prefHeight="25.0" prefWidth="138.0" />
+                  <Label fx:id="typeLabel" layoutY="1.0" prefHeight="17.0" prefWidth="159.0" />
+                  <Label fx:id="statusLabel" layoutX="159.0" layoutY="1.0" prefHeight="17.0" prefWidth="219.0" />
                </children>
             </AnchorPane>
             <TextField fx:id="titleField" accessibleText="Title" editable="false" prefHeight="25.0" prefWidth="543.0" promptText="Title" style="-fx-focus-color: transparent; -fx-faint-focus-color: transparent;" />

@@ -14,7 +14,6 @@ public class User
     private static String role;
     private static String gmail;
     private static String phoneNumber;
-    //todo: how about date of birth ?
     private static LocalDate dateOfBirth;
     private static String avatar;
 
