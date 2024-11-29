@@ -30,16 +30,13 @@ public class DocumentController extends Controller {
     private TableView<Document> documentTable;
 
     @FXML
-    private Button findBookButton;
-
-    @FXML
     private Button deleteBookButton;
 
     @FXML
     private Button editBookButton;
 
     @FXML
-    private Button changepage;
+    private Button changePage;
 
     @FXML
     private TextField searchField;
@@ -62,26 +59,26 @@ public class DocumentController extends Controller {
     @FXML
     private TableColumn<Document, Integer> quantityColumn;
 
-    private ObservableList<Document> documentList;
+    private ObservableList<Document> documentList = FXCollections.observableArrayList();
     private int currentPage = 0;
     private static final int ROWS_PER_PAGE = 18;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadDocumentData();
+
         currentPage = 0;
         updateTable(currentPage);
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("documentName"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
         tagColumn.setCellValueFactory(new PropertyValueFactory<>("tagName"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        findBookButton.setOnAction(event -> handleFindBook());
-        editBookButton.setOnAction(event -> handleEditBook());
-        deleteBookButton.setOnAction(event -> handleDeleteBook());
+
         contentPane.setOnMouseClicked(event -> {
             searchField.getParent().requestFocus();
         });
-        changepage.setOnAction(event -> handlePageChange());
+        changePage.setOnAction(event -> handlePageChange());
+
         if (User.getRole().equals("Admin")) {
             deleteBookButton.setVisible(true);
             editBookButton.setVisible(true);
@@ -89,17 +86,15 @@ public class DocumentController extends Controller {
     }
 
     private void loadDocumentData() {
-        documentList = FXCollections.observableArrayList();
-        DatabaseHelper.connectToDatabase();
         try (Connection connection = DatabaseHelper.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT d.documentID, d.documentName, d.authors, c.tagName, d.quantity " +
-                     "FROM documents d LEFT JOIN tags c ON d.tagID = c.tagID")) {
+             ResultSet resultSet = statement.executeQuery("SELECT d.documentID, d.documentName, d.authors, d.quantity " +
+                     "FROM documents d")) {
 
             while (resultSet.next()) {
                 int documentID = resultSet.getInt("documentID");
                 String documentName = resultSet.getString("documentName");
-                String tagName = resultSet.getString("tagName");
+                String tagName = Document.getTagsByDocumentID(documentID);
                 String authors = resultSet.getString("authors");
                 int quantity = resultSet.getInt("quantity");
 
@@ -109,6 +104,7 @@ public class DocumentController extends Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         int totalPages = (int) Math.ceil((double) documentList.size() / ROWS_PER_PAGE);
         if (currentPage > totalPages) {
             System.out.println(currentPage);

@@ -1,5 +1,6 @@
 package library.controller;
 
+import library.entity.Document;
 import library.helper.DatabaseHelper;
 
 import javafx.fxml.FXML;
@@ -35,13 +36,13 @@ public class RequestDetailsController extends Controller{
     private int documentID = DocumentRequestController.selectedDocument.getDocumentID();
     private String bookName = DocumentRequestController.selectedDocument.getDocumentName();
     private String author = DocumentRequestController.selectedDocument.getAuthors();
-    private int tag = DocumentRequestController.selectedDocument.getTagID();
+    private String tag = Document.getTagsByDocumentID(documentID);
     private String fileName = DocumentRequestController.selectedDocument.getFileName();
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         bookNameField.setText(bookName);
         authorField.setText(author);
-        tagField.setText(Integer.toString(tag));
+        tagField.setText(tag);
         chosenFileName.setText(fileName);
     }
 

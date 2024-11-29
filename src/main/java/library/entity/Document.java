@@ -2,10 +2,13 @@ package library.entity;
 
 import library.helper.DatabaseHelper;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Document {
     private int documentID;
     private String documentName;
-    private int tagID;
     private String tagName;
     private String authors;
     private String status;
@@ -37,16 +40,49 @@ public class Document {
         this.tagName = tagName;
     }
 
+    public static int getSpecificDocumentIDFromDB(String documentName) {
+        int ans = 0;
+        String query = "select documentID from documents where documentName = ?";
+
+        try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
+            statement.setString(1, documentName);
+
+            ResultSet res = statement.executeQuery();
+            if (res.next()) {
+                ans = res.getInt("documentID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ans;
+    }
+
+    public static String getTagsByDocumentID(int id) {
+        String ans = "";
+        String query = "select tagName from tags " +
+                "join document_tag on tags.tagID = document_tag.tagID " +
+                "where document_tag.documentID = " + id;
+
+        try (PreparedStatement stmt = DatabaseHelper.getConnection().prepareStatement(query)) {
+            ResultSet res = stmt.executeQuery();
+            while (res.next()) {
+                if (ans != "") ans += ", ";
+                ans += res.getString("tagName");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ans;
+    }
+
     public int getDocumentID() {
         return documentID;
     }
 
     public String getDocumentName() {
         return documentName;
-    }
-
-    public int getTagID() {
-        return tagID;
     }
 
     public String getAuthors() {

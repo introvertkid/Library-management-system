@@ -16,8 +16,11 @@
     <children>
         <AnchorPane layoutX="8.0" prefHeight="46.0" prefWidth="948.0">
             <children>
-                <Button fx:id="openDocumentButton" layoutX="567.0" layoutY="10.0" mnemonicParsing="false" onAction="#openDocument" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />
-                <Button fx:id="deleteBookButton" alignment="BASELINE_LEFT" layoutX="868.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleDeleteBook" prefHeight="24.0" prefWidth="10.0" style="-fx-cursor: hand; -fx-background-color: transparent;" styleClass="accountButton" visible="false">
+                <Button fx:id="openDocumentButton" layoutX="567.0" layoutY="10.0" mnemonicParsing="false"
+                        onAction="#openDocument" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />
+
+                <Button fx:id="deleteBookButton" alignment="BASELINE_LEFT" layoutX="868.0" layoutY="11.0" mnemonicParsing="false"
+                        onAction="#handleDeleteBook" prefHeight="24.0" prefWidth="10.0" style="-fx-cursor: hand; -fx-background-color: transparent;" styleClass="accountButton" visible="false">
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -29,7 +32,9 @@
                         <Font size="18.0" />
                     </font>
                 </Button>
-                <Button fx:id="editBookButton" alignment="BASELINE_LEFT" layoutX="888.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleEditBook" prefHeight="24.0" prefWidth="10.0" style="-fx-cursor: hand; -fx-background-color: transparent;" styleClass="accountButton" visible="false">
+
+                <Button fx:id="editBookButton" alignment="BASELINE_LEFT" layoutX="888.0" layoutY="11.0" mnemonicParsing="false"
+                        onAction="#handleEditBook" prefHeight="24.0" prefWidth="10.0" style="-fx-cursor: hand; -fx-background-color: transparent;" styleClass="accountButton" visible="false">
                     <graphic>
                         <ImageView fitHeight="20.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -44,7 +49,8 @@
                 <StackPane layoutX="663.0" layoutY="5.0" prefHeight="36.0" prefWidth="186.0">
                     <children>
                         <TextField fx:id="searchField" prefHeight="24.0" prefWidth="206.0" promptText="Search..." styleClass="text-field" />
-                        <Button fx:id="findBookButton" alignment="CENTER" minWidth="32.0" prefHeight="24.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="🔎" StackPane.alignment="CENTER_RIGHT">
+                        <Button fx:id="findBookButton" alignment="CENTER" minWidth="32.0" prefHeight="24.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="🔎" StackPane.alignment="CENTER_RIGHT"
+                        onAction="#handleFindBook">
                             <font>
                                 <Font size="20.0" />
                             </font>
@@ -67,6 +73,6 @@
         <Button fx:id="nextPageButton" layoutX="919.0" layoutY="525.0" mnemonicParsing="false" onAction="#handleNextPage" prefHeight="26.0" prefWidth="46.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: black; -fx-background-color: #F5F5F5; -fx-font-weight: bold; -fx-cursor: hand;" text="Next" />
         <!-- Button Previous -->
         <Button fx:id="prevPageButton" layoutX="25.0" layoutY="525.0" mnemonicParsing="false" onAction="#handlePrevPage" prefHeight="26.0" prefWidth="46.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: black; -fx-background-color: #F5F5F5; -fx-font-weight: bold; -fx-cursor: hand;" text="Prev" />
-      <Button fx:id="changepage" layoutX="401.0" layoutY="525.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="54.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: black; -fx-background-color: #F5F5F5; -fx-font-weight: bold; -fx-cursor: hand;" text="Change" />
+      <Button fx:id="changePage" layoutX="401.0" layoutY="525.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="54.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: black; -fx-background-color: #F5F5F5; -fx-font-weight: bold; -fx-cursor: hand;" text="Change" />
     </children>
 </AnchorPane>

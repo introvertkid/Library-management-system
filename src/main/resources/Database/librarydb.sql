@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS documents (
     FOREIGN KEY (tagID) REFERENCES tags(tagID) ON UPDATE CASCADE
 );
 
-create table if not exists document_tag_bridge(
+create table if not exists document_tag(
 	documentID int not null,
     tagID int not null,
     primary key(documentID, tagID),

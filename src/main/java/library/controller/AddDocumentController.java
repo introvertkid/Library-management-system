@@ -1,7 +1,7 @@
 package library.controller;
 
-import library.entity.Document;
 import library.helper.DatabaseHelper;
+import library.entity.Document;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -45,10 +45,17 @@ public class AddDocumentController extends Controller
 
     File selectedFile;
 
+    Map<String, Integer> tags = new HashMap<>();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         suggestionList.setVisible(false);
-        suggestions = getAllTagsFromDB();
+        getAllTagsFromDB();
+        for (String str : suggestions) {
+            System.out.println(str);
+        }
+        System.out.println();
+        System.out.println(Collections.singletonList(tags));
 
         // Listen for text changes in the tag field to show tag suggestions
         tagField.textProperty().addListener((observableValue, oldValue, newValue) -> {
@@ -85,21 +92,21 @@ public class AddDocumentController extends Controller
         });
     }
 
-    private ObservableList<String> getAllTagsFromDB()
-    {
-        DatabaseHelper.connectToDatabase();
-        ObservableList<String> ans = FXCollections.observableArrayList();
-        String query = "SELECT tagName FROM tags";
+    private void getAllTagsFromDB() {
+        String query = "select * from tags";
+
         try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                String tmp = resultSet.getString("tagName");
-                ans.add(tmp);
+                String name = resultSet.getString("tagName");
+                int id = resultSet.getInt("tagID");
+
+                tags.put(name, id);
+                suggestions.add(name);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return ans;
     }
 
     public void addDocument() {
@@ -136,29 +143,6 @@ public class AddDocumentController extends Controller
         } else if (selectedFile == null) {
             showAlert("Error", "Selected file can't be null");
         } else {
-            String queryCheck = "SELECT COUNT(*) FROM documents WHERE fileName = ?";
-            String queryInsert = "INSERT INTO documents (documentName, authors, tagID, fileName) VALUES (?, ?, ?, ?)";
-            String queryTagCheck = "SELECT tagID FROM tags WHERE tagName = ?";
-            String queryTagInsert = "INSERT INTO tags (tagName) VALUES (?)";
-
-            DatabaseHelper.connectToDatabase();
-
-            try (PreparedStatement stmtCheck = DatabaseHelper.getConnection().prepareStatement(queryCheck)) {
-                stmtCheck.setString(1, selectedFile.getName());
-                ResultSet rs = stmtCheck.executeQuery();
-                rs.next();
-                int count = rs.getInt(1);
-
-                if (count > 0) {
-                    showAlert("Error", "The file already exists in the database");
-                    return;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert("Error", "Failed to check existing file");
-                return;
-            }
-
             File dest = new File(DEFAULT_PATH + selectedFile.getName());
             try {
                 FileUtils.copyFile(selectedFile.getAbsoluteFile(), dest);
@@ -169,46 +153,43 @@ public class AddDocumentController extends Controller
                 return;
             }
 
-            int tagID = -1;
-            try (PreparedStatement stmtTagCheck = DatabaseHelper.getConnection().prepareStatement(queryTagCheck)) {
-                stmtTagCheck.setString(1, tagField.getText());
-                ResultSet rs = stmtTagCheck.executeQuery();
+            insertDocumentIntoDB();
+            insertDocument_TagIntoDB();
+            resetAllTextField();
+        }
+    }
 
-                if (rs.next()) {
-                    tagID = rs.getInt("tagID");
-                } else {
-                    try (PreparedStatement stmtTagInsert = DatabaseHelper.getConnection().prepareStatement(queryTagInsert, PreparedStatement.RETURN_GENERATED_KEYS)) {
-                        stmtTagInsert.setString(1, tagField.getText());
-                        stmtTagInsert.executeUpdate();
+    private void insertDocumentIntoDB() {
+        String query = "INSERT INTO documents (documentName, authors, fileName) " +
+                "VALUES (?, ?, ?)";
 
-                        ResultSet generatedKeys = stmtTagInsert.getGeneratedKeys();
-                        if (generatedKeys.next()) {
-                            tagID = generatedKeys.getInt(1);
-                        }
-                    }
-                }
-            } catch (Exception e) {
+        try (PreparedStatement stmt = DatabaseHelper.getConnection().prepareStatement(query)) {
+            stmt.setString(1, bookNameField.getText());
+            stmt.setString(2, authorField.getText());
+            stmt.setString(3, selectedFile.getName());
+            stmt.executeUpdate();
+            showAlert("Success", "Document added successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to add document");
+        }
+    }
+
+    private void insertDocument_TagIntoDB() {
+        String query = "insert into document_tag (documentID, tagID) " + "values(?, ?)";
+
+        for (String str : selectedTags) {
+            try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
+                statement.setInt(1, Document.getSpecificDocumentIDFromDB(bookNameField.getText()));
+                statement.setInt(2, tags.get(str));
+                statement.executeUpdate();
+            } catch (SQLException e) {
                 e.printStackTrace();
-                showAlert("Error", "Failed to check or insert category");
-                return;
-            }
-
-            try (PreparedStatement stmtInsert = DatabaseHelper.getConnection().prepareStatement(queryInsert)) {
-                stmtInsert.setString(1, bookNameField.getText());
-                stmtInsert.setString(2, authorField.getText());
-                stmtInsert.setInt(3, tagID);
-                stmtInsert.setString(4, selectedFile.getName());
-                stmtInsert.executeUpdate();
-                showAlert("Success", "Document added successfully");
-                resetFields();
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert("Error", "Failed to add document");
             }
         }
     }
 
-    private void resetFields() {
+    private void resetAllTextField() {
         tagField.clear();
         bookNameField.clear();
         authorField.clear();
