@@ -30,6 +30,9 @@ public class DocumentController extends Controller {
     private TableView<Document> documentTable;
 
     @FXML
+    private Button findBookButton;
+
+    @FXML
     private Button deleteBookButton;
 
     @FXML
@@ -40,9 +43,6 @@ public class DocumentController extends Controller {
 
     @FXML
     private TextField searchField;
-
-    @FXML
-    private Button findBookButton;
 
     @FXML
     private AnchorPane contentPane;
@@ -76,26 +76,26 @@ public class DocumentController extends Controller {
 
     private Document selectedBook;
 
-    private ObservableList<Document> documentList;
+    private ObservableList<Document> documentList = FXCollections.observableArrayList();;
     private int currentPage = 0;
     private static final int ROWS_PER_PAGE = 18;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadDocumentData();
+
         currentPage = 0;
         updateTable(currentPage);
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("documentName"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
         tagColumn.setCellValueFactory(new PropertyValueFactory<>("tagName"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        findBookButton.setOnAction(event -> handleFindBook());
-        editBookButton.setOnAction(event -> handleEditBook());
-        deleteBookButton.setOnAction(event -> handleDeleteBook());
+
         contentPane.setOnMouseClicked(event -> {
             searchField.getParent().requestFocus();
         });
         changePage.setOnAction(event -> handlePageChange());
+
         if (User.getRole().equals("Admin")) {
             deleteBookButton.setVisible(true);
             editBookButton.setVisible(true);
@@ -105,19 +105,15 @@ public class DocumentController extends Controller {
     }
 
     private void loadDocumentData() {
-        documentList = FXCollections.observableArrayList();
-        DatabaseHelper.connectToDatabase();
         try (Connection connection = DatabaseHelper.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT d.documentID, d.documentName, d.authors, c.tagName, d.quantity\n"
-                     + "FROM documents d\n"
-                     + "LEFT JOIN tags c ON d.tagID = c.tagID\n"
-                     + "WHERE d.status = 'available' AND d.quantity > 0;")) {
+             ResultSet resultSet = statement.executeQuery("SELECT d.documentID, d.documentName, d.authors, d.quantity " +
+                     "FROM documents d")) {
 
             while (resultSet.next()) {
                 int documentID = resultSet.getInt("documentID");
                 String documentName = resultSet.getString("documentName");
-                String tagName = resultSet.getString("tagName");
+                String tagName = Document.getTagsByDocumentID(documentID);
                 String authors = resultSet.getString("authors");
                 int quantity = resultSet.getInt("quantity");
 
@@ -127,6 +123,7 @@ public class DocumentController extends Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         int totalPages = (int) Math.ceil((double) documentList.size() / ROWS_PER_PAGE);
         if (currentPage > totalPages) {
             System.out.println(currentPage);
@@ -177,8 +174,6 @@ public class DocumentController extends Controller {
 
         documentTable.setItems(paginatedList);
     }
-
-
 
     private void setupPagination() {
         String countQuery = "SELECT COUNT(*) AS total FROM documents";
@@ -579,10 +574,9 @@ public class DocumentController extends Controller {
             unBorrowButton.setVisible(false);
             loadDocumentData();
         } else if ("Borrowed".equals(statusChoice.getValue())) {
-            String query = "SELECT d.documentID, d.documentName, d.authors, d.fileName, d.status, c.tagName "
+            String query = "SELECT d.documentID, d.documentName, d.authors, d.fileName, d.status "
                     + "FROM borrowings b "
                     + "JOIN documents d ON b.documentName = d.documentName "
-                    + "LEFT JOIN tags c ON d.tagID = c.tagID "
                     + "WHERE b.userName = ?";
 
             try (Connection conn = DatabaseHelper.getConnection();
@@ -598,7 +592,7 @@ public class DocumentController extends Controller {
                                 rs.getString("authors"),
                                 rs.getString("fileName"),
                                 rs.getString("status"),
-                                rs.getString("tagName")
+                                Document.getTagsByDocumentID(rs.getInt("documentID"))
                         );
                         documentList.add(document);
                     }
@@ -612,10 +606,9 @@ public class DocumentController extends Controller {
             unBorrowButton.setVisible(false);
             borrowButton.setVisible(true);
             openDocumentButton.setVisible(false);
-            String query = "SELECT d.documentID, d.documentName, d.authors, d.fileName, d.status, c.tagName, d.quantity "
+            String query = "SELECT d.documentID, d.documentName, d.authors, d.fileName, d.status, d.quantity "
                     + "FROM documents d "
                     + "LEFT JOIN borrowings b ON d.documentName = b.documentName AND b.userName = ? "
-                    + "LEFT JOIN tags c ON d.tagID = c.tagID "
                     + "WHERE d.status = 'available' AND b.documentName IS NULL";
 
             try (Connection conn = DatabaseHelper.getConnection();
@@ -631,7 +624,7 @@ public class DocumentController extends Controller {
                                 rs.getString("authors"),
                                 rs.getString("fileName"),
                                 rs.getString("status"),
-                                rs.getString("tagName"),
+                                Document.getTagsByDocumentID(rs.getInt("documentID")),
                                 rs.getInt("quantity")
                         );
                         documentList.add(document);
