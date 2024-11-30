@@ -9,9 +9,12 @@ import javafx.css.SimpleStyleableObjectProperty;
 import javafx.css.StyleableObjectProperty;
 import javafx.css.StyleableProperty;
 import javafx.scene.Node;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Skin;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.skin.TitledPaneSkin;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import java.util.ArrayList;
@@ -51,6 +54,15 @@ public class CustomTitledPaneSkin extends TitledPaneSkin {
         text = (Text) title.lookup(".text");
 
         registerChangeListener(control.graphicProperty(), ov -> adjustTitleLayout());
+        ImageView img = new ImageView(new Image(getClass().getResource("/image/UserAvatar/interview.png").toExternalForm()));
+        img.setFitHeight(36d);
+        img.setFitWidth(30d);
+        img.setPreserveRatio(true);
+        img.setSmooth(true);
+        control.setGraphicTextGap(10);
+        img.setTranslateY((text.getBoundsInParent().getHeight() - img.getFitHeight()) / 2);
+        control.setGraphic(img);
+        control.setContentDisplay(ContentDisplay.LEFT);
     }
 
     private void adjustTitleLayout() {

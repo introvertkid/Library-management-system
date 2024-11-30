@@ -42,6 +42,9 @@ public class DocumentController extends Controller {
     private TextField searchField;
 
     @FXML
+    private Button findBookButton;
+
+    @FXML
     private AnchorPane contentPane;
 
     @FXML
@@ -59,42 +62,62 @@ public class DocumentController extends Controller {
     @FXML
     private TableColumn<Document, Integer> quantityColumn;
 
-    private ObservableList<Document> documentList = FXCollections.observableArrayList();
+    @FXML
+    private Button borrowButton;
+
+    @FXML
+    private Button openDocumentButton;
+
+    @FXML
+    private ComboBox<String> statusChoice;
+
+    @FXML
+    private Button unBorrowButton;
+
+    private Document selectedBook;
+
+    private ObservableList<Document> documentList;
     private int currentPage = 0;
     private static final int ROWS_PER_PAGE = 18;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadDocumentData();
-
         currentPage = 0;
         updateTable(currentPage);
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("documentName"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("authors"));
         tagColumn.setCellValueFactory(new PropertyValueFactory<>("tagName"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-
+        findBookButton.setOnAction(event -> handleFindBook());
+        editBookButton.setOnAction(event -> handleEditBook());
+        deleteBookButton.setOnAction(event -> handleDeleteBook());
         contentPane.setOnMouseClicked(event -> {
             searchField.getParent().requestFocus();
         });
         changePage.setOnAction(event -> handlePageChange());
-
         if (User.getRole().equals("Admin")) {
             deleteBookButton.setVisible(true);
             editBookButton.setVisible(true);
         }
+        statusChoice.setItems(FXCollections.observableArrayList("All", "Borrowed", "Available"));
+        statusChoice.setValue("All");
     }
 
     private void loadDocumentData() {
+        documentList = FXCollections.observableArrayList();
+        DatabaseHelper.connectToDatabase();
         try (Connection connection = DatabaseHelper.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("SELECT d.documentID, d.documentName, d.authors, d.quantity " +
-                     "FROM documents d")) {
+             ResultSet resultSet = statement.executeQuery("SELECT d.documentID, d.documentName, d.authors, c.tagName, d.quantity\n"
+                     + "FROM documents d\n"
+                     + "LEFT JOIN tags c ON d.tagID = c.tagID\n"
+                     + "WHERE d.status = 'available' AND d.quantity > 0;")) {
 
             while (resultSet.next()) {
                 int documentID = resultSet.getInt("documentID");
                 String documentName = resultSet.getString("documentName");
-                String tagName = Document.getTagsByDocumentID(documentID);
+                String tagName = resultSet.getString("tagName");
                 String authors = resultSet.getString("authors");
                 int quantity = resultSet.getInt("quantity");
 
@@ -104,7 +127,6 @@ public class DocumentController extends Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         int totalPages = (int) Math.ceil((double) documentList.size() / ROWS_PER_PAGE);
         if (currentPage > totalPages) {
             System.out.println(currentPage);
@@ -146,14 +168,17 @@ public class DocumentController extends Controller {
         int fromIndex = pageIndex * ROWS_PER_PAGE;
         int toIndex = Math.min(fromIndex + ROWS_PER_PAGE, documentList.size());
         ObservableList<Document> paginatedList;
+
         if (fromIndex >= documentList.size()) {
-            paginatedList = FXCollections.observableArrayList(documentList.subList(1, toIndex));
+            paginatedList = FXCollections.observableArrayList();
         } else {
             paginatedList = FXCollections.observableArrayList(documentList.subList(fromIndex, toIndex));
         }
-        documentTable.setItems(paginatedList);
 
+        documentTable.setItems(paginatedList);
     }
+
+
 
     private void setupPagination() {
         String countQuery = "SELECT COUNT(*) AS total FROM documents";
@@ -459,4 +484,205 @@ public class DocumentController extends Controller {
 //            throw new RuntimeException(e);
 //        }
 //    }
+
+    @FXML
+    private void handleBorrowButton() {
+         selectedBook = documentTable.getSelectionModel().getSelectedItem();
+        if (selectedBook != null && selectedBook.getQuantity() > 0) {
+            String query = "UPDATE documents\n"
+                    + "SET quantity = quantity - 1\n"
+                    + "WHERE documentID = ?";
+
+            DatabaseHelper.connectToDatabase();
+            try (Connection conn = DatabaseHelper.getConnection()) {
+                PreparedStatement stmt = conn.prepareStatement(query);
+
+                stmt.setInt(1, selectedBook.getDocumentID());
+                if(updateBorrowingsTable() == true) {
+                    int rowsAffected = stmt.executeUpdate();
+                    if (rowsAffected > 0) {
+                        borrowButton.setVisible(false);
+                        openDocumentButton.setVisible(true);
+                        selectedBook.setQuantity(selectedBook.getQuantity() - 1);
+                        updateDocTable();
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    private void handleDocumentStatus() {
+         selectedBook = documentTable.getSelectionModel().getSelectedItem();
+       if (selectedBook != null) {
+           String query = "Select count(*) from borrowings\n"
+                   + "Where userName = ? and documentName = ?";
+           DatabaseHelper.connectToDatabase();
+           try (Connection conn = DatabaseHelper.getConnection()) {
+               PreparedStatement stmt = conn.prepareStatement(query);
+
+               stmt.setString(1, User.getUsername());
+               stmt.setString(2, selectedBook.getDocumentName());
+
+               ResultSet rs = stmt.executeQuery();
+                  if (rs.next()) {
+                       int count = rs.getInt(1);
+                      if (count > 0) {
+                          borrowButton.setVisible(false);
+                          openDocumentButton.setVisible(true);
+                      } else {
+                          borrowButton.setVisible(true);
+                          openDocumentButton.setVisible(false);
+                      }
+                  }
+
+           } catch (SQLException e) {
+               e.printStackTrace();
+           }
+       }
+    }
+
+    private boolean updateBorrowingsTable() {
+       String query = "INSERT INTO borrowings (userName, documentName) VALUES (?, ?)";
+        DatabaseHelper.connectToDatabase();
+        try (Connection conn = DatabaseHelper.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setString(1, User.getUsername());
+            stmt.setString(2, selectedBook.getDocumentName());
+
+            stmt.setString(1, User.getUsername());
+            stmt.setString(2, selectedBook.getDocumentName());
+            int newRowsAffected = stmt.executeUpdate();
+
+            if (newRowsAffected > 0) {
+                showAlert("Alert", "Borrow document successfully!");
+                updateDocTable();
+                return true;
+            } else {
+                showAlert("Alert", "failed to borrow document!");
+            }
+            return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @FXML
+    private void updateDocTable() {
+        documentList.clear();
+
+        if ("All".equals(statusChoice.getValue())) {
+            unBorrowButton.setVisible(false);
+            loadDocumentData();
+        } else if ("Borrowed".equals(statusChoice.getValue())) {
+            String query = "SELECT d.documentID, d.documentName, d.authors, d.fileName, d.status, c.tagName "
+                    + "FROM borrowings b "
+                    + "JOIN documents d ON b.documentName = d.documentName "
+                    + "LEFT JOIN tags c ON d.tagID = c.tagID "
+                    + "WHERE b.userName = ?";
+
+            try (Connection conn = DatabaseHelper.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(query)) {
+
+                stmt.setString(1, User.getUsername());
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        Document document = new Document(
+                                rs.getInt("documentID"),
+                                rs.getString("documentName"),
+                                rs.getString("authors"),
+                                rs.getString("fileName"),
+                                rs.getString("status"),
+                                rs.getString("tagName")
+                        );
+                        documentList.add(document);
+                    }
+                    documentTable.setItems(documentList);
+                    unBorrowButton.setVisible(true);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else if ("Available".equals(statusChoice.getValue())) {
+            unBorrowButton.setVisible(false);
+            borrowButton.setVisible(true);
+            openDocumentButton.setVisible(false);
+            String query = "SELECT d.documentID, d.documentName, d.authors, d.fileName, d.status, c.tagName, d.quantity "
+                    + "FROM documents d "
+                    + "LEFT JOIN borrowings b ON d.documentName = b.documentName AND b.userName = ? "
+                    + "LEFT JOIN tags c ON d.tagID = c.tagID "
+                    + "WHERE d.status = 'available' AND b.documentName IS NULL";
+
+            try (Connection conn = DatabaseHelper.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(query)) {
+
+                stmt.setString(1, User.getUsername());
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        Document document = new Document(
+                                rs.getInt("documentID"),
+                                rs.getString("documentName"),
+                                rs.getString("authors"),
+                                rs.getString("fileName"),
+                                rs.getString("status"),
+                                rs.getString("tagName"),
+                                rs.getInt("quantity")
+                        );
+                        documentList.add(document);
+                    }
+                    documentTable.setItems(documentList);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    private void handleUnborrowed() {
+        selectedBook = documentTable.getSelectionModel().getSelectedItem();
+
+        if (selectedBook != null && selectedBook.getQuantity() >= 0) {
+            String queryUpdateDocuments = "UPDATE documents "
+                    + "SET quantity = quantity + 1 "
+                    + "WHERE documentID = ?";
+
+            String queryDeleteBorrowings = "DELETE FROM borrowings "
+                    + "WHERE documentName = ? AND userName = ?";
+
+            DatabaseHelper.connectToDatabase();
+            try (Connection conn = DatabaseHelper.getConnection()) {
+                try (PreparedStatement stmtDelete = conn.prepareStatement(queryDeleteBorrowings)) {
+                    stmtDelete.setString(1, selectedBook.getDocumentName());
+                    stmtDelete.setString(2, User.getUsername());
+
+                    int rowsAffected = stmtDelete.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        try (PreparedStatement stmtUpdate = conn.prepareStatement(queryUpdateDocuments)) {
+                            stmtUpdate.setInt(1, selectedBook.getDocumentID());
+
+                            int rowsUpdated = stmtUpdate.executeUpdate();
+                            if (rowsUpdated > 0) {
+
+                                selectedBook.setQuantity(selectedBook.getQuantity() + 1);
+                               updateDocTable();
+                            }
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
 }

@@ -131,9 +131,9 @@
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-border-width: 0;
-    -fx-pref-height: 42px;
+    -fx-pref-height: 50px;
     -fx-alignment: baseline-left;
-    -fx-padding: 0px 0px 0px 45px;
+    -fx-padding: 0px 0px 0px 10px;
 }
 
 .titled-pane > .content {
