@@ -55,8 +55,7 @@ public class DocumentRequestController extends Controller {
 
     private void loadRequestData() {
         documentList.clear();
-        String query = "SELECT d.*, c.tagName FROM documents d " +
-                "JOIN tags c ON d.tagID = c.tagID " +
+        String query = "SELECT d.* FROM documents d " +
                 "WHERE d.status = 'Pending'";
         DatabaseHelper.connectToDatabase();
         try (Connection connection = DatabaseHelper.getConnection();
@@ -69,7 +68,7 @@ public class DocumentRequestController extends Controller {
                         resultSet.getString("authors"),
                         resultSet.getString("fileName"),
                         resultSet.getString("status"),
-                        resultSet.getString("tagName")
+                        Document.getTagsByDocumentID( resultSet.getInt("documentID"))
                 );
                 documentList.add(document);
             }

@@ -108,7 +108,7 @@ public class DocumentController extends Controller {
         try (Connection connection = DatabaseHelper.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT d.documentID, d.documentName, d.authors, d.quantity " +
-                     "FROM documents d")) {
+                     "FROM documents d Where status = 'Available' ")) {
 
             while (resultSet.next()) {
                 int documentID = resultSet.getInt("documentID");
@@ -176,7 +176,7 @@ public class DocumentController extends Controller {
     }
 
     private void setupPagination() {
-        String countQuery = "SELECT COUNT(*) AS total FROM documents";
+        String countQuery = "SELECT COUNT(*) AS total FROM documents ";
         try (Connection connection = DatabaseHelper.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(countQuery)) {
@@ -486,7 +486,8 @@ public class DocumentController extends Controller {
         if (selectedBook != null && selectedBook.getQuantity() > 0) {
             String query = "UPDATE documents\n"
                     + "SET quantity = quantity - 1\n"
-                    + "WHERE documentID = ?";
+                    + "WHERE documentID = ? "
+                    + "and status = 'Available'";
 
             DatabaseHelper.connectToDatabase();
             try (Connection conn = DatabaseHelper.getConnection()) {
