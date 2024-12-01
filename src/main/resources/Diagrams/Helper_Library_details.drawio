@@ -1,0 +1,15 @@
+<mxGraphModel dx="0" dy="0" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" background="none" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="node2" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;DatabaseHelper&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- URL: String&lt;br/&gt;- connection: Connection&lt;br/&gt;- PASSWORD: String&lt;br/&gt;- USERNAME: String&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ getConnection(): Connection&lt;br/&gt;+ connectToDatabase(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="206" y="-13" width="223" height="184" as="geometry" />
+    </mxCell>
+    <mxCell id="node1" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;PasswordEncoder&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ hashedpassword(String): String&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="-38" y="184" width="240" height="68" as="geometry" />
+    </mxCell>
+    <mxCell id="node0" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;TagBookCount&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- totalBooks: int&lt;br/&gt;- tagName: String&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ getTagName(): String&lt;br/&gt;+ getTotalBooks(): int&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="-38" y="-14" width="179" height="147" as="geometry" />
+    </mxCell>
+  </root>
+</mxGraphModel>

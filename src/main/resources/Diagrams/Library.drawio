@@ -1,0 +1,21 @@
+<mxGraphModel dx="0" dy="0" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" background="none" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="node3" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;CustomTitledPaneSkin&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- textGraphicTranslateBinding: DoubleBinding&lt;br/&gt;- arrow: Region&lt;br/&gt;- arrowSide: StyleableObjectProperty&amp;lt;ArrowSide&amp;gt;&lt;br/&gt;- arrowTranslateBinding: DoubleBinding&lt;br/&gt;- title: Region&lt;br/&gt;- graphic: Node&lt;br/&gt;- text: Text&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ arrowSideProperty(): ObjectProperty&amp;lt;ArrowSide&amp;gt;&lt;br/&gt;+ setArrowSide(ArrowSide): void&lt;br/&gt;+ getCssMetaData(): List&amp;lt;CssMetaData&amp;lt;?, ?&amp;gt;&amp;gt;&lt;br/&gt;+ dispose(): void&lt;br/&gt;- clearBindings(): void&lt;br/&gt;+ getArrowSide(): ArrowSide&lt;br/&gt;- adjustTitleLayout(): void&lt;br/&gt;+ getClassCssMetaData(): List&amp;lt;CssMetaData&amp;lt;?, ?&amp;gt;&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="240" y="51" width="360" height="400" as="geometry" />
+    </mxCell>
+    <mxCell id="node0" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Main&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- savedWidth: double&lt;br/&gt;- savedHeight: double&lt;br/&gt;- primaryStage: Stage&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ loadScene(String): void&lt;br/&gt;+ main(String[]): void&lt;br/&gt;+ start(Stage): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="-44" y="17" width="190" height="184" as="geometry" />
+    </mxCell>
+    <mxCell id="node2" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;package&amp;gt;&amp;gt;&lt;/i&gt;&lt;br/&gt;&lt;b&gt;package  library.controller&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="-61" y="434" width="237" height="35" as="geometry" />
+    </mxCell>
+    <mxCell id="node1" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;package&amp;gt;&amp;gt;&lt;/i&gt;&lt;br/&gt;&lt;b&gt;package  library.entity&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="-61" y="362" width="207" height="35" as="geometry" />
+    </mxCell>
+    <mxCell id="node4" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;package&amp;gt;&amp;gt;&lt;/i&gt;&lt;br/&gt;&lt;b&gt;package  library.helper&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="-76" y="260" width="211" height="35" as="geometry" />
+    </mxCell>
+  </root>
+</mxGraphModel>
