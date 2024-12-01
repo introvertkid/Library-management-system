@@ -1,5 +1,6 @@
 package library.controller;
 
+import javafx.scene.input.KeyCode;
 import library.helper.DatabaseHelper;
 import library.entity.Document;
 import library.entity.User;
@@ -30,10 +31,10 @@ public class DocumentController extends Controller {
     private TableView<Document> documentTable;
 
     @FXML
-    private Button findBookButton;
+    private Button deleteBookButton;
 
     @FXML
-    private Button deleteBookButton;
+    public Button findBookButton;
 
     @FXML
     private Button editBookButton;
@@ -95,6 +96,12 @@ public class DocumentController extends Controller {
             searchField.getParent().requestFocus();
         });
         changePage.setOnAction(event -> handlePageChange());
+
+        searchField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                findBookButton.fire();
+            }
+        });
 
         if (User.getRole().equals("Admin")) {
             deleteBookButton.setVisible(true);
@@ -167,23 +174,21 @@ public class DocumentController extends Controller {
         ObservableList<Document> paginatedList;
 
         if (fromIndex >= documentList.size()) {
-            paginatedList = FXCollections.observableArrayList();
+            paginatedList = FXCollections.observableArrayList(documentList.subList(1, toIndex));
         } else {
             paginatedList = FXCollections.observableArrayList(documentList.subList(fromIndex, toIndex));
         }
-
         documentTable.setItems(paginatedList);
     }
 
     private void setupPagination() {
-        String countQuery = "SELECT COUNT(*) AS total FROM documents ";
+        String countQuery = "SELECT COUNT(*) AS total FROM documents";
         try (Connection connection = DatabaseHelper.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(countQuery)) {
 
             if (resultSet.next()) {
                 int totalRecords = resultSet.getInt("total");
-                int pageCount = (int) Math.ceil((double) totalRecords / ROWS_PER_PAGE);
                 if (totalRecords > 0) {
                     updateTable(1);
                 }
