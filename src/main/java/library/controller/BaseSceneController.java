@@ -97,7 +97,6 @@ public class BaseSceneController extends Controller {
         userAvatar.setClip(clip);
     }
 
-
     @FXML
     private Image changeAvatar(String username) {
         String query = "SELECT avatar FROM users WHERE username = ?";
@@ -132,7 +131,6 @@ public class BaseSceneController extends Controller {
         return avatarImage;
     }
 
-
     private String getUserNameFromDatabase(String username) {
         String userFullName = "";
         String query = "SELECT userFullName FROM users WHERE username = ?";
@@ -152,7 +150,6 @@ public class BaseSceneController extends Controller {
         System.out.println(userFullName);
         return userFullName;
     }
-
 
     @FXML
     private void handleAddDocumentButton() {
@@ -189,11 +186,6 @@ public class BaseSceneController extends Controller {
     private void handleDocRequestsButton() {
         loadFXMLtoAnchorPane("DocumentRequest", contentPane);
         setStyleForSelectedButton(showDocRequests);
-    }
-
-    @FXML
-    private void handleButton() {
-        loadFXMLtoAnchorPane("Accordition", contentPane);
     }
 
     @FXML

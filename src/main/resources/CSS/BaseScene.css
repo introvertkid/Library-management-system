@@ -35,7 +35,7 @@
     -fx-font-size: 18px;
 }
 
-.addbookButton:hover {
+.addbookButton:hover, .addbookButton:focused, .addbookButton.selected {
     -fx-background-color: #4c70ba;
     -fx-font-family: 'Montserrat';
     -fx-text-fill: white;
@@ -73,7 +73,36 @@
     -fx-font-weight: bold;
     -fx-cursor: hand;
 }
+.docrequestButton {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+}
 
+.docrequestButton:hover, .docrequestButton:focused, .docrequestButton.selected {
+    -fx-background-color: #4c70ba;
+    -fx-font-family: 'Montserrat';
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
+.showreportButton {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+}
+
+.showreportButton:hover, .showreportButton:focused, .showreportButton.selected {
+    -fx-background-color: #4c70ba;
+    -fx-font-family: 'Montserrat';
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}
 #logoutButton:hover #logoutImage {
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
