@@ -12,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -38,7 +37,7 @@ public class BaseSceneController extends Controller {
     private Button dashboardButton;
 
     @FXML
-    public static Button documentButton;
+    private Button documentButton;
 
     @FXML
     private Button reportButton;
@@ -183,7 +182,7 @@ public class BaseSceneController extends Controller {
     @FXML
     private void handleDocumentButton() {
         loadFXMLtoAnchorPane("DocumentScene", contentPane);
-//        setStyleForSelectedButton(documentButton);
+        setStyleForSelectedButton(documentButton);
     }
 
     @FXML

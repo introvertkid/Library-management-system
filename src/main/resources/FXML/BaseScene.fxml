@@ -17,7 +17,8 @@
 
 <?import javafx.scene.Cursor?>
 <?import javafx.geometry.Insets?>
-<AnchorPane fx:id="Dashboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1200.0" style="-fx-background-color: silver;" stylesheets="@../CSS/BaseScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+<AnchorPane fx:id="Dashboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1200.0" style="-fx-background-color: silver;"
+            stylesheets="@../CSS/BaseScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="library.controller.BaseSceneController">
    <!-- Navigation bar section -->
    <AnchorPane layoutY="46.4" prefHeight="574.0" prefWidth="200.0" style="-fx-background-color: #3b5998;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="46.0">
@@ -38,7 +39,9 @@
                   </font>
                </Button>
                <!-- Documents Button -->
-               <Button fx:id="documentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleDocumentButton" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="documentButton" text="  Documents">
+               <Button fx:id="documentButton" alignment="BASELINE_LEFT" mnemonicParsing="false"
+                       onAction="#handleDocumentButton" prefHeight="42.0" prefWidth="200.0"
+                       style="-fx-cursor: hand;" styleClass="documentButton" text="  Documents">
                   <graphic>
                      <ImageView fitHeight="23.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                         <image>
