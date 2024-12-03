@@ -12,6 +12,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -90,6 +93,16 @@ public class DocumentRequestController extends Controller {
                 showAlert("Error", "There was an error while trying to open the request details.");
             }
         }
+    }
 
+    @FXML
+    private void previewDocument() {
+        selectedDocument = requestTable.getSelectionModel().getSelectedItem();
+        try {
+            String fileName = selectedDocument.getFileName();
+            Desktop.getDesktop().open(new File("src/main/resources/Document/" + fileName));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
