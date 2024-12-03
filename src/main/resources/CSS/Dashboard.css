@@ -4,3 +4,62 @@
     -fx-border-width: 0.5px;
     -fx-alignment: center;
 }
+
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-radius: 8px;
+    -fx-padding: 0;
+}
+
+.table-column {
+    -fx-text-fill: #2c3e50;
+    -fx-font-size: 14px;
+    -fx-alignment: center;
+    -fx-border-color: transparent;
+}
+
+.table-cell {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0.5px;
+    -fx-alignment: center;
+}
+
+.table-row-cell:filled:hover {
+    -fx-background-color: rgba(52, 152, 219, 0.2);
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+.table-row-cell:nth-child(odd) {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:nth-child(even) {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(52, 152, 219, 0.4);
+    -fx-text-fill: white;
+}
+
+.documentTable .scroll-bar:horizontal .scroll-bar:vertical .decrement-button {
+    -fx-background-color:transparent;
+	-fx-background-radius: 0em;
+	-fx-padding:0 0 10 0;
+}
+
+.documentTable  .scroll-bar .decrement-arrow,
+{
+	-fx-padding:0;
+}
+
+.transparent-textarea {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-border-color: transparent;
+    -fx-text-fill: black;
+    -fx-padding: 5;
+}

@@ -1,44 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="content" prefHeight="546.0" prefWidth="906.0" style="-fx-background-color: white;" stylesheets="@../CSS/Dashboard.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="library.controller.DashboardController">
+<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="1005.0" style="-fx-background-color: white;" stylesheets="@../CSS/Dashboard.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.DashboardController">
    <children>
-      <VBox fx:id="contentVbox" alignment="CENTER" layoutX="24.0" layoutY="-10.0" prefHeight="530.0" prefWidth="578.0" spacing="20" style="-fx-padding: 20;">
+      <VBox fx:id="contentVbox" alignment="CENTER" layoutY="-6.0" prefHeight="198.0" prefWidth="983.0" spacing="20" style="-fx-padding: 20;">
          <children>
-            <HBox alignment="CENTER" spacing="20">
+            <HBox alignment="CENTER" prefHeight="158.0" prefWidth="924.0" spacing="40.0">
                <children>
-                  <VBox fx:id="VBoxTotalBooks" prefHeight="102.0" prefWidth="201.0" style="-fx-background-color: #007bff; -fx-padding: 10; -fx-border-radius: 10; -fx-background-radius: 10;">
+                  <AnchorPane fx:id="VBoxTotalBooks" prefHeight="140.0" prefWidth="202.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
                      <children>
-                        <Label fx:id="labelTotalBooks" style="-fx-text-fill: white; -fx-font-size: 18px;" />
-                        <Button fx:id="documentview" onAction="#document" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;" text="View Details">
+                        <Button fx:id="documentview" layoutX="52.0" layoutY="7.0" onAction="#document" prefHeight="64.0" prefWidth="98.0" style="-fx-background-color: transparent; -fx-cursor: hand;" stylesheets="@../CSS/BaseScene.css">
                            <graphic>
-                              <Label style="-fx-text-fill: white;" text="&gt;" />
+                              <ImageView fitHeight="74.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/totalbook.png" />
+                                 </image>
+                              </ImageView>
                            </graphic>
                         </Button>
+                        <Label fx:id="labelTotalBooks" alignment="CENTER" layoutX="83.0" layoutY="91.0" prefHeight="23.0" prefWidth="36.0" style="-fx-text-fill: green; -fx-font-size: 18;" text="100" textAlignment="CENTER">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label contentDisplay="CENTER" layoutX="46.0" layoutY="123.0" prefHeight="30.0" prefWidth="109.0" style="-fx-text-fill: green;" text="Total books" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
                      </children>
-                  </VBox>
-                  <VBox fx:id="VBoxTotalUsers" prefHeight="102.0" prefWidth="201.0" style="-fx-background-color: #28a745; -fx-padding: 10; -fx-border-radius: 10; -fx-background-radius: 10;">
+                  </AnchorPane>
+                  <AnchorPane fx:id="VBoxTotalUsers" prefHeight="140.0" prefWidth="202.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
                      <children>
-                        <Label fx:id="labelTotalUsers" style="-fx-text-fill: white; -fx-font-size: 18px;" text="Total users: 5" />
-                        <Button style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;" text="View Details">
+                        <Button fx:id="user" layoutX="52.0" layoutY="7.0" prefHeight="64.0" prefWidth="98.0" style="-fx-background-color: transparent; -fx-cursor: hand;" stylesheets="@../CSS/BaseScene.css">
                            <graphic>
-                              <Label style="-fx-text-fill: white;" text="&gt;" />
+                              <ImageView fitHeight="75.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/totaluser.png" />
+                                 </image>
+                              </ImageView>
                            </graphic>
                         </Button>
+                        <Label fx:id="labelTotalUsers" alignment="CENTER" layoutX="83.0" layoutY="94.0" prefHeight="23.0" prefWidth="36.0" style="-fx-text-fill: green; -fx-font-size: 18;" text="100" textAlignment="RIGHT">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label contentDisplay="CENTER" layoutX="27.0" layoutY="126.0" prefHeight="30.0" prefWidth="147.0" style="-fx-text-fill: green;" text="Registered users" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
                      </children>
-                  </VBox>
+                  </AnchorPane>
+                  <AnchorPane fx:id="VBoxBorrowingBook" prefHeight="140.0" prefWidth="202.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                     <children>
+                        <Button fx:id="borrowbookview" layoutX="52.0" layoutY="7.0" prefHeight="64.0" prefWidth="98.0" style="-fx-background-color: transparent; -fx-cursor: hand;" stylesheets="@../CSS/BaseScene.css" />
+                        <Label fx:id="labelBorrowedBooks" alignment="CENTER" layoutX="83.0" layoutY="91.0" prefHeight="23.0" prefWidth="36.0" style="-fx-text-fill: green; -fx-font-size: 18;" text="0" textAlignment="CENTER">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label contentDisplay="CENTER" layoutX="22.0" layoutY="122.0" prefHeight="30.0" prefWidth="157.0" style="-fx-text-fill: green;" text="Borrowing books">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="80.0" fitWidth="83.0" layoutX="61.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                           <image>
+                              <Image url="@../image/borrow.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="VBoxTotalBorrowBooks" prefHeight="140.0" prefWidth="202.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+                     <children>
+                        <Button fx:id="totalborrowbook" layoutX="52.0" layoutY="7.0" prefHeight="64.0" prefWidth="98.0" style="-fx-background-color: transparent; -fx-cursor: hand;" stylesheets="@../CSS/BaseScene.css">
+                           <graphic>
+                              <ImageView fitHeight="74.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/bookborrow.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Label fx:id="labelTotalBorrow" alignment="CENTER" layoutX="83.0" layoutY="91.0" prefHeight="23.0" prefWidth="36.0" style="-fx-text-fill: green; -fx-font-size: 18;" text="100" textAlignment="CENTER">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Label>
+                        <Label contentDisplay="CENTER" layoutX="17.0" layoutY="123.0" prefHeight="30.0" prefWidth="177.0" style="-fx-text-fill: green;" text="Total borrow books" textAlignment="CENTER">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
                </children>
             </HBox>
-            <TableView fx:id="tagTable" prefHeight="354.0" prefWidth="526.0">
-               <columns>
-                  <TableColumn fx:id="tagColumn" prefWidth="273.5999641418457" text="Tag" />
-                  <TableColumn fx:id="totalBooksColumn" prefWidth="243.20001220703125" text="Total Books" />
-               </columns>
-            </TableView>
          </children>
       </VBox>
+      <TableView fx:id="tagTable" layoutX="22.0" layoutY="193.0" prefHeight="359.0" prefWidth="450.0">
+         <columns>
+            <TableColumn fx:id="tagColumn" prefWidth="231.19997882843018" text="Tag" />
+            <TableColumn fx:id="totalBooksColumn" prefWidth="210.40003967285156" text="Total Books" />
+         </columns>
+      </TableView>
+      <AnchorPane fx:id="rcmbook" layoutX="511.0" layoutY="193.0" prefHeight="408.0" prefWidth="450.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10; -fx-border-radius: 20;" AnchorPane.leftAnchor="511.0" AnchorPane.rightAnchor="89.79999999999995">
+         <children>
+            <Label layoutX="144.0" text="Recommend  books:">
+               <font>
+                  <Font name="Dubai Regular" size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="271.0" fitWidth="186.0" layoutX="23.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="100.0" AnchorPane.topAnchor="40.0">
+               <image>
+                  <Image url="@../image/testbook1.jpg" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="271.0" fitWidth="178.0" layoutX="241.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/testbook2.jpg" />
+               </image>
+            </ImageView>
+            <Label layoutX="29.0" layoutY="309.0" prefHeight="19.0" prefWidth="98.0" text="Hoàng Tử Bé">
+               <font>
+                  <Font name="Roboto Medium" size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="29.0" layoutY="328.0" prefHeight="18.0" prefWidth="202.0" text="Author: Antoine de Saint Exupéry" />
+            <Label layoutX="29.0" layoutY="346.0" prefHeight="18.0" prefWidth="163.0" text="Rate: 4,9/5" />
+            <Label layoutX="248.0" layoutY="328.0" prefHeight="18.0" prefWidth="202.0" text="Author: Eva Ibbotson" />
+            <Label layoutX="248.0" layoutY="346.0" prefHeight="18.0" prefWidth="163.0" text="Rate: 4,9/5" />
+            <Label layoutX="248.0" layoutY="309.0" prefHeight="19.0" prefWidth="139.0" text="Đối thoại cùng ma">
+               <font>
+                  <Font name="Roboto Medium" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

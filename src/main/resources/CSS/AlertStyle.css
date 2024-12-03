@@ -1,0 +1,60 @@
+/* Style cho toàn bộ body */
+.custom-alert {
+    -fx-background-color: white;
+    -fx-font-family: sans-serif;
+}
+
+/* Style cho DialogPane của Alert */
+.custom-alert .alert-content {
+    -fx-background-color: white;
+    -fx-border-color: #c0c0c0;
+    -fx-border-width: 2px 4px 4px 2px;
+    -fx-min-width: 300px;
+    -fx-min-height: 150px;
+    -fx-padding: 10px;
+}
+
+/* Style cho tiêu đề của hộp thoại */
+.custom-alert .alert-header {
+    -fx-background-color: #B0B0B0;
+    -fx-font-weight: bold;
+    -fx-text-fill: #000;
+    -fx-alignment: center;
+    -fx-height: 20px;
+    -fx-padding: 5px;
+}
+
+/* Style cho vùng chứa các nút */
+.custom-alert .alert-buttons {
+    -fx-height: 50px;
+    -fx-alignment: center;
+}
+
+/* Style cho các nút trong Alert */
+.custom-alert .button {
+    -fx-background-color: #E9E9CF;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-min-width: 125px;
+    -fx-min-height: 33px;
+    -fx-padding-left: 20px;
+}
+
+/* Thêm hình ảnh vào các nút hoặc phần khác */
+.custom-alert .alert-content .alert-header {
+    -fx-background-position: left center;
+    -fx-background-repeat: no-repeat;
+}
+
+.custom-alert .alert-content .alert-header:after {
+    -fx-background-position: right center;
+    -fx-background-repeat: no-repeat;
+}
+
+.button:hover {
+    -fx-background-color: #4c70ba;
+    -fx-font-family: 'Montserrat';
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+}

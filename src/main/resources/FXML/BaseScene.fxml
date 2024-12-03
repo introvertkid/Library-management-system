@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Point3D?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
@@ -15,13 +16,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.Cursor?>
-<?import javafx.geometry.Insets?>
-<AnchorPane fx:id="Dashboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1200.0" style="-fx-background-color: silver;"
-            stylesheets="@../CSS/BaseScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="library.controller.BaseSceneController">
+<AnchorPane fx:id="Dashboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1200.0" style="-fx-background-color: silver;" stylesheets="@../CSS/BaseScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.BaseSceneController">
    <!-- Navigation bar section -->
-   <AnchorPane layoutY="46.4" prefHeight="574.0" prefWidth="200.0" style="-fx-background-color: #3b5998;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="46.0">
+   <AnchorPane layoutY="48.0" prefHeight="574.0" prefWidth="200.0" style="-fx-background-color: #6C7B8B;" AnchorPane.bottomAnchor="-1.6000000000000227" AnchorPane.topAnchor="48.0">
       <children>
          <VBox fx:id="navigationBar" layoutY="-1.6" prefHeight="503.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-2.0">
             <children>
@@ -39,11 +36,9 @@
                   </font>
                </Button>
                <!-- Documents Button -->
-               <Button fx:id="documentButton" alignment="BASELINE_LEFT" mnemonicParsing="false"
-                       onAction="#handleDocumentButton" prefHeight="42.0" prefWidth="200.0"
-                       style="-fx-cursor: hand;" styleClass="documentButton" text="  Documents">
+               <Button fx:id="documentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleDocumentButton" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="documentButton" text="  Documents">
                   <graphic>
-                     <ImageView fitHeight="23.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                     <ImageView fitHeight="23.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="f">
                         <image>
                            <Image url="@../image/book.png" />
                         </image>
@@ -86,13 +81,11 @@
                <!--                  accordion for drop down menu for user request-->
                <Accordion fx:id="userRequest" visible="false">
                   <panes>
-                     <TitledPane fx:id="userrq" prefWidth="184.0" text="User Request">
+                     <TitledPane fx:id="userrq" prefWidth="184.0" style="-fx-cursor: hand; -fx-text-fill: black;" text="User Request">
                         <content>
-                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="84.0" prefWidth="198.0" style="-fx-background-color: #3b5998; -fx-border-color: #3b5998; -fx-padding: 0; -fx-border-width: 0; -fx-margin: 0;">
+                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="84.0" prefWidth="198.0" style="-fx-background-color: transparent; -fx-border-color: #3b5998; -fx-padding: 0; -fx-border-width: 0; -fx-margin: 0;">
                               <children>
-                                 <Button fx:id="showDocRequests" alignment="BASELINE_LEFT" mnemonicParsing="false"
-                                         onAction="#handleDocRequestsButton" prefHeight="42.0" prefWidth="200.0"
-                                         styleClass="dashboardButton" text="Doc Request" visible="false">
+                                 <Button fx:id="showDocRequests" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleDocRequestsButton" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="docrequestButton" text="Doc Request" visible="false">
                                     <font>
                                        <Font size="18.0" />
                                     </font>
@@ -100,24 +93,19 @@
                                        <Insets left="40.0" />
                                     </padding>
                                     <graphic>
-                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
-                                                  preserveRatio="true">
+                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                           <image>
-                                             <Image url="@../image/book.png"/>
+                                             <Image url="@../image/book.png" />
                                           </image>
                                        </ImageView>
                                     </graphic>
                                     <padding>
-                                       <Insets left="40.0"/>
+                                       <Insets left="40.0" />
                                     </padding>
                                  </Button>
-                                 <Button fx:id="showReportButton" alignment="BASELINE_LEFT" layoutY="42.0"
-                                         mnemonicParsing="false" onAction="#handleShowReportButtonAction"
-                                         prefHeight="42.0" prefWidth="200.0" styleClass="dashboardButton"
-                                         text="Show Reports" visible="false">
+                                 <Button fx:id="showReportButton" alignment="BASELINE_LEFT" layoutY="42.0" mnemonicParsing="false" onAction="#handleShowReportButtonAction" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="showreportButton" text="Show Reports" visible="false">
                                     <graphic>
-                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
-                                                  preserveRatio="true">
+                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                           <image>
                                              <Image url="@../image/report.png" />
                                           </image>
@@ -165,7 +153,7 @@
    <AnchorPane fx:id="contentPane" layoutX="200.0" layoutY="46.0" prefHeight="574.0" prefWidth="1000.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="46.0" />
 
    <!-- Top control bar on the right -->
-   <AnchorPane prefHeight="46.0" prefWidth="1000.0" style="-fx-background-color: #3b5998;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+   <AnchorPane prefHeight="46.0" prefWidth="1000.0" style="-fx-background-color: #6C7B8B;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <!-- User Avatar and Info on the Left -->
       <AnchorPane layoutX="768.0" layoutY="1.0" prefHeight="44.0" prefWidth="231.0" style="-fx-background-color: transparent;" AnchorPane.rightAnchor="0.7999999999999545" />
       <StackPane layoutX="474.0" layoutY="2.0" prefHeight="42.0" prefWidth="501.0">
@@ -187,13 +175,27 @@
                      <Font size="18.0" />
                   </font>
                </Button>
+               <AnchorPane prefHeight="47.0" prefWidth="70.0">
+                  <children>
 
-               <!-- User Name Text -->
-               <Text fx:id="userNameText" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-wrap-text: true;" text="userfullname" textAlignment="JUSTIFY">
-                  <font>
-                     <Font name="Tahoma" size="24.0" />
-                  </font>
-               </Text>
+                           <Text fx:id="userNameText" fontSmoothingType="LCD" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-wrap-text: false;" text="username" textAlignment="RIGHT" AnchorPane.rightAnchor="0.0">
+                              <font>
+                                 <Font name="Tahoma" size="17.0" />
+                              </font>
+                           </Text>
+                     <Text fx:id="role" fontSmoothingType="LCD" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-wrap-text: false;" text="admin" textAlignment="RIGHT" AnchorPane.rightAnchor="0.0">
+                        <font>
+                           <Font name="Tahoma" size="12.0" />
+                        </font>
+                        <cursor>
+                           <Cursor fx:constant="OPEN_HAND" />
+                        </cursor>
+                        <rotationAxis>
+                           <Point3D />
+                        </rotationAxis>
+                     </Text>
+                  </children>
+               </AnchorPane>
                <!-- User Avatar -->
                <ImageView fx:id="userAvatar" fitHeight="40.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                   <clip>
@@ -206,6 +208,11 @@
             </HBox>
          </children>
       </StackPane>
+      <Text fill="#d9b0b0" layoutX="272.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Library Management System" textAlignment="CENTER" wrappingWidth="248.185302734375">
+         <font>
+            <Font name="Century Gothic" size="17.0" />
+         </font>
+      </Text>
    </AnchorPane>
    <ImageView fitHeight="50.0" fitWidth="50.0" layoutY="-2.0">
       <image>

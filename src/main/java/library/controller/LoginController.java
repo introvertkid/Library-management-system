@@ -2,7 +2,6 @@ package library.controller;
 
 import library.helper.*;
 import library.entity.User;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,9 +18,6 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class LoginController extends Controller {
-    @FXML
-    private ProgressIndicator loadingIndicator;
-
     @FXML
     private TextField usernameField;
 
@@ -54,10 +50,6 @@ public class LoginController extends Controller {
         });
     }
 
-    public class UserSession {
-        public static String currentUser;
-    }
-
     public void setupFieldFocusListener(TextInputControl a, String p) {
         a.focusedProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal) {
@@ -71,7 +63,7 @@ public class LoginController extends Controller {
     }
 
     @FXML
-    private void togglePasswordVisibility(ActionEvent event) {
+    private void togglePasswordVisibility() {
         boolean isHiddenVisible = passwordFieldHidden.isVisible();
         if (isHiddenVisible) {
             passwordField.setText(passwordFieldHidden.getText());
@@ -200,7 +192,6 @@ public class LoginController extends Controller {
                 if (PasswordEncoder.hashedpassword(password).equals(storedPassword)) {
                     System.out.println("Login Successful!");
                     User.loadUserData(resultSet);
-                    UserSession.currentUser = username;
                     return true;
                 } else {
                     showAlert("Error", "Incorrect Password!");

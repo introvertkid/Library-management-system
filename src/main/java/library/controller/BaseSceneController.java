@@ -49,7 +49,7 @@ public class BaseSceneController extends Controller {
     private Button logoutButton;
 
     @FXML
-    private Text userNameText;
+    private Text userNameText, role;
 
     @FXML
     private ImageView userAvatar;
@@ -70,6 +70,10 @@ public class BaseSceneController extends Controller {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         DatabaseHelper.connectToDatabase();
         setCircularAvatar();
+        userNameText.setText(User.getUserFullName());
+        role.setText(User.getRole());
+        Button selectedButton = dashboardButton;
+        setStyleForSelectedButton(selectedButton);
         for (Node node : navigationBar.getChildren()) {
             if (node instanceof Button) {
                 Button but = (Button) node;
@@ -87,12 +91,10 @@ public class BaseSceneController extends Controller {
     }
 
     public void setCircularAvatar() {
-        String userFullName = getUserNameFromDatabase(LoginController.UserSession.currentUser);
-        userNameText.setText(userFullName);
-        userAvatar.setImage(changeAvatar(LoginController.UserSession.currentUser));
+        userAvatar.setImage(changeAvatar(User.getUsername()));
         double centerX = userAvatar.getFitWidth() / 2;
-        double centerY =( userAvatar.getFitHeight() -1.75)/ 2;
-        double radius = Math.min(userAvatar.getFitWidth(), userAvatar.getFitHeight()) / 2;
+        double centerY = (userAvatar.getFitHeight() - 1.75) / 2;
+        double radius = (Math.min(userAvatar.getFitWidth(), userAvatar.getFitHeight()) - 1) / 2;
         Circle clip = new Circle(centerX, centerY, radius);
         userAvatar.setClip(clip);
     }
@@ -129,26 +131,6 @@ public class BaseSceneController extends Controller {
             }
         }
         return avatarImage;
-    }
-
-    private String getUserNameFromDatabase(String username) {
-        String userFullName = "";
-        String query = "SELECT userFullName FROM users WHERE username = ?";
-
-        try (Connection conn = DatabaseHelper.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setString(1, username);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                userFullName = rs.getString("userFullName");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        System.out.println(userFullName);
-        return userFullName;
     }
 
     @FXML

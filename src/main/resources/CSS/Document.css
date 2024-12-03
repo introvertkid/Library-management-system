@@ -15,7 +15,6 @@
 }
 
 .table-column {
-    -fx-background-color: transparent;
     -fx-text-fill: #2c3e50;
     -fx-font-size: 14px;
     -fx-alignment: center;
@@ -47,23 +46,14 @@
     -fx-text-fill: white;
 }
 
-.documentTable .scroll-bar:horizontal .decrement-button {
+.documentTable .scroll-bar:horizontal .scroll-bar:vertical .decrement-button {
     -fx-background-color:transparent;
 	-fx-background-radius: 0em;
 	-fx-padding:0 0 10 0;
-
-}
-
-.documentTable .scroll-bar:vertical .decrement-button {
-
-    -fx-background-color:transparent;
-	-fx-background-radius: 0em;
-	-fx-padding:0 10 0 0;
-
 }
 
 .documentTable  .scroll-bar .decrement-arrow,
- {
+{
 	-fx-padding:0;
 }
 

@@ -1,5 +1,7 @@
 package library.controller;
 
+import javafx.scene.control.Button;
+import library.entity.User;
 import library.helper.DatabaseHelper;
 import library.helper.TagBookCount;
 
@@ -28,6 +30,12 @@ public class DashboardController extends Controller {
     private Label labelTotalUsers;
 
     @FXML
+    private Label labelBorrowedBooks;
+
+    @FXML
+    private Label labelTotalBorrow;
+
+    @FXML
     private TableView<TagBookCount> tagTable;
 
     @FXML
@@ -43,6 +51,8 @@ public class DashboardController extends Controller {
         totalBooksColumn.setCellValueFactory(new PropertyValueFactory<>("totalBooks"));
         loadTotalBooksAndUsers();
         loadCategoryBookCounts();
+        loadBorrowingBookCounts(User.getUsername());
+        getTotalBorrowedAndUnreturnedBooks(User.getUsername());
     }
 
     private void loadTotalBooksAndUsers() {
@@ -54,7 +64,7 @@ public class DashboardController extends Controller {
                  ResultSet bookResult = bookStatement.executeQuery()) {
                 if (bookResult.next()) {
                     int numOfBooks = bookResult.getInt(1);
-                    labelTotalBooks.setText("Total books: " + numOfBooks);
+                    labelTotalBooks.setText(String.valueOf(numOfBooks));
                 }
             }
 
@@ -62,7 +72,7 @@ public class DashboardController extends Controller {
                  ResultSet userResult = userStatement.executeQuery()) {
                 if (userResult.next()) {
                     int numOfUsers = userResult.getInt(1);
-                    labelTotalUsers.setText("Total users: " + numOfUsers);
+                    labelTotalUsers.setText(String.valueOf(numOfUsers));
                 }
             }
 
@@ -72,6 +82,7 @@ public class DashboardController extends Controller {
         }
     }
 
+    //todo: join documents - document_tag - tags
     private void loadCategoryBookCounts() {
         String tagBookCountQuery = "SELECT c.tagName, COUNT(d.documentID) AS totalBooks " +
                 "FROM tags c LEFT JOIN documents d ON c.tagID = d.tagID " +
@@ -90,6 +101,51 @@ public class DashboardController extends Controller {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    private void loadBorrowingBookCounts(String username) {
+        String borrowQuery = "SELECT COUNT(*) " +
+                "FROM borrowings b " +
+                "INNER JOIN users u ON b.userName = u.username " +
+                "WHERE u.username = ? and returned = false";
+
+        try (Connection connection = DatabaseHelper.getConnection();
+             PreparedStatement bookStatement = connection.prepareStatement(borrowQuery)) {
+
+            bookStatement.setString(1, username);
+
+            try (ResultSet res = bookStatement.executeQuery()) {
+                if (res.next()) {
+                    int borrowedCount = res.getInt(1);
+                    labelBorrowedBooks.setText(String.valueOf(borrowedCount));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            labelBorrowedBooks.setText("Error fetching data");
+        }
+    }
+
+    private void getTotalBorrowedAndUnreturnedBooks(String username) {
+        String query = "SELECT COUNT(*) " +
+                "FROM borrowings b " +
+                "INNER JOIN users u ON b.userName = u.username " +
+                "WHERE u.username = ?";
+        int x = 0;
+        try (Connection connection = DatabaseHelper.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setString(1, username);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    x = resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        labelTotalBorrow.setText(String.valueOf(x));
     }
 
     public void document() {

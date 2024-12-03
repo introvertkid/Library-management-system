@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -19,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     @FXML
-    private Button selectedButton;
+    private static Button selectedButton;
     private static Parent root;
     private static Scene scene;
     private static Stage primaryStage;
@@ -56,6 +57,10 @@ public class Controller implements Initializable {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(Controller.class.getResource("/CSS/AlertStyle.css").toExternalForm());
+        dialogPane.getStyleClass().add("custom-alert");
+
         alert.showAndWait();
     }
 
@@ -81,15 +86,15 @@ public class Controller implements Initializable {
         }
     }
 
-    void setStyleForSelectedButton(Button button) {
+    static void setStyleForSelectedButton(Button button) {
         if (selectedButton != null) {
             selectedButton.setStyle("");
         }
         selectedButton = button;
         selectedButton.setStyle(
-                "    -fx-background-color: #4c70ba;\n" +
+                "    -fx-background-color: #B9D3EE;\n" +
                         "    -fx-font-family: 'Montserrat';\n" +
-                        "    -fx-text-fill: white;\n" +
+                        "    -fx-text-fill: black;\n" +
                         "    -fx-background-radius: 5;\n" +
                         "    -fx-font-weight: bold;\n" +
                         "    -fx-cursor: hand;");

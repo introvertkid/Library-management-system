@@ -77,7 +77,7 @@ public class DocumentController extends Controller {
 
     private Document selectedBook;
 
-    private ObservableList<Document> documentList = FXCollections.observableArrayList();;
+    private final ObservableList<Document> documentList = FXCollections.observableArrayList();;
     private int currentPage = 0;
     private static final int ROWS_PER_PAGE = 18;
 
@@ -107,8 +107,8 @@ public class DocumentController extends Controller {
             deleteBookButton.setVisible(true);
             editBookButton.setVisible(true);
         }
-        statusChoice.setItems(FXCollections.observableArrayList("All", "Borrowed", "Available"));
-        statusChoice.setValue("All");
+        statusChoice.setItems(FXCollections.observableArrayList(" All", " Borrowed", " Available"));
+        statusChoice.setValue(" All");
     }
 
     private void loadDocumentData() {
@@ -519,7 +519,7 @@ public class DocumentController extends Controller {
          selectedBook = documentTable.getSelectionModel().getSelectedItem();
        if (selectedBook != null) {
            String query = "Select count(*) from borrowings\n"
-                   + "Where userName = ? and documentName = ?";
+                   + "Where userName = ? and documentName = ? and returned = false";
            DatabaseHelper.connectToDatabase();
            try (Connection conn = DatabaseHelper.getConnection()) {
                PreparedStatement stmt = conn.prepareStatement(query);
@@ -553,9 +553,6 @@ public class DocumentController extends Controller {
 
             stmt.setString(1, User.getUsername());
             stmt.setString(2, selectedBook.getDocumentName());
-
-            stmt.setString(1, User.getUsername());
-            stmt.setString(2, selectedBook.getDocumentName());
             int newRowsAffected = stmt.executeUpdate();
 
             if (newRowsAffected > 0) {
@@ -576,14 +573,14 @@ public class DocumentController extends Controller {
     private void updateDocTable() {
         documentList.clear();
 
-        if ("All".equals(statusChoice.getValue())) {
+        if (" All".equals(statusChoice.getValue())) {
             unBorrowButton.setVisible(false);
             loadDocumentData();
-        } else if ("Borrowed".equals(statusChoice.getValue())) {
+        } else if (" Borrowed".equals(statusChoice.getValue())) {
             String query = "SELECT d.documentID, d.documentName, d.authors, d.fileName, d.status "
                     + "FROM borrowings b "
                     + "JOIN documents d ON b.documentName = d.documentName "
-                    + "WHERE b.userName = ?";
+                    + "WHERE b.userName = ? and b.returned = false";
 
             try (Connection conn = DatabaseHelper.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -608,7 +605,7 @@ public class DocumentController extends Controller {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        } else if ("Available".equals(statusChoice.getValue())) {
+        } else if (" Available".equals(statusChoice.getValue())) {
             unBorrowButton.setVisible(false);
             borrowButton.setVisible(true);
             openDocumentButton.setVisible(false);
@@ -652,7 +649,8 @@ public class DocumentController extends Controller {
                     + "SET quantity = quantity + 1 "
                     + "WHERE documentID = ?";
 
-            String queryDeleteBorrowings = "DELETE FROM borrowings "
+            String queryDeleteBorrowings = "update borrowings "
+                    + "set returned = true "
                     + "WHERE documentName = ? AND userName = ?";
 
             DatabaseHelper.connectToDatabase();
@@ -681,7 +679,4 @@ public class DocumentController extends Controller {
             }
         }
     }
-
-
-
 }

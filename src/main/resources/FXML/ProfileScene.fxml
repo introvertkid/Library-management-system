@@ -12,16 +12,15 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="985.0" style="-fx-background-color: silver;" stylesheets="@../CSS/ProfileScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="library.controller.ProfileController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="544.0" prefWidth="985.0" style="-fx-background-color: white;" stylesheets="@../CSS/ProfileScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.ProfileController">
    <children>
       <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="496.0" prefWidth="985.0" style="-fx-background-color: silver; -fx-border: transparent;" AnchorPane.bottomAnchor="-7.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
-            <AnchorPane prefHeight="605.0" prefWidth="984.0" style="-fx-background-color: silver;">
+            <AnchorPane prefHeight="533.0" prefWidth="984.0" style="-fx-background-color: white;">
                <children>
-                  <SplitPane dividerPositions="0.5020358306188925" layoutX="0.8" layoutY="225.0" prefHeight="371.0" prefWidth="969.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="0.0">
+                  <SplitPane dividerPositions="0.5020358306188925" layoutX="0.8" layoutY="225.0" prefHeight="323.0" prefWidth="983.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="0.0">
                      <items>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="294.0" prefWidth="480.0" style="-fx-background-color: white;">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="291.0" prefWidth="483.0" style="-fx-background-color: white;">
                            <children>
                               <VBox alignment="TOP_CENTER" layoutX="88.0" prefHeight="387.0" prefWidth="303.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>

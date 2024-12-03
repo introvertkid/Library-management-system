@@ -23,8 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
-public class AddDocumentController extends Controller
-{
+public class AddDocumentController extends Controller {
     private final String DEFAULT_FILE_NAME = "No file chosen";
     private final String DEFAULT_PATH = "src\\main\\resources\\Document\\";
 
@@ -159,19 +158,23 @@ public class AddDocumentController extends Controller
         }
     }
 
+    //todo: no need to insert tagID here
     private void insertDocumentIntoDB() {
-        String query = "INSERT INTO documents (documentName, authors, fileName) " +
-                "VALUES (?, ?, ?)";
+        String query = "INSERT INTO documents (documentName, authors, fileName, tagID) " +
+                "VALUES (?, ?, ?, ?)";
+        for (String str : selectedTags) {
+            try (PreparedStatement stmt = DatabaseHelper.getConnection().prepareStatement(query)) {
 
-        try (PreparedStatement stmt = DatabaseHelper.getConnection().prepareStatement(query)) {
-            stmt.setString(1, bookNameField.getText());
-            stmt.setString(2, authorField.getText());
-            stmt.setString(3, selectedFile.getName());
-            stmt.executeUpdate();
-            showAlert("Success", "Document added successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert("Error", "Failed to add document");
+                stmt.setString(1, bookNameField.getText());
+                stmt.setString(2, authorField.getText());
+                stmt.setString(3, selectedFile.getName());
+                stmt.setInt(4, tags.get(str));
+                stmt.executeUpdate();
+                showAlert("Success", "Document added successfully");
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("Error", "Failed to add document");
+            }
         }
     }
 

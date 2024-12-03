@@ -33,8 +33,6 @@ public class DocumentRequestController extends Controller {
     @FXML
     private TableColumn<Document, String> statusColumn;
     @FXML
-    private ComboBox<String> statusChoice;
-    @FXML
     private AnchorPane contentPane;
 
     private ObservableList<Document> documentList = FXCollections.observableArrayList();
