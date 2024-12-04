@@ -62,9 +62,7 @@ public class BookDetailController extends Controller {
 //        commentScroll.setContent(commentList);
 //        commentScroll.setStyle("-fx-background-color: #FAFAFA; -fx-border-color: transparent;");
 
-
         commentScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-
 
         Platform.runLater(() -> {
             Node verticalScrollBar = commentScroll.lookup(".scroll-bar:vertical");
