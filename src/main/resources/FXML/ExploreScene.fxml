@@ -9,21 +9,21 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="contentPane" prefHeight="609.0" prefWidth="1057.0" stylesheets="@../CSS/ExploreScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.ExploreController">
-    <StackPane layoutX="259.0" prefHeight="30.0" prefWidth="278.0">
+    <StackPane layoutX="259.0" prefHeight="52.0" prefWidth="490.0">
         <TextField fx:id="searchField" prefHeight="24.0" prefWidth="206.0" promptText="Search..." styleClass="text-field" />
-        <Button fx:id="findBookButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#handleFindBook" prefHeight="34.0" prefWidth="42.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="🔎" textAlignment="RIGHT" StackPane.alignment="CENTER_RIGHT">
+        <Button fx:id="findBookButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#handleFindBook" prefHeight="34.0" prefWidth="62.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="🔎" textAlignment="RIGHT" StackPane.alignment="CENTER_RIGHT">
             <font>
                 <Font size="18.0" />
             </font>
         </Button>
     </StackPane>
-    <TableView fx:id="bookTable" layoutX="14.0" layoutY="65.0" prefHeight="480.0" prefWidth="943.0">
+    <TableView fx:id="bookTable" layoutX="19.0" layoutY="51.0" prefHeight="504.0" prefWidth="945.0">
         <columns>
-            <TableColumn fx:id="thumbnailColumn" prefWidth="150.0" text="Thumbnail" />
-            <TableColumn fx:id="titleColumn" prefWidth="300.0" text="Title" />
-            <TableColumn fx:id="authorColumn" prefWidth="280.0" text="Authors" />
-         <TableColumn fx:id="qrCodeColumn" prefWidth="180.0" text="QR" />
+            <TableColumn fx:id="thumbnailColumn" prefWidth="144.00000381469727" text="Thumbnail" />
+            <TableColumn fx:id="titleColumn" prefWidth="306.40000915527344" text="Title" />
+            <TableColumn fx:id="authorColumn" prefWidth="268.7999572753906" text="Authors" />
+         <TableColumn fx:id="qrCodeColumn" prefWidth="206.4000244140625" text="QR" />
         </columns>
     </TableView>
-
+   <Button fx:id="openDetailBook" layoutX="802.0" layoutY="14.0" mnemonicParsing="false" onAction="#openBookDetail" prefHeight="24.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Detal" />
 </AnchorPane>

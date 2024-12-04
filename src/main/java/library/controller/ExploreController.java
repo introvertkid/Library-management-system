@@ -7,19 +7,19 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import library.entity.Book;
 import library.helper.APIHelper;
 import library.helper.JsonHelper;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class ExploreController extends Controller {
@@ -31,6 +31,8 @@ public class ExploreController extends Controller {
 
     @FXML
     public AnchorPane contentPane;
+
+    public ProgressIndicator loadingIndicator;
 
     @FXML
     private TableView<Book> bookTable;
@@ -51,16 +53,6 @@ public class ExploreController extends Controller {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        searchField.setOnKeyPressed(event ->
-        {
-            if (event.getCode() == KeyCode.ENTER) {
-                try {
-                    handleFindBook();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
         thumbnailColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getThumbnail()));
         thumbnailColumn.setCellFactory(column -> new TableCell<>() {
             private final ImageView imageView = new ImageView();
@@ -84,7 +76,7 @@ public class ExploreController extends Controller {
             }
         });
 
-        //cau hinh qr
+        // Cấu hình QR Code
         qrCodeColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getQrCode()));
         qrCodeColumn.setCellFactory(column -> new TableCell<>() {
             private final ImageView imageView = new ImageView();
@@ -107,48 +99,118 @@ public class ExploreController extends Controller {
             }
         });
 
+        // Cấu hình title
         titleColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTitle()));
+        titleColumn.setCellFactory(column -> new TableCell<>() {
+            private final Text text = new Text();
+
+            {
+                text.wrappingWidthProperty().bind(titleColumn.widthProperty().subtract(10));
+                text.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    text.setText(item);
+                    setGraphic(text);
+                    setAlignment(javafx.geometry.Pos.CENTER); // Căn giữa toàn bộ TableCell
+                }
+            }
+        });
+
+        // Cấu hình author
         authorColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAuthors()));
+        authorColumn.setCellFactory(column -> new TableCell<>() {
+            private final Text text = new Text();
+
+            {
+                text.wrappingWidthProperty().bind(authorColumn.widthProperty().subtract(10));
+                text.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+            }
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    text.setText(item);
+                    setGraphic(text);
+                    setAlignment(javafx.geometry.Pos.CENTER);
+                }
+            }
+        });
 
         bookTable.setItems(bookList);
+
+        searchField.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                findBookButton.fire();
+            }
+        });
+        loadingIndicator = new ProgressIndicator();
+        loadingIndicator.setLayoutX(220);
+        loadingIndicator.setLayoutY(10);
+        loadingIndicator.setVisible(false);
+        loadingIndicator.setStyle("-fx-pref-width: 30px; -fx-pref-height: 30px;");
+        contentPane.getChildren().add(loadingIndicator);
     }
 
-    public void handleFindBook() throws Exception {
+    public void handleFindBook() {
         String query = APIHelper.parseQuery(searchField.getText().trim());
-        JsonObject jsonObject = APIHelper.fetchBookData(query);
 
-        if (jsonObject != null) {
-            bookList.clear();
-            JsonArray items = jsonObject.getAsJsonArray("items");
-            for (int i = 0; i < items.size(); i++) {
-                JsonObject bookJson = items.get(i).getAsJsonObject().getAsJsonObject("volumeInfo");
-                String title = getJsonPrimitive(bookJson, "title");
-                String authors = getJsonPrimitive(bookJson, "authors");
-                String thumbnailUrl = bookJson.has("imageLinks")
-                        ? bookJson.getAsJsonObject("imageLinks").get("thumbnail").getAsString()
-                        : null;
-                String bookLink = bookJson.has("infoLink") ? bookJson.get("infoLink").getAsString() : "";
+        loadingIndicator.setVisible(true);
 
-                // tao thumbnail
-                Image thumbnail = thumbnailUrl != null ? new Image(thumbnailUrl, 150, 200, true, true) : null;
+        // Tạo Task để load dữ liệu trên background thread
+        Task<ObservableList<Book>> loadBooksTask = new Task<>() {
+            @Override
+            protected ObservableList<Book> call() throws Exception {
+                ObservableList<Book> books = FXCollections.observableArrayList();
+                JsonObject jsonObject = APIHelper.fetchBookData(query);
 
-                // tao qr
-                Image qrCode = QRCodeGenerator.generateQRCode(bookLink, 100, 100);
-                String thumbnailLink = getJsonPrimitive(items.get(0), "thumbnail");
-                String title1 = getJsonPrimitive(items.get(0), "title");
-                String authors1 = getJsonPrimitive(items.get(0), "authors");
-                System.out.println(JsonHelper.decodeURL(JsonHelper.parsePrettyJson((JsonObject) items.get(0))));
-                System.out.println("thumbnail: " + thumbnailLink);
-                System.out.println("title: " + title1);
-                System.out.println("authors: " + authors1);
-                System.out.println("END");
+                if (jsonObject != null) {
+                    JsonArray items = jsonObject.getAsJsonArray("items");
+                    for (int i = 0; i < items.size(); i++) {
+                        JsonObject bookJson = items.get(i).getAsJsonObject().getAsJsonObject("volumeInfo");
+                        String title = getJsonPrimitive(bookJson, "title");
+                        String authors = getJsonPrimitive(bookJson, "authors");
+                        String thumbnailUrl = bookJson.has("imageLinks")
+                                ? bookJson.getAsJsonObject("imageLinks").get("thumbnail").getAsString()
+                                : null;
+                        String bookLink = bookJson.has("infoLink") ? bookJson.get("infoLink").getAsString() : "";
 
-                // add book
-                bookList.add(new Book(thumbnail, title, authors, qrCode));
+                        Image thumbnail = thumbnailUrl != null ? new Image(thumbnailUrl, 150, 200, true, true) : null;
+                        Image qrCode = QRCodeGenerator.generateQRCode(bookLink, 100, 100);
+                        String title1 = getJsonPrimitive(items.get(0), "title");
+                        String authors1 = getJsonPrimitive(items.get(0), "authors");
+                        System.out.println(JsonHelper.decodeURL(JsonHelper.parsePrettyJson((JsonObject) items.get(0))));
+                        System.out.println("thumbnail: " + thumbnailUrl);
+                        System.out.println("title: " + title1);
+                        System.out.println("authors: " + authors1);
+                        System.out.println("END");
+
+                        books.add(new Book(thumbnail, title, authors, qrCode));
+                    }
+                }
+
+                return books;
             }
-        } else {
-            System.out.println("JSON object is null");
-        }
+        };
+
+        //sau khi tải xong
+        loadBooksTask.setOnSucceeded(event -> {
+            bookList.setAll(loadBooksTask.getValue());
+            loadingIndicator.setVisible(false);
+        });
+        loadBooksTask.setOnFailed(event -> {
+            loadingIndicator.setVisible(false);
+            System.err.println("Error loading books: " + loadBooksTask.getException());
+        });
+        new Thread(loadBooksTask).start();
     }
 
     //todo: hotfix only !!!
@@ -202,5 +264,9 @@ public class ExploreController extends Controller {
 //            System.out.println(curNode.getClass().getName() + " is not handled");
 //        }
         return null;
+    }
+
+    public void openBookDetail() {
+        loadFXMLtoAnchorPane("BookDetail", contentPane);
     }
 }
