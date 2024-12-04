@@ -5,7 +5,7 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane fx:id="contentPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="library.controller.RequestDetailsController">
+            fx:controller="library.controller.DocumentDetailsController">
    <children>
       <AnchorPane fx:id="container" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588" prefWidth="985.3333740234375">
          <children>
@@ -18,7 +18,7 @@
             <TextField fx:id="authorField" layoutX="150.0" layoutY="175.0" prefWidth="200.0" />
             <Label layoutX="50.0" layoutY="226.0" text="File:" />
             <Text fx:id="chosenFileName" layoutX="150.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No file chosen" />
-            <Button layoutX="144.0" layoutY="248.0" mnemonicParsing="false" onAction="#aceptRequest" prefHeight="26.0" prefWidth="51.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Acept" />
+            <Button layoutX="144.0" layoutY="248.0" mnemonicParsing="false" onAction="#acceptRequest" prefHeight="26.0" prefWidth="51.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Acept" />
             <Button layoutX="209.0" layoutY="248.0" mnemonicParsing="false" onAction="#rejectRequest" prefHeight="26.0" prefWidth="51.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Reject" />
             <Button layoutX="274.0" layoutY="248.0" mnemonicParsing="false" onAction="#openFile" prefHeight="26.0" prefWidth="76.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Open FIle" />
          </children>

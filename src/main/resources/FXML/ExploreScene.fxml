@@ -25,5 +25,6 @@
          <TableColumn fx:id="qrCodeColumn" prefWidth="206.4000244140625" text="QR" />
         </columns>
     </TableView>
-   <Button fx:id="openDetailBook" layoutX="802.0" layoutY="14.0" mnemonicParsing="false" onAction="#openBookDetail" prefHeight="24.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Detal" />
+   <Button fx:id="openDetailBook" layoutX="802.0" layoutY="14.0" mnemonicParsing="false"
+           onAction="#openBookDetail" prefHeight="24.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Detail" />
 </AnchorPane>

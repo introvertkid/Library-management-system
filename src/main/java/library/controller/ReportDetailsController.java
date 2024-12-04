@@ -29,12 +29,11 @@ public class ReportDetailsController extends Controller {
     @FXML
     private TextArea contentField;
 
-    private int reportID = ShowReportController.selectedReport.getReportID();
-    private int userID = ShowReportController.selectedReport.getUserID();
-    private String reportType = ShowReportController.selectedReport.getReportType();
-    private String title = ShowReportController.selectedReport.getTitle();
-    private String content = ShowReportController.selectedReport.getContent();
-    private String status = ShowReportController.selectedReport.getStatus();
+    private int reportID = ReportRequestController.selectedReport.getReportID();
+    private String reportType = ReportRequestController.selectedReport.getReportType();
+    private String title = ReportRequestController.selectedReport.getTitle();
+    private String content = ReportRequestController.selectedReport.getContent();
+    private String status = ReportRequestController.selectedReport.getStatus();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

@@ -11,135 +11,154 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="1005.0" style="-fx-background-color: white;" stylesheets="@../CSS/Dashboard.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.DashboardController">
-   <children>
-      <VBox fx:id="contentVbox" alignment="CENTER" layoutY="-6.0" prefHeight="198.0" prefWidth="983.0" spacing="20" style="-fx-padding: 20;">
-         <children>
-            <HBox alignment="CENTER" prefHeight="158.0" prefWidth="924.0" spacing="40.0">
-               <children>
-                  <AnchorPane fx:id="VBoxTotalBooks" prefHeight="140.0" prefWidth="202.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
-                     <children>
-                        <Button fx:id="documentview" layoutX="52.0" layoutY="7.0" onAction="#document" prefHeight="64.0" prefWidth="98.0" style="-fx-background-color: transparent; -fx-cursor: hand;" stylesheets="@../CSS/BaseScene.css">
-                           <graphic>
-                              <ImageView fitHeight="74.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../image/totalbook.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Label fx:id="labelTotalBooks" alignment="CENTER" layoutX="83.0" layoutY="91.0" prefHeight="23.0" prefWidth="36.0" style="-fx-text-fill: green; -fx-font-size: 18;" text="100" textAlignment="CENTER">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Label>
-                        <Label contentDisplay="CENTER" layoutX="46.0" layoutY="123.0" prefHeight="30.0" prefWidth="109.0" style="-fx-text-fill: green;" text="Total books" textAlignment="CENTER">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="VBoxTotalUsers" prefHeight="140.0" prefWidth="202.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
-                     <children>
-                        <Button fx:id="user" layoutX="52.0" layoutY="7.0" prefHeight="64.0" prefWidth="98.0" style="-fx-background-color: transparent; -fx-cursor: hand;" stylesheets="@../CSS/BaseScene.css">
-                           <graphic>
-                              <ImageView fitHeight="75.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../image/totaluser.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Label fx:id="labelTotalUsers" alignment="CENTER" layoutX="83.0" layoutY="94.0" prefHeight="23.0" prefWidth="36.0" style="-fx-text-fill: green; -fx-font-size: 18;" text="100" textAlignment="RIGHT">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Label>
-                        <Label contentDisplay="CENTER" layoutX="27.0" layoutY="126.0" prefHeight="30.0" prefWidth="147.0" style="-fx-text-fill: green;" text="Registered users" textAlignment="CENTER">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="VBoxBorrowingBook" prefHeight="140.0" prefWidth="202.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
-                     <children>
-                        <Button fx:id="borrowbookview" layoutX="52.0" layoutY="7.0" prefHeight="64.0" prefWidth="98.0" style="-fx-background-color: transparent; -fx-cursor: hand;" stylesheets="@../CSS/BaseScene.css" />
-                        <Label fx:id="labelBorrowedBooks" alignment="CENTER" layoutX="83.0" layoutY="91.0" prefHeight="23.0" prefWidth="36.0" style="-fx-text-fill: green; -fx-font-size: 18;" text="0" textAlignment="CENTER">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Label>
-                        <Label contentDisplay="CENTER" layoutX="22.0" layoutY="122.0" prefHeight="30.0" prefWidth="157.0" style="-fx-text-fill: green;" text="Borrowing books">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <ImageView fitHeight="80.0" fitWidth="83.0" layoutX="61.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-                           <image>
-                              <Image url="@../image/borrow.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="VBoxTotalBorrowBooks" prefHeight="140.0" prefWidth="202.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
-                     <children>
-                        <Button fx:id="totalborrowbook" layoutX="52.0" layoutY="7.0" prefHeight="64.0" prefWidth="98.0" style="-fx-background-color: transparent; -fx-cursor: hand;" stylesheets="@../CSS/BaseScene.css">
-                           <graphic>
-                              <ImageView fitHeight="74.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../image/bookborrow.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Label fx:id="labelTotalBorrow" alignment="CENTER" layoutX="83.0" layoutY="91.0" prefHeight="23.0" prefWidth="36.0" style="-fx-text-fill: green; -fx-font-size: 18;" text="100" textAlignment="CENTER">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Label>
-                        <Label contentDisplay="CENTER" layoutX="17.0" layoutY="123.0" prefHeight="30.0" prefWidth="177.0" style="-fx-text-fill: green;" text="Total borrow books" textAlignment="CENTER">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-      <TableView fx:id="tagTable" layoutX="22.0" layoutY="193.0" prefHeight="359.0" prefWidth="450.0">
-         <columns>
-            <TableColumn fx:id="tagColumn" prefWidth="231.19997882843018" text="Tag" />
-            <TableColumn fx:id="totalBooksColumn" prefWidth="210.40003967285156" text="Total Books" />
-         </columns>
-      </TableView>
-      <AnchorPane fx:id="rcmbook" layoutX="511.0" layoutY="193.0" prefHeight="408.0" prefWidth="450.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10; -fx-border-radius: 20;" AnchorPane.leftAnchor="511.0" AnchorPane.rightAnchor="89.79999999999995">
-         <children>
-            <Label fx:id="recommend" layoutX="144.0" text="Recommend  books:">
+<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="1005.0" style="-fx-background-color: white;"
+            stylesheets="@../CSS/Dashboard.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="library.controller.DashboardController">
+   <VBox fx:id="contentVbox" alignment="CENTER" layoutY="-6.0" prefHeight="198.0" prefWidth="983.0" spacing="20"
+         style="-fx-padding: 20;">
+      <HBox alignment="CENTER" prefHeight="158.0" prefWidth="924.0" spacing="40.0">
+         <AnchorPane fx:id="VBoxTotalBooks" prefHeight="140.0" prefWidth="202.0"
+                     style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+            <Button fx:id="documentview" layoutX="52.0" layoutY="7.0" onAction="#document" prefHeight="64.0"
+                    prefWidth="98.0" style="-fx-background-color: transparent; -fx-cursor: hand;"
+                    stylesheets="@../CSS/BaseScene.css">
+               <graphic>
+                  <ImageView fitHeight="74.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                     <Image url="@../image/totalbook.png"/>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label fx:id="labelTotalBooks" alignment="CENTER" layoutX="83.0" layoutY="91.0" prefHeight="23.0"
+                   prefWidth="36.0" style="-fx-text-fill: green; -fx-font-size: 18;" text="100"
+                   textAlignment="CENTER">
                <font>
-                  <Font name="Dubai Regular" size="20.0" />
+                  <Font size="10.0"/>
                </font>
             </Label>
-            <ImageView fx:id="firstBookCover" fitHeight="271.0" fitWidth="186.0" layoutX="23.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="100.0" AnchorPane.topAnchor="40.0" />
-            <ImageView fx:id="secondBookCover" fitHeight="271.0" fitWidth="178.0" layoutX="241.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="firstBookName" layoutX="29.0" layoutY="309.0" prefHeight="21.0" prefWidth="163.0" text="Hoàng Tử Bé">
+            <Label contentDisplay="CENTER" layoutX="46.0" layoutY="123.0" prefHeight="30.0" prefWidth="109.0"
+                   style="-fx-text-fill: green;" text="Total books" textAlignment="CENTER">
                <font>
-                  <Font name="Roboto Medium" size="15.0" />
+                  <Font size="20.0"/>
                </font>
             </Label>
-            <Label fx:id="firstBookAuthor" layoutX="29.0" layoutY="328.0" prefHeight="18.0" prefWidth="202.0" text="Author: Antoine de Saint Exupéry" />
-            <Label layoutX="29.0" layoutY="346.0" prefHeight="18.0" prefWidth="163.0" text="Rate: 5/5" />
-            <Label fx:id="secondBookAuthor" layoutX="248.0" layoutY="328.0" prefHeight="18.0" prefWidth="202.0" text="Author: Eva Ibbotson" />
-            <Label layoutX="248.0" layoutY="346.0" prefHeight="18.0" prefWidth="163.0" text="Rate: 5/5" />
-            <Label fx:id="secondBookName" layoutX="248.0" layoutY="309.0" prefHeight="21.0" prefWidth="157.0" text="Đối thoại cùng ma">
+         </AnchorPane>
+         <AnchorPane fx:id="VBoxTotalUsers" prefHeight="140.0" prefWidth="202.0"
+                     style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+            <Button fx:id="user" layoutX="52.0" layoutY="7.0" prefHeight="64.0" prefWidth="98.0"
+                    style="-fx-background-color: transparent; -fx-cursor: hand;"
+                    stylesheets="@../CSS/BaseScene.css">
+               <graphic>
+                  <ImageView fitHeight="75.0" fitWidth="78.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/totaluser.png"/>
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label fx:id="labelTotalUsers" alignment="CENTER" layoutX="83.0" layoutY="94.0" prefHeight="23.0"
+                   prefWidth="36.0" style="-fx-text-fill: green; -fx-font-size: 18;" text="100"
+                   textAlignment="RIGHT">
                <font>
-                  <Font name="Roboto Medium" size="15.0" />
+                  <Font size="10.0"/>
                </font>
             </Label>
-         </children>
-      </AnchorPane>
-   </children>
+            <Label contentDisplay="CENTER" layoutX="27.0" layoutY="126.0" prefHeight="30.0" prefWidth="147.0"
+                   style="-fx-text-fill: green;" text="Registered users" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0"/>
+               </font>
+            </Label>
+         </AnchorPane>
+         <AnchorPane fx:id="VBoxBorrowingBook" prefHeight="140.0" prefWidth="202.0"
+                     style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+            <Button fx:id="borrowbookview" layoutX="52.0" layoutY="7.0" prefHeight="64.0" prefWidth="98.0"
+                    style="-fx-background-color: transparent; -fx-cursor: hand;"
+                    stylesheets="@../CSS/BaseScene.css"/>
+            <Label fx:id="labelBorrowedBooks" alignment="CENTER" layoutX="83.0" layoutY="91.0"
+                   prefHeight="23.0" prefWidth="36.0" style="-fx-text-fill: green; -fx-font-size: 18;" text="0"
+                   textAlignment="CENTER">
+               <font>
+                  <Font size="10.0"/>
+               </font>
+            </Label>
+            <Label contentDisplay="CENTER" layoutX="22.0" layoutY="122.0" prefHeight="30.0" prefWidth="157.0"
+                   style="-fx-text-fill: green;" text="Borrowing books">
+               <font>
+                  <Font size="20.0"/>
+               </font>
+            </Label>
+            <ImageView fitHeight="80.0" fitWidth="83.0" layoutX="61.0" layoutY="7.0" pickOnBounds="true"
+                       preserveRatio="true" style="-fx-cursor: hand;">
+               <image>
+                  <Image url="@../image/borrow.png"/>
+               </image>
+            </ImageView>
+         </AnchorPane>
+         <AnchorPane fx:id="VBoxTotalBorrowBooks" prefHeight="140.0" prefWidth="202.0"
+                     style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-color: black; -fx-border-radius: 20;">
+            <Button fx:id="totalborrowbook" layoutX="52.0" layoutY="7.0" prefHeight="64.0" prefWidth="98.0"
+                    style="-fx-background-color: transparent; -fx-cursor: hand;"
+                    stylesheets="@../CSS/BaseScene.css">
+               <graphic>
+                  <ImageView fitHeight="74.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../image/bookborrow.png"/>
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label fx:id="labelTotalBorrow" alignment="CENTER" layoutX="83.0" layoutY="91.0" prefHeight="23.0"
+                   prefWidth="36.0" style="-fx-text-fill: green; -fx-font-size: 18;" text="100"
+                   textAlignment="CENTER">
+               <font>
+                  <Font size="10.0"/>
+               </font>
+            </Label>
+            <Label contentDisplay="CENTER" layoutX="17.0" layoutY="123.0" prefHeight="30.0" prefWidth="177.0"
+                   style="-fx-text-fill: green;" text="Total borrow books" textAlignment="CENTER">
+               <font>
+                  <Font size="20.0"/>
+               </font>
+            </Label>
+         </AnchorPane>
+      </HBox>
+   </VBox>
+   <TableView fx:id="tagTable" layoutX="22.0" layoutY="193.0" prefHeight="359.0" prefWidth="450.0">
+      <columns>
+         <TableColumn fx:id="tagColumn" prefWidth="231.19997882843018" text="Tag"/>
+         <TableColumn fx:id="totalBooksColumn" prefWidth="210.40003967285156" text="Total Books"/>
+      </columns>
+   </TableView>
+   <AnchorPane fx:id="rcmbook" layoutX="511.0" layoutY="193.0" prefHeight="408.0" prefWidth="450.0"
+               style="-fx-background-color: #EEEEEE; -fx-background-radius: 10; -fx-border-radius: 20;"
+               AnchorPane.leftAnchor="511.0" AnchorPane.rightAnchor="89.79999999999995">
+      <Label fx:id="recommend" layoutX="144.0" text="Recommend  books:">
+         <font>
+            <Font name="Dubai Regular" size="20.0"/>
+         </font>
+      </Label>
+      <ImageView fx:id="firstBookCover" fitHeight="271.0" fitWidth="186.0" layoutX="23.0" layoutY="37.0"
+                 pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="100.0"
+                 AnchorPane.topAnchor="40.0"/>
+      <ImageView fx:id="secondBookCover" fitHeight="271.0" fitWidth="178.0" layoutX="241.0" layoutY="36.0"
+                 pickOnBounds="true" preserveRatio="true"/>
+      <Label fx:id="firstBookName" layoutX="29.0" layoutY="309.0" prefHeight="21.0" prefWidth="163.0"
+             text="Hoàng Tử Bé">
+         <font>
+            <Font name="Roboto Medium" size="15.0"/>
+         </font>
+      </Label>
+      <Label fx:id="firstBookAuthor" layoutX="29.0" layoutY="328.0" prefHeight="18.0" prefWidth="202.0"
+             text="Author: Antoine de Saint Exupéry"/>
+      <Label layoutX="29.0" layoutY="346.0" prefHeight="18.0" prefWidth="163.0" text="Rate: 5/5"/>
+      <Label fx:id="secondBookAuthor" layoutX="248.0" layoutY="328.0" prefHeight="18.0" prefWidth="202.0"
+             text="Author: Eva Ibbotson"/>
+      <Label layoutX="248.0" layoutY="346.0" prefHeight="18.0" prefWidth="163.0" text="Rate: 5/5"/>
+      <Label fx:id="secondBookName" layoutX="248.0" layoutY="309.0" prefHeight="21.0" prefWidth="157.0"
+             text="Đối thoại cùng ma">
+         <font>
+            <Font name="Roboto Medium" size="15.0"/>
+         </font>
+      </Label>
+   </AnchorPane>
 </AnchorPane>

@@ -50,10 +50,6 @@ public class AddDocumentController extends Controller {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         suggestionList.setVisible(false);
         getAllTagsFromDB();
-        for (String str : suggestions) {
-            System.out.println(str);
-        }
-        System.out.println();
         System.out.println(Collections.singletonList(tags));
 
         // Listen for text changes in the tag field to show tag suggestions
@@ -158,23 +154,19 @@ public class AddDocumentController extends Controller {
         }
     }
 
-    //todo: no need to insert tagID here
     private void insertDocumentIntoDB() {
-        String query = "INSERT INTO documents (documentName, authors, fileName, tagID) " +
-                "VALUES (?, ?, ?, ?)";
-        for (String str : selectedTags) {
-            try (PreparedStatement stmt = DatabaseHelper.getConnection().prepareStatement(query)) {
+        String query = "INSERT INTO documents (documentName, authors, fileName) " +
+                "VALUES (?, ?, ?)";
+        try (PreparedStatement stmt = DatabaseHelper.getConnection().prepareStatement(query)) {
 
-                stmt.setString(1, bookNameField.getText());
-                stmt.setString(2, authorField.getText());
-                stmt.setString(3, selectedFile.getName());
-                stmt.setInt(4, tags.get(str));
-                stmt.executeUpdate();
-                showAlert("Success", "Document added successfully");
-            } catch (Exception e) {
-                e.printStackTrace();
-                showAlert("Error", "Failed to add document");
-            }
+            stmt.setString(1, bookNameField.getText());
+            stmt.setString(2, authorField.getText());
+            stmt.setString(3, selectedFile.getName());
+            stmt.executeUpdate();
+            showAlert("Success", "Document added successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to add document");
         }
     }
 
