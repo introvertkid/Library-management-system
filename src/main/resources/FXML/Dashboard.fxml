@@ -118,31 +118,23 @@
       </TableView>
       <AnchorPane fx:id="rcmbook" layoutX="511.0" layoutY="193.0" prefHeight="408.0" prefWidth="450.0" style="-fx-background-color: #EEEEEE; -fx-background-radius: 10; -fx-border-radius: 20;" AnchorPane.leftAnchor="511.0" AnchorPane.rightAnchor="89.79999999999995">
          <children>
-            <Label layoutX="144.0" text="Recommend  books:">
+            <Label fx:id="recommend" layoutX="144.0" text="Recommend  books:">
                <font>
                   <Font name="Dubai Regular" size="20.0" />
                </font>
             </Label>
-            <ImageView fitHeight="271.0" fitWidth="186.0" layoutX="23.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="100.0" AnchorPane.topAnchor="40.0">
-               <image>
-                  <Image url="@../image/testbook1.jpg" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="271.0" fitWidth="178.0" layoutX="241.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/testbook2.jpg" />
-               </image>
-            </ImageView>
-            <Label layoutX="29.0" layoutY="309.0" prefHeight="19.0" prefWidth="98.0" text="Hoàng Tử Bé">
+            <ImageView fx:id="firstBookCover" fitHeight="271.0" fitWidth="186.0" layoutX="23.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="100.0" AnchorPane.topAnchor="40.0" />
+            <ImageView fx:id="secondBookCover" fitHeight="271.0" fitWidth="178.0" layoutX="241.0" layoutY="36.0" pickOnBounds="true" preserveRatio="true" />
+            <Label fx:id="firstBookName" layoutX="29.0" layoutY="309.0" prefHeight="19.0" prefWidth="98.0" text="Hoàng Tử Bé">
                <font>
                   <Font name="Roboto Medium" size="15.0" />
                </font>
             </Label>
-            <Label layoutX="29.0" layoutY="328.0" prefHeight="18.0" prefWidth="202.0" text="Author: Antoine de Saint Exupéry" />
+            <Label fx:id="firstBookAuthor" layoutX="29.0" layoutY="328.0" prefHeight="18.0" prefWidth="202.0" text="Author: Antoine de Saint Exupéry" />
             <Label layoutX="29.0" layoutY="346.0" prefHeight="18.0" prefWidth="163.0" text="Rate: 4,9/5" />
-            <Label layoutX="248.0" layoutY="328.0" prefHeight="18.0" prefWidth="202.0" text="Author: Eva Ibbotson" />
+            <Label fx:id="secondBookAuthor" layoutX="248.0" layoutY="328.0" prefHeight="18.0" prefWidth="202.0" text="Author: Eva Ibbotson" />
             <Label layoutX="248.0" layoutY="346.0" prefHeight="18.0" prefWidth="163.0" text="Rate: 4,9/5" />
-            <Label layoutX="248.0" layoutY="309.0" prefHeight="19.0" prefWidth="139.0" text="Đối thoại cùng ma">
+            <Label fx:id="secondBookName" layoutX="248.0" layoutY="309.0" prefHeight="19.0" prefWidth="139.0" text="Đối thoại cùng ma">
                <font>
                   <Font name="Roboto Medium" size="15.0" />
                </font>
