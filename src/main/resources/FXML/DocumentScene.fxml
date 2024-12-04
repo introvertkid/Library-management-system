@@ -14,13 +14,10 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="contentPane" prefHeight="567.0" prefWidth="990.0" style="-fx-background-color: white;"
-            stylesheets="@../CSS/Document.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="library.controller.DocumentController">
+<AnchorPane fx:id="contentPane" prefHeight="567.0" prefWidth="990.0" style="-fx-background-color: white;" stylesheets="@../CSS/Document.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.DocumentController">
     <children>
         <AnchorPane layoutX="8.0" prefHeight="46.0" prefWidth="980.0">
             <children>
-                <Button fx:id="openDocumentButton" layoutX="622.0" layoutY="9.0" mnemonicParsing="false" onAction="#openDocument" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" AnchorPane.bottomAnchor="10.199999999999996" AnchorPane.leftAnchor="622.0" AnchorPane.rightAnchor="271.5999999999999" AnchorPane.topAnchor="9.0" />
 
                 <Button fx:id="deleteBookButton" alignment="BASELINE_LEFT" layoutX="911.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleDeleteBook" prefHeight="24.0" prefWidth="10.0" style="-fx-cursor: hand; -fx-background-color: transparent;" styleClass="accountButton" visible="true">
                     <graphic>
@@ -57,7 +54,6 @@
                         </Button>
                     </children>
                 </StackPane>
-                <Button fx:id="borrowButton" layoutX="622.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleBorrowButton" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Borrow" AnchorPane.bottomAnchor="10.200000000000003" AnchorPane.leftAnchor="622.0" AnchorPane.rightAnchor="271.6" AnchorPane.topAnchor="9.0" />
                 <ComboBox fx:id="statusChoice" layoutX="464.0" layoutY="10.0" onAction="#updateDocTable" prefHeight="26.0" prefWidth="150.0" promptText="  Status" style="-fx-background-color: silver; -fx-cursor: hand;">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
@@ -67,8 +63,7 @@
                         </FXCollections>
                     </items>
                 </ComboBox>
-                <Button fx:id="unBorrowButton" layoutX="340.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleUnborrowed" prefHeight="24.0" prefWidth="114.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Return the Book" visible="false" />
-            <Button fx:id="detailButton" layoutX="95.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDetailButton" prefHeight="27.0" prefWidth="79.0" text="Show detail" />
+            <Button fx:id="detailButton" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleDetailButton" prefHeight="27.0" prefWidth="95.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show detail" />
             </children>
         </AnchorPane>
         <TableView fx:id="documentTable" layoutX="3.0" layoutY="42.0" onMousePressed="#handleDocumentStatus" prefHeight="480.0" prefWidth="990.0" style="-fx-background-color: transparent;">

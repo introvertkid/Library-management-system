@@ -64,16 +64,7 @@ public class DocumentController extends Controller {
     private TableColumn<Document, Integer> quantityColumn;
 
     @FXML
-    private Button borrowButton;
-
-    @FXML
-    private Button openDocumentButton;
-
-    @FXML
     private ComboBox<String> statusChoice;
-
-    @FXML
-    private Button unBorrowButton;
 
     private Document selectedBook;
 
@@ -216,87 +207,6 @@ public class DocumentController extends Controller {
             if (filteredList.isEmpty()) {
                 showAlert("No Results", "No books found matching the search term.");
             }
-        }
-    }
-
-    public void load1(String fileName) {
-        try {
-            Desktop.getDesktop().open(new File("src/main/resources/Document/" + fileName));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private String getFileNameFromDatabase(String fileName) {
-        String fileNamee = "";
-        String query = "SELECT fileName FROM documents WHERE documentName = ?";
-
-        try (Connection conn = DatabaseHelper.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, fileName);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                fileNamee = rs.getString("fileName");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        System.out.println(fileNamee);
-        return fileNamee;
-    }
-
-    public void openDocument() {
-        Document selectedDocument = documentTable.getSelectionModel().getSelectedItem();
-        if (selectedDocument == null) {
-            showAlert("Error", "No document selected. Please select a document to open.");
-            return;
-        }
-        String documentName = selectedDocument.getDocumentName();
-        if (documentName != null) {
-            String fileName = getFileNameFromDatabase(documentName);
-
-            if (fileName != null) {
-                Alert loadingAlert = new Alert(Alert.AlertType.INFORMATION);
-                loadingAlert.setTitle("Loading");
-                loadingAlert.setHeaderText("Please wait...");
-                loadingAlert.setContentText("Opening document...");
-                loadingAlert.show();
-                new Thread(() -> {
-                    try {
-                        load1(fileName);
-                        Platform.runLater(() -> {
-                            loadingAlert.setTitle("Success");
-                            loadingAlert.setHeaderText("Document Opened");
-                            loadingAlert.setContentText("The document has been opened.");
-                            try {
-                                Thread.sleep(3000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            loadingAlert.close();
-                        });
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        Platform.runLater(() -> {
-                            loadingAlert.setTitle("Error");
-                            loadingAlert.setHeaderText("Failed to open document");
-                            loadingAlert.setContentText("An error occurred while opening the document.");
-                            try {
-                                Thread.sleep(3000);
-                            } catch (InterruptedException ex) {
-                                ex.printStackTrace();
-                            }
-                            loadingAlert.close();
-                        });
-                    }
-                }).start();
-            } else {
-                System.out.println("File not found.");
-                showAlert("Error", "File not found.");
-            }
-        } else {
-            showAlert("Error", "File not found.");
         }
     }
 
@@ -486,35 +396,6 @@ public class DocumentController extends Controller {
 //    }
 
     @FXML
-    private void handleBorrowButton() {
-         selectedBook = documentTable.getSelectionModel().getSelectedItem();
-        if (selectedBook != null && selectedBook.getQuantity() > 0) {
-            String query = "UPDATE documents\n"
-                    + "SET quantity = quantity - 1\n"
-                    + "WHERE documentID = ? "
-                    + "and status = 'Available'";
-
-            DatabaseHelper.connectToDatabase();
-            try (Connection conn = DatabaseHelper.getConnection()) {
-                PreparedStatement stmt = conn.prepareStatement(query);
-
-                stmt.setInt(1, selectedBook.getDocumentID());
-                if(updateBorrowingsTable() == true) {
-                    int rowsAffected = stmt.executeUpdate();
-                    if (rowsAffected > 0) {
-                        borrowButton.setVisible(false);
-                        openDocumentButton.setVisible(true);
-                        selectedBook.setQuantity(selectedBook.getQuantity() - 1);
-                        updateDocTable();
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @FXML
     private void handleDocumentStatus() {
          selectedBook = documentTable.getSelectionModel().getSelectedItem();
        if (selectedBook != null) {
@@ -530,13 +411,6 @@ public class DocumentController extends Controller {
                ResultSet rs = stmt.executeQuery();
                   if (rs.next()) {
                        int count = rs.getInt(1);
-                      if (count > 0) {
-                          borrowButton.setVisible(false);
-                          openDocumentButton.setVisible(true);
-                      } else {
-                          borrowButton.setVisible(true);
-                          openDocumentButton.setVisible(false);
-                      }
                   }
 
            } catch (SQLException e) {
@@ -545,36 +419,11 @@ public class DocumentController extends Controller {
        }
     }
 
-    private boolean updateBorrowingsTable() {
-       String query = "INSERT INTO borrowings (userName, documentName) VALUES (?, ?)";
-        DatabaseHelper.connectToDatabase();
-        try (Connection conn = DatabaseHelper.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement(query);
-
-            stmt.setString(1, User.getUsername());
-            stmt.setString(2, selectedBook.getDocumentName());
-            int newRowsAffected = stmt.executeUpdate();
-
-            if (newRowsAffected > 0) {
-                showAlert("Alert", "Borrow document successfully!");
-                updateDocTable();
-                return true;
-            } else {
-                showAlert("Alert", "failed to borrow document!");
-            }
-            return false;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
     @FXML
     private void updateDocTable() {
         documentList.clear();
 
         if (" All".equals(statusChoice.getValue())) {
-            unBorrowButton.setVisible(false);
             loadDocumentData();
         } else if (" Borrowed".equals(statusChoice.getValue())) {
             String query = "SELECT d.documentID, d.documentName, d.authors, d.fileName, d.status "
@@ -600,15 +449,11 @@ public class DocumentController extends Controller {
                         documentList.add(document);
                     }
                     documentTable.setItems(documentList);
-                    unBorrowButton.setVisible(true);
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else if (" Available".equals(statusChoice.getValue())) {
-            unBorrowButton.setVisible(false);
-            borrowButton.setVisible(true);
-            openDocumentButton.setVisible(false);
             String query = "SELECT d.documentID, d.documentName, d.authors, d.fileName, d.status, d.quantity "
                     + "FROM documents d "
                     + "LEFT JOIN borrowings b ON d.documentName = b.documentName AND b.userName = ? "
@@ -633,46 +478,6 @@ public class DocumentController extends Controller {
                         documentList.add(document);
                     }
                     documentTable.setItems(documentList);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @FXML
-    private void handleUnborrowed() {
-        selectedBook = documentTable.getSelectionModel().getSelectedItem();
-
-        if (selectedBook != null && selectedBook.getQuantity() >= 0) {
-            String queryUpdateDocuments = "UPDATE documents "
-                    + "SET quantity = quantity + 1 "
-                    + "WHERE documentID = ?";
-
-            String queryDeleteBorrowings = "update borrowings "
-                    + "set returned = true "
-                    + "WHERE documentName = ? AND userName = ?";
-
-            DatabaseHelper.connectToDatabase();
-            try (Connection conn = DatabaseHelper.getConnection()) {
-                try (PreparedStatement stmtDelete = conn.prepareStatement(queryDeleteBorrowings)) {
-                    stmtDelete.setString(1, selectedBook.getDocumentName());
-                    stmtDelete.setString(2, User.getUsername());
-
-                    int rowsAffected = stmtDelete.executeUpdate();
-
-                    if (rowsAffected > 0) {
-                        try (PreparedStatement stmtUpdate = conn.prepareStatement(queryUpdateDocuments)) {
-                            stmtUpdate.setInt(1, selectedBook.getDocumentID());
-
-                            int rowsUpdated = stmtUpdate.executeUpdate();
-                            if (rowsUpdated > 0) {
-
-                                selectedBook.setQuantity(selectedBook.getQuantity() + 1);
-                               updateDocTable();
-                            }
-                        }
-                    }
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

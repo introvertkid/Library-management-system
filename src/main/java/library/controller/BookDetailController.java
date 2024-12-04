@@ -3,6 +3,7 @@ package library.controller;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
@@ -17,6 +18,9 @@ import library.entity.Document;
 import library.entity.User;
 import library.helper.DatabaseHelper;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -35,7 +39,7 @@ public class BookDetailController extends Controller {
     private ImageView bookImage;
 
     @FXML
-    private Button borrowButton;
+    private Button borrowButton, returnButton, openDocumentButton;
 
     @FXML
     private TextArea commentArea;
@@ -54,12 +58,9 @@ public class BookDetailController extends Controller {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadBookDetails();
         loadComments(documentID);
+        viewBorrowOrReturnButton();
 
         commentArea.setWrapText(true);
-//        commentList = new VBox();
-//        commentList.setStyle("-fx-background-color: #FAFAFA;");
-//        commentScroll.setContent(commentList);
-//        commentScroll.setStyle("-fx-background-color: #FAFAFA; -fx-border-color: transparent;");
 
         commentScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
@@ -240,6 +241,8 @@ public class BookDetailController extends Controller {
                     int rowsAffected = stmt.executeUpdate();
                     if (rowsAffected > 0) {
                         borrowButton.setVisible(false);
+                        returnButton.setVisible(true);
+                        openDocumentButton.setVisible(true);
                         loadBookDetails();
                         selectedDocument.setQuantity(selectedDocument.getQuantity() - 1);
                     }
@@ -270,6 +273,143 @@ public class BookDetailController extends Controller {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @FXML
+    private void handleReturnButton() {
+        String queryUpdateDocuments = "UPDATE documents "
+                + "SET quantity = quantity + 1 "
+                + "WHERE documentID = ?";
+
+        String queryDeleteBorrowings = "update borrowings "
+                + "set returned = true "
+                + "WHERE documentName = ? AND userName = ?";
+
+        try (Connection conn = DatabaseHelper.getConnection()) {
+            try (PreparedStatement stmtDelete = conn.prepareStatement(queryDeleteBorrowings)) {
+                stmtDelete.setString(1, selectedDocument.getDocumentName());
+                stmtDelete.setString(2, User.getUsername());
+
+                int rowsAffected = stmtDelete.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    try (PreparedStatement stmtUpdate = conn.prepareStatement(queryUpdateDocuments)) {
+                        stmtUpdate.setInt(1, selectedDocument.getDocumentID());
+
+                        int rowsUpdated = stmtUpdate.executeUpdate();
+                        if (rowsUpdated > 0) {
+                            borrowButton.setVisible(true);
+                            returnButton.setVisible(false);
+                            openDocumentButton.setVisible(false);
+                            loadBookDetails();
+                            selectedDocument.setQuantity(selectedDocument.getQuantity() + 1);
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void viewBorrowOrReturnButton() {
+        String query = "Select count(*) from borrowings\n"
+                + "Where userName = ? and documentName = ? and returned = false";
+
+        try (Connection conn = DatabaseHelper.getConnection()) {
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            stmt.setString(1, User.getUsername());
+            stmt.setString(2, selectedDocument.getDocumentName());
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                borrowButton.setVisible(count <= 0);
+                returnButton.setVisible(count > 0);
+                openDocumentButton.setVisible(count > 0);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void load1(String fileName) {
+        try {
+            Desktop.getDesktop().open(new File("src/main/resources/Document/" + fileName));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private String getFileNameFromDatabase(String fileName) {
+        String fileNamee = "";
+        String query = "SELECT fileName FROM documents WHERE documentName = ?";
+
+        try (Connection conn = DatabaseHelper.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, fileName);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                fileNamee = rs.getString("fileName");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(fileNamee);
+        return fileNamee;
+    }
+
+    @FXML
+    private void openDocument() {
+        String documentName = selectedDocument.getDocumentName();
+        if (documentName != null) {
+            String fileName = getFileNameFromDatabase(documentName);
+
+            if (fileName != null) {
+                Alert loadingAlert = new Alert(Alert.AlertType.INFORMATION);
+                loadingAlert.setTitle("Loading");
+                loadingAlert.setHeaderText("Please wait...");
+                loadingAlert.setContentText("Opening document...");
+                loadingAlert.show();
+                new Thread(() -> {
+                    try {
+                        load1(fileName);
+                        Platform.runLater(() -> {
+                            loadingAlert.setTitle("Success");
+                            loadingAlert.setHeaderText("Document Opened");
+                            loadingAlert.setContentText("The document has been opened.");
+                            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                            loadingAlert.close();
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Platform.runLater(() -> {
+                            loadingAlert.setTitle("Error");
+                            loadingAlert.setHeaderText("Failed to open document");
+                            loadingAlert.setContentText("An error occurred while opening the document.");
+                            try {
+                                Thread.sleep(3000);
+                            } catch (InterruptedException ex) {
+                                ex.printStackTrace();
+                            }
+                            loadingAlert.close();
+                        });
+                    }
+                }).start();
+            } else {
+                System.out.println("File not found.");
+                showAlert("Error", "File not found.");
+            }
+        } else {
+            showAlert("Error", "File not found.");
         }
     }
 }
