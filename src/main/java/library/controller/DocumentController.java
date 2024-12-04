@@ -82,10 +82,6 @@ public class DocumentController extends Controller {
     private int currentPage = 0;
     private static final int ROWS_PER_PAGE = 18;
 
-    public static ObservableList<Document> getDocumentList() {
-        return documentList;
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadDocumentData();

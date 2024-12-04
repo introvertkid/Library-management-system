@@ -1,5 +1,7 @@
 package library.controller;
 
+import javafx.concurrent.Task;
+import javafx.scene.layout.AnchorPane;
 import library.helper.*;
 import library.entity.User;
 import javafx.application.Platform;
@@ -7,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -31,7 +34,11 @@ public class LoginController extends Controller {
     private Button togglePasswordButton;
 
     @FXML
+    private AnchorPane loginScene;
+
+    @FXML
     private Button loginButton;
+    public ProgressIndicator loadingIndicator;
 
     @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -48,6 +55,12 @@ public class LoginController extends Controller {
                 loginButton.fire();
             }
         });
+        loadingIndicator = new ProgressIndicator();
+        loadingIndicator.setLayoutX(275);
+        loadingIndicator.setLayoutY(210);
+        loadingIndicator.setVisible(false);
+        loadingIndicator.setStyle("-fx-pref-width: 30px; -fx-pref-height: 30px;");
+        loginScene.getChildren().add(loadingIndicator);
     }
 
     public void setupFieldFocusListener(TextInputControl a, String p) {
@@ -83,10 +96,38 @@ public class LoginController extends Controller {
         String username = usernameField.getText();
         String password = passwordField.isVisible() ? passwordField.getText() : passwordFieldHidden.getText();
 
-        if (login(username, password)) {
-            loadNewScene("BaseScene", actionEvent);
-        }
+        loadingIndicator.setVisible(true);
+        loginButton.setDisable(true);
+
+        Task<Boolean> loginTask = new Task<>() {
+            @Override
+            protected Boolean call() { // goi luong rieng
+                return login(username, password);
+            }
+        };
+
+        // khi logintask hoan thanh
+        loginTask.setOnSucceeded(event -> {
+            boolean success = loginTask.getValue();
+            loadingIndicator.setVisible(false);
+            loginButton.setDisable(false);
+            if (success) {
+                loadNewScene("BaseScene", actionEvent);
+            }
+        });
+
+        loginTask.setOnFailed(event -> {
+            loadingIndicator.setVisible(false);
+            loginButton.setDisable(false);
+            showAlert("Error", "An unexpected error occurred. Please try again.");
+        });
+
+        //chay Task trong luong rieng
+        Thread loginThread = new Thread(loginTask);
+        loginThread.setDaemon(true);
+        loginThread.start();
     }
+
 
     public String generateRandomPassword(int length) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
