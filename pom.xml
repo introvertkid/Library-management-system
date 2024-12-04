@@ -74,6 +74,12 @@
             <artifactId>javafx-media</artifactId>
             <version>21.0.4</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-swing</artifactId> <!-- Required for SwingFXUtils -->
+            <version>21.0.4</version>
+        </dependency>
         <!--    END DEPENDENCIES FOR JAVAFX-->
 
         <!-- mail -->
@@ -97,6 +103,12 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.11.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>2.0.29</version>
         </dependency>
 
         <!--    END DEPENDENCIES FOR MISCELLANEOUS-->

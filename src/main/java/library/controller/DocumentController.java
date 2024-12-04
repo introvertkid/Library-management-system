@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -77,9 +78,13 @@ public class DocumentController extends Controller {
 
     private Document selectedBook;
 
-    private final ObservableList<Document> documentList = FXCollections.observableArrayList();;
+    private static final ObservableList<Document> documentList = FXCollections.observableArrayList();;
     private int currentPage = 0;
     private static final int ROWS_PER_PAGE = 18;
+
+    public static ObservableList<Document> getDocumentList() {
+        return documentList;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
