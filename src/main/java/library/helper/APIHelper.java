@@ -37,4 +37,8 @@ public class APIHelper {
         }
         return null;
     }
+
+    public static String parseQuery(String query) {
+        return query.replace(" ", "+");
+    }
 }

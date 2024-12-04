@@ -16,151 +16,171 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="Dashboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1200.0" style="-fx-background-color: silver;" stylesheets="@../CSS/BaseScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.BaseSceneController">
+<AnchorPane fx:id="Dashboard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1200.0" style="-fx-background-color: silver;"
+            stylesheets="@../CSS/BaseScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="library.controller.BaseSceneController">
    <!-- Navigation bar section -->
-   <AnchorPane layoutY="48.0" prefHeight="574.0" prefWidth="200.0" style="-fx-background-color: #6C7B8B;" AnchorPane.bottomAnchor="-1.6000000000000227" AnchorPane.topAnchor="48.0">
-      <children>
-         <VBox fx:id="navigationBar" layoutY="-1.6" prefHeight="503.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-2.0">
-            <children>
-               <!-- Dashboard Button -->
-               <Button fx:id="dashboardButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleDashBoardButton" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="dashboardButton" text="   Dashboard" textAlignment="CENTER" textFill="#0d0c0c">
-                  <graphic>
-                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../image/home.png" />
-                        </image>
-                     </ImageView>
-                  </graphic>
-                  <font>
-                     <Font size="14.0" />
-                  </font>
-               </Button>
-               <!-- Documents Button -->
-               <Button fx:id="documentButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleDocumentButton" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="documentButton" text="  Documents">
-                  <graphic>
-                     <ImageView fitHeight="23.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="f">
-                        <image>
-                           <Image url="@../image/book.png" />
-                        </image>
-                     </ImageView>
-                  </graphic>
-                  <font>
-                     <Font size="18.0" />
-                  </font>
-               </Button>
-               <!-- Report Button -->
-               <Button fx:id="reportButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleReportButtonAction" prefHeight="44.0" prefWidth="199.0" style="-fx-cursor: hand;" styleClass="reportButton" text="  Report">
-                  <graphic>
-                     <ImageView fitHeight="24.0" fitWidth="23.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../image/report1.png" />
-                        </image>
-                        <cursor>
-                           <Cursor fx:constant="DEFAULT" />
-                        </cursor>
-                     </ImageView>
-                  </graphic>
-                  <font>
-                     <Font size="18.0" />
-                  </font>
-               </Button>
-               <!-- Settings Button -->
-               <Button fx:id="userButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#UserProfile" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="accountButton" text="   Profile">
-                  <graphic>
-                     <ImageView fitHeight="23.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../image/user.png" />
-                        </image>
-                     </ImageView>
-                  </graphic>
-                  <font>
-                     <Font size="18.0" />
-                  </font>
-               </Button>
-
-               <!-- Explore Button -->
-               <Button fx:id="exploreButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleExploreButton" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="accountButton" text="   Explore">
-                  <graphic>
-                     <ImageView fitHeight="23.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../image/explorebook.png" />
-                        </image>
-                     </ImageView>
-                  </graphic>
-                  <font>
-                     <Font size="18.0" />
-                  </font>
-               </Button>
-
-               <!--                  accordion for drop down menu for user request-->
-               <Accordion fx:id="userRequest" visible="false">
-                  <panes>
-                     <TitledPane fx:id="userrq" prefWidth="184.0" style="-fx-cursor: hand; -fx-text-fill: black;" text="User Request">
-                        <content>
-                           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="84.0" prefWidth="198.0" style="-fx-background-color: transparent; -fx-border-color: #3b5998; -fx-padding: 0; -fx-border-width: 0; -fx-margin: 0;">
-                              <children>
-                                 <Button fx:id="showDocRequests" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleDocRequestsButton" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="docrequestButton" text="Doc Request" visible="false">
-                                    <font>
-                                       <Font size="18.0" />
-                                    </font>
-                                    <padding>
-                                       <Insets left="40.0" />
-                                    </padding>
-                                    <graphic>
-                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                             <Image url="@../image/book.png" />
-                                          </image>
-                                       </ImageView>
-                                    </graphic>
-                                    <padding>
-                                       <Insets left="40.0" />
-                                    </padding>
-                                 </Button>
-                                 <Button fx:id="showReportButton" alignment="BASELINE_LEFT" layoutY="42.0" mnemonicParsing="false" onAction="#handleShowReportButtonAction" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="showreportButton" text="Show Reports" visible="false">
-                                    <graphic>
-                                       <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                          <image>
-                                             <Image url="@../image/report.png" />
-                                          </image>
-                                       </ImageView>
-                                    </graphic>
-                                    <font>
-                                       <Font size="18.0" />
-                                    </font>
-                                    <padding>
-                                       <Insets left="35.0" />
-                                    </padding>
-                                 </Button>
-                              </children>
-                           </AnchorPane>
-                        </content>
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                        <opaqueInsets>
-                           <Insets />
-                        </opaqueInsets>
-                     </TitledPane>
-                  </panes>
-               </Accordion>
-            </children>
-         </VBox>
-
-         <!-- Logout Button -->
-         <Button fx:id="logoutButton" alignment="BASELINE_LEFT" layoutY="531.0" mnemonicParsing="false" onAction="#Logout" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="documentButton" text=" Log out">
+   <AnchorPane layoutY="48.0" prefHeight="574.0" prefWidth="200.0" style="-fx-background-color: #6C7B8B;"
+               AnchorPane.bottomAnchor="-1.6000000000000227" AnchorPane.topAnchor="48.0">
+      <VBox fx:id="navigationBar" layoutY="-1.6" prefHeight="503.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0"
+            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="-2.0">
+         <!-- Dashboard Button -->
+         <Button fx:id="dashboardButton" alignment="BASELINE_LEFT" mnemonicParsing="false"
+                 onAction="#handleDashBoardButton" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;"
+                 styleClass="dashboardButton" text="   Dashboard" textAlignment="CENTER" textFill="#0d0c0c">
             <graphic>
-               <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                   <image>
-                     <Image url="@../image/logout.png" />
+                     <Image url="@../image/home.png"/>
                   </image>
                </ImageView>
             </graphic>
             <font>
-               <Font size="18.0" />
+               <Font size="14.0"/>
             </font>
          </Button>
-      </children>
+         <!-- Documents Button -->
+         <Button fx:id="documentButton" alignment="BASELINE_LEFT" mnemonicParsing="false"
+                 onAction="#handleDocumentButton" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;"
+                 styleClass="documentButton" text="  Documents">
+            <graphic>
+               <ImageView fitHeight="23.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="f">
+                  <image>
+                     <Image url="@../image/book.png"/>
+                  </image>
+               </ImageView>
+            </graphic>
+            <font>
+               <Font size="18.0"/>
+            </font>
+         </Button>
+         <!-- Report Button -->
+         <Button fx:id="reportButton" alignment="BASELINE_LEFT" mnemonicParsing="false"
+                 onAction="#handleReportButtonAction" prefHeight="44.0" prefWidth="199.0" style="-fx-cursor: hand;"
+                 styleClass="reportButton" text="  Report">
+            <graphic>
+               <ImageView fitHeight="24.0" fitWidth="23.0" nodeOrientation="INHERIT" pickOnBounds="true"
+                          preserveRatio="true">
+                  <image>
+                     <Image url="@../image/report1.png"/>
+                  </image>
+                  <cursor>
+                     <Cursor fx:constant="DEFAULT"/>
+                  </cursor>
+               </ImageView>
+            </graphic>
+            <font>
+               <Font size="18.0"/>
+            </font>
+         </Button>
+         <!-- Settings Button -->
+         <Button fx:id="userButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#UserProfile"
+                 prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="accountButton"
+                 text="   Profile">
+            <graphic>
+               <ImageView fitHeight="23.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../image/user.png"/>
+                  </image>
+               </ImageView>
+            </graphic>
+            <font>
+               <Font size="18.0"/>
+            </font>
+         </Button>
+
+         <!-- Explore Button -->
+         <Button fx:id="exploreButton" alignment="BASELINE_LEFT" mnemonicParsing="false"
+                 onAction="#handleExploreButton" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;"
+                 styleClass="accountButton" text="   Explore">
+            <graphic>
+               <ImageView fitHeight="23.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../image/compass.png"/>
+                  </image>
+               </ImageView>
+            </graphic>
+            <font>
+               <Font size="18.0"/>
+            </font>
+         </Button>
+
+         <!--                  accordion for drop down menu for user request-->
+         <Accordion fx:id="userRequest" visible="false">
+            <panes>
+               <TitledPane fx:id="userrq" prefWidth="184.0" style="-fx-cursor: hand; -fx-text-fill: black;"
+                           text="User Request">
+                  <content>
+                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="84.0" prefWidth="198.0"
+                                 style="-fx-background-color: transparent; -fx-border-color: #3b5998; -fx-padding: 0; -fx-border-width: 0; -fx-margin: 0;">
+                        <Button fx:id="showDocRequests" alignment="BASELINE_LEFT" mnemonicParsing="false"
+                                onAction="#handleDocRequestsButton" prefHeight="42.0" prefWidth="200.0"
+                                style="-fx-cursor: hand;" styleClass="docrequestButton" text="Doc Request"
+                                visible="false">
+                           <font>
+                              <Font size="18.0"/>
+                           </font>
+                           <padding>
+                              <Insets left="40.0"/>
+                           </padding>
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
+                                         preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/book.png"/>
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <padding>
+                              <Insets left="40.0"/>
+                           </padding>
+                        </Button>
+                        <Button fx:id="showReportButton" alignment="BASELINE_LEFT" layoutY="42.0"
+                                mnemonicParsing="false" onAction="#handleShowReportButtonAction" prefHeight="42.0"
+                                prefWidth="200.0" style="-fx-cursor: hand;" styleClass="showreportButton"
+                                text="Show Reports" visible="false">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
+                                         preserveRatio="true">
+                                 <image>
+                                    <Image url="@../image/report.png"/>
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font size="18.0"/>
+                           </font>
+                           <padding>
+                              <Insets left="35.0"/>
+                           </padding>
+                        </Button>
+                     </AnchorPane>
+                  </content>
+                  <font>
+                     <Font size="18.0"/>
+                  </font>
+                  <opaqueInsets>
+                     <Insets/>
+                  </opaqueInsets>
+               </TitledPane>
+            </panes>
+         </Accordion>
+      </VBox>
+
+      <!-- Logout Button -->
+      <Button fx:id="logoutButton" alignment="BASELINE_LEFT" layoutY="531.0" mnemonicParsing="false" onAction="#Logout"
+              prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="documentButton" text=" Log out">
+         <graphic>
+            <ImageView fitHeight="24.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/logout.png"/>
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="18.0"/>
+         </font>
+      </Button>
    </AnchorPane>
 
    <!-- Main workspace -->
