@@ -49,6 +49,9 @@ public class BaseSceneController extends Controller {
     private Button logoutButton;
 
     @FXML
+    private Button exploreButton;
+
+    @FXML
     private Text userNameText;
 
     @FXML
@@ -97,6 +100,7 @@ public class BaseSceneController extends Controller {
         userAvatar.setClip(clip);
     }
 
+
     @FXML
     private Image changeAvatar(String username) {
         String query = "SELECT avatar FROM users WHERE username = ?";
@@ -131,6 +135,7 @@ public class BaseSceneController extends Controller {
         return avatarImage;
     }
 
+
     private String getUserNameFromDatabase(String username) {
         String userFullName = "";
         String query = "SELECT userFullName FROM users WHERE username = ?";
@@ -150,6 +155,7 @@ public class BaseSceneController extends Controller {
         System.out.println(userFullName);
         return userFullName;
     }
+
 
     @FXML
     private void handleAddDocumentButton() {
@@ -197,5 +203,11 @@ public class BaseSceneController extends Controller {
     public void Logout(ActionEvent actionEvent) {
         loadNewScene("LoginScene", actionEvent);
         setStyleForSelectedButton(logoutButton);
+    }
+
+    @FXML
+    public void handleExploreButton() {
+        loadFXMLtoAnchorPane("ExploreScene", contentPane);
+        setStyleForSelectedButton(exploreButton);
     }
 }

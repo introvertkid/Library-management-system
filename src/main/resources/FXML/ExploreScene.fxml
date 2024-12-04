@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="contentPane" prefHeight="400.0" prefWidth="600.0" stylesheets="@../CSS/ExploreScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.ExploreController">
+    <StackPane layoutX="63.0" layoutY="27.0" prefHeight="26.0" prefWidth="188.0">
+        <TextField fx:id="searchField" prefHeight="24.0" prefWidth="206.0" promptText="Search..." styleClass="text-field" />
+        <Button fx:id="findBookButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#handleFindBook" prefHeight="34.0" prefWidth="42.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="🔎" textAlignment="RIGHT" StackPane.alignment="CENTER_RIGHT">
+            <font>
+                <Font size="18.0" />
+            </font>
+        </Button>
+    </StackPane>
+   <ImageView fx:id="bookCover" fitHeight="170.0" fitWidth="150.0" layoutX="36.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
+   <Label fx:id="titleField" layoutX="378.0" layoutY="116.0" text="Label" />
+   <Label fx:id="authorsField" layoutX="378.0" layoutY="172.0" text="Label" />
+</AnchorPane>
