@@ -684,4 +684,24 @@ public class DocumentController extends Controller {
             }
         }
     }
+
+    public static Document selectedDocument;
+
+    @FXML
+    public void handleDetailButton() {
+        selectedDocument = documentTable.getSelectionModel().getSelectedItem();
+
+        if (selectedDocument != null) {
+            // Pass the document ID or other details to the BookDetailController
+            try {
+                loadFXMLtoAnchorPane("BookDetail", contentPane);
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("Error", "There was an error while trying to open the document details.");
+            }
+        } else {
+            // Alert the user if no report is selected
+            showAlert("No selection", "Please select a document!");
+        }
+    }
 }
