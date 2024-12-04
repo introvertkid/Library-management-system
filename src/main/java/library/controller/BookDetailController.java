@@ -23,6 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class BookDetailController extends Controller {
@@ -60,9 +61,7 @@ public class BookDetailController extends Controller {
 //        commentScroll.setContent(commentList);
 //        commentScroll.setStyle("-fx-background-color: #FAFAFA; -fx-border-color: transparent;");
 
-
         commentScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-
 
         Platform.runLater(() -> {
             Node verticalScrollBar = commentScroll.lookup(".scroll-bar:vertical");

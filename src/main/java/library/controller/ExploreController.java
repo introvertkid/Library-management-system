@@ -8,17 +8,12 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
-import library.entity.Book;
 import javafx.scene.text.Text;
 import library.entity.Book;
 import library.helper.APIHelper;
@@ -165,13 +160,7 @@ public class ExploreController extends Controller {
         contentPane.getChildren().add(loadingIndicator);
     }
 
-        titleColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getTitle()));
-        authorColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getAuthors()));
-
-        bookTable.setItems(bookList);
-    }
-
-    public void handleFindBook() throws Exception {
+    public void handleFindBook() {
         String query = APIHelper.parseQuery(searchField.getText().trim());
 
         loadingIndicator.setVisible(true);
@@ -183,38 +172,6 @@ public class ExploreController extends Controller {
                 ObservableList<Book> books = FXCollections.observableArrayList();
                 JsonObject jsonObject = APIHelper.fetchBookData(query);
 
-        if (jsonObject != null) {
-            bookList.clear();
-            JsonArray items = jsonObject.getAsJsonArray("items");
-            for (int i = 0; i < items.size(); i++) {
-                JsonObject bookJson = items.get(i).getAsJsonObject().getAsJsonObject("volumeInfo");
-                String title = getJsonPrimitive(bookJson, "title");
-                String authors = getJsonPrimitive(bookJson, "authors");
-                String thumbnailUrl = bookJson.has("imageLinks")
-                        ? bookJson.getAsJsonObject("imageLinks").get("thumbnail").getAsString()
-                        : null;
-                String bookLink = bookJson.has("infoLink") ? bookJson.get("infoLink").getAsString() : "";
-
-                // tao thumbnail
-                Image thumbnail = thumbnailUrl != null ? new Image(thumbnailUrl, 150, 200, true, true) : null;
-
-                // tao qr
-                Image qrCode = QRCodeGenerator.generateQRCode(bookLink, 100, 100);
-                String thumbnailLink = getJsonPrimitive(items.get(0), "thumbnail");
-                String title1 = getJsonPrimitive(items.get(0), "title");
-                String authors1 = getJsonPrimitive(items.get(0), "authors");
-                System.out.println(JsonHelper.decodeURL(JsonHelper.parsePrettyJson((JsonObject) items.get(0))));
-                System.out.println("thumbnail: " + thumbnailLink);
-                System.out.println("title: " + title1);
-                System.out.println("authors: " + authors1);
-                System.out.println("END");
-
-                // add book
-                bookList.add(new Book(thumbnail, title, authors, qrCode));
-            }
-        } else {
-            System.out.println("JSON object is null");
-        }
                 if (jsonObject != null) {
                     JsonArray items = jsonObject.getAsJsonArray("items");
                     for (int i = 0; i < items.size(); i++) {
@@ -228,13 +185,6 @@ public class ExploreController extends Controller {
 
                         Image thumbnail = thumbnailUrl != null ? new Image(thumbnailUrl, 150, 200, true, true) : null;
                         Image qrCode = QRCodeGenerator.generateQRCode(bookLink, 100, 100);
-                        String title1 = getJsonPrimitive(items.get(0), "title");
-                        String authors1 = getJsonPrimitive(items.get(0), "authors");
-                        System.out.println(JsonHelper.decodeURL(JsonHelper.parsePrettyJson((JsonObject) items.get(0))));
-                        System.out.println("thumbnail: " + thumbnailUrl);
-                        System.out.println("title: " + title1);
-                        System.out.println("authors: " + authors1);
-                        System.out.println("END");
 
                         books.add(new Book(thumbnail, title, authors, qrCode));
                     }
