@@ -95,9 +95,12 @@ public class DashboardController extends Controller {
 
     //todo: join documents - document_tag - tags
     private void loadCategoryBookCounts() {
-        String tagBookCountQuery = "SELECT c.tagName, COUNT(d.documentID) AS totalBooks " +
-                "FROM tags c LEFT JOIN documents d ON c.tagID = d.tagID " +
-                "GROUP BY c.tagName";
+        String tagBookCountQuery = "SELECT t.tagName, COUNT(dt.documentID) AS totalBooks\n" +
+                "FROM tags t\n" +
+                "LEFT JOIN document_tag dt ON t.tagID = dt.tagID\n" +
+                "GROUP BY  t.tagName\n" +
+                "HAVING totalBooks > 0\n" +
+                "ORDER BY totalBooks DESC";
 
         try (Connection connection = DatabaseHelper.getConnection();
              PreparedStatement statement = connection.prepareStatement(tagBookCountQuery);

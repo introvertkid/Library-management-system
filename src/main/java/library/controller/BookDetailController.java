@@ -64,6 +64,7 @@ public class BookDetailController extends Controller {
 
         commentScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
+
         Platform.runLater(() -> {
             Node verticalScrollBar = commentScroll.lookup(".scroll-bar:vertical");
             if (verticalScrollBar != null) {
@@ -74,9 +75,8 @@ public class BookDetailController extends Controller {
 
     private void loadBookDetails() {
         String query = """
-                SELECT d.documentName, d.authors, t.tagName, d.quantity, d.status
+                SELECT d.documentName, d.authors, d.quantity, d.status
                 FROM documents d
-                JOIN tags t ON d.tagID = t.tagID
                 WHERE d.documentID = ?;
                 """;
 
@@ -89,7 +89,7 @@ public class BookDetailController extends Controller {
                 if (resultSet.next()) {
                     String documentName = resultSet.getString("documentName");
                     String authors = resultSet.getString("authors");
-                    String tagName = resultSet.getString("tagName");
+                    String tagName = Document.getTagsByDocumentID(documentID);
                     int quantity = resultSet.getInt("quantity");
                     String status = resultSet.getString("status");
 

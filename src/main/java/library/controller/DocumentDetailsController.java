@@ -17,7 +17,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class RequestDetailsController extends Controller{
+public class DocumentDetailsController extends Controller{
     @FXML
     private TextField bookNameField;
 
@@ -76,7 +76,7 @@ public class RequestDetailsController extends Controller{
     }
 
     @FXML
-    private void aceptRequest() {
+    private void acceptRequest() {
         String query = "Update documents set status = 'Available' WHERE documentID = ?";
         try (Connection connection = DatabaseHelper.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
