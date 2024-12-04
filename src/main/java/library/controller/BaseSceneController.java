@@ -71,7 +71,6 @@ public class BaseSceneController extends Controller {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DatabaseHelper.connectToDatabase();
         setCircularAvatar();
         userNameText.setText(User.getUserFullName());
         role.setText(User.getRole());

@@ -180,7 +180,6 @@ public class LoginController extends Controller {
     }
 
     public boolean login(String username, String password) {
-        DatabaseHelper.connectToDatabase();
         try (Connection conn = DatabaseHelper.getConnection()) {
             String query = "SELECT * FROM users WHERE username = ?";
             PreparedStatement statement = conn.prepareStatement(query);

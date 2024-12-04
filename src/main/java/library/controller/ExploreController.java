@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import library.entity.Book;
 import library.helper.APIHelper;
@@ -50,6 +51,16 @@ public class ExploreController extends Controller {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        searchField.setOnKeyPressed(event ->
+        {
+            if (event.getCode() == KeyCode.ENTER) {
+                try {
+                    handleFindBook();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
         thumbnailColumn.setCellValueFactory(data -> new SimpleObjectProperty<>(data.getValue().getThumbnail()));
         thumbnailColumn.setCellFactory(column -> new TableCell<>() {
             private final ImageView imageView = new ImageView();
@@ -103,7 +114,7 @@ public class ExploreController extends Controller {
     }
 
     public void handleFindBook() throws Exception {
-        String query = parseQuery(searchField.getText().trim());
+        String query = APIHelper.parseQuery(searchField.getText().trim());
         JsonObject jsonObject = APIHelper.fetchBookData(query);
 
         if (jsonObject != null) {
@@ -141,7 +152,7 @@ public class ExploreController extends Controller {
     }
 
     //todo: hotfix only !!!
-    public String getJsonPrimitive(JsonElement curNode, String target) {
+    public static String getJsonPrimitive(JsonElement curNode, String target) {
         if (curNode instanceof JsonObject) {
             JsonObject obj = curNode.getAsJsonObject();
             for (String key : obj.keySet()) {
@@ -170,7 +181,8 @@ public class ExploreController extends Controller {
                     return ans;
                 }
             }
-            //        else if (curNode instanceof JsonArray) {
+        }
+//        else if (curNode instanceof JsonArray) {
 //            JsonArray arr = curNode.getAsJsonArray();
 //            return arr.toString();
 //            for (JsonElement element : arr) {
@@ -186,13 +198,9 @@ public class ExploreController extends Controller {
 //        }
 //        else if (curNode instanceof JsonPrimitive)
 //            return (JsonPrimitive) curNode;
-        } else {
-            System.out.println(curNode.getClass().getName() + " is not handled");
-        }
+//        else {
+//            System.out.println(curNode.getClass().getName() + " is not handled");
+//        }
         return null;
-    }
-
-    public String parseQuery(String query) {
-        return query.replace(" ", "+");
     }
 }
