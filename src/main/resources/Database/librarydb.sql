@@ -65,6 +65,15 @@ create table if not exists reports(
     foreign key (userID) references users(userID) on update cascade
 );
 
+create table if not exists comments(
+	commentID int auto_increment primary key,
+    documentID int,
+    userID int,
+    content varchar(255),
+    foreign key (documentID) references documents(documentID) on update cascade,
+    foreign key (userID) references users(userID) on update cascade
+);
+
 #insert value for users
 insert into users(username, hashedPassword, userFullName) value('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', 'admin');
 
