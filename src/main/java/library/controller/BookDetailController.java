@@ -1,9 +1,12 @@
 package library.controller;
 
+import library.entity.Document;
+import library.entity.Comment;
+import library.helper.DatabaseHelper;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -12,12 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import library.entity.Comment;
-import library.entity.Document;
-import library.entity.User;
-import library.helper.DatabaseHelper;
 
-import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,9 +34,6 @@ public class BookDetailController extends Controller {
     private ImageView bookImage;
 
     @FXML
-    private Button borrowButton;
-
-    @FXML
     private TextArea commentArea;
 
     @FXML
@@ -47,20 +42,18 @@ public class BookDetailController extends Controller {
     @FXML
     private ScrollPane commentScroll;
 
-    private final Document selectedDocument = DocumentController.selectedDocument;
-    private final int documentID = selectedDocument.getDocumentID();
-    List<Comment> cmtList = new ArrayList<>();
+//    private final Document selectedDocument = DocumentController.selectedDocument;
+//    private final int documentID = selectedDocument.getDocumentID();
+//    List<Comment> cmtList = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadBookDetails();
-        loadComments(documentID);
-
+        testBookDetail();
         commentArea.setWrapText(true);
-//        commentList = new VBox();
-//        commentList.setStyle("-fx-background-color: #FAFAFA;");
-//        commentScroll.setContent(commentList);
-//        commentScroll.setStyle("-fx-background-color: #FAFAFA; -fx-border-color: transparent;");
+        commentList = new VBox();
+        commentList.setStyle("-fx-background-color: #FAFAFA;");
+        commentScroll.setContent(commentList);
+        commentScroll.setStyle("-fx-background-color: #FAFAFA; -fx-border-color: transparent;");
 
         commentScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
@@ -71,38 +64,48 @@ public class BookDetailController extends Controller {
                 verticalScrollBar.setStyle("-fx-opacity: 0; -fx-background-color: transparent;");
             }
         });
+        List<Comment> cmtList = new ArrayList<>();
+     cmtList.add( new Comment("Lê Sỹ Thái Sơn", "This is a great product!", "/image/UserAvatar/userAvatar.png"));
+        cmtList.add( new Comment("Thạch Minh Quân", "Very helpful and easy to use.", "/image/UserAvatar/userAvatar.png"));
+        cmtList.add(new Comment("Phan Đăng Nhật", "Highly recommend this to everyone.", "/image/UserAvatar/userAvatar.png"));
+      cmtList.add(new Comment("Vũ Cao Phong", "Amazing! Will buy again.", "/image/UserAvatar/userAvatar.png"));
+       cmtList.add(new Comment(
+                "Vũ Nguyễn Trường Minh",
+                "This book provided incredible insights into human behavior, relationships, and the challenges people face when dealing with complex situations. I highly recommend this to anyone interested in understanding more about psychological intricacies.",
+                "/image/UserAvatar/userAvatar.png"));
+        commentList.getChildren().addAll(cmtList);
     }
 
-    private void loadBookDetails() {
-        String query = """
-                SELECT d.documentName, d.authors, d.quantity, d.status
-                FROM documents d
-                WHERE d.documentID = ?;
-                """;
-
-        try (Connection conn = DatabaseHelper.getConnection();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-
-            statement.setInt(1, documentID);
-
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    String documentName = resultSet.getString("documentName");
-                    String authors = resultSet.getString("authors");
-                    String tagName = Document.getTagsByDocumentID(documentID);
-                    int quantity = resultSet.getInt("quantity");
-                    String status = resultSet.getString("status");
-
-                    displayBookDetails(documentName, authors, tagName, quantity, status);
-                } else {
-                    displayError("No details found for this book.");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            displayError("Failed to load book details.");
-        }
-    }
+//    private void loadBookDetails() {
+//        String query = """
+//                SELECT d.documentName, d.authors, d.quantity, d.status
+//                FROM documents d
+//                WHERE d.documentID = ?;
+//                """;
+//
+//        try (Connection conn = DatabaseHelper.getConnection();
+//             PreparedStatement statement = conn.prepareStatement(query)) {
+//
+//            statement.setInt(1, documentID);
+//
+//            try (ResultSet resultSet = statement.executeQuery()) {
+//                if (resultSet.next()) {
+//                    String documentName = resultSet.getString("documentName");
+//                    String authors = resultSet.getString("authors");
+//                    String tagName = Document.getTagsByDocumentID(documentID);
+//                    int quantity = resultSet.getInt("quantity");
+//                    String status = resultSet.getString("status");
+//
+//                    displayBookDetails(documentName, authors, tagName, quantity, status);
+//                } else {
+//                    displayError("No details found for this book.");
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            displayError("Failed to load book details.");
+//        }
+//    }
 
     private void displayBookDetails(String name, String author, String tagName, int quantity, String status) {
         // Cover image
@@ -139,140 +142,36 @@ public class BookDetailController extends Controller {
         details.getChildren().add(errorText);
     }
 
+    public void testBookDetail() {
+        String title = "The Swallows";
+        String author = "Author: Lisa Lutz";
+        String genre = "Genre: Mystery, Thriller";
+        String summary = "Summary: A story of intrigue and betrayal unfolds at a private school, "
+                + "where secrets are the norm, and students are not as innocent as they appear.";
 
-    public void loadComments(int documentID) {
-        commentList = new VBox();
-        commentList.setStyle("-fx-background-color: #FAFAFA;");
-        commentScroll.setContent(commentList);
-        commentScroll.setStyle("-fx-background-color: #FAFAFA; -fx-border-color: transparent;");
-        cmtList = fetchComments(documentID);
-        commentList.getChildren().clear();
-        commentList.getChildren().addAll(cmtList);
+        String imagePath = "/image/the-swallows-673x1024.jpg";
+        Image image = new Image(getClass().getResourceAsStream(imagePath));
+        bookImage.setImage(image);
+        bookImage.setFitWidth(200);
+        bookImage.setPreserveRatio(true);
+
+        Text titleText = new Text(title + "\n\n");
+        titleText.setFont(new Font("Arial", 24));
+        titleText.setStyle("-fx-font-weight: bold;");
+
+        Text authorText = new Text(author + "\n");
+        authorText.setFont(new Font("Arial", 14));
+
+        Text genreText = new Text(genre + "\n");
+        genreText.setFont(new Font("Arial", 14));
+
+        Text summaryText = new Text(summary);
+        summaryText.setFont(new Font("Arial", 14));
+
+        details.getChildren().clear();
+        details.getChildren().addAll(titleText, authorText, genreText, summaryText);
     }
 
-
-    private List<Comment> fetchComments(int documentID) {
-        List<Comment> comments = new ArrayList<>();
-
-        String query = """
-                SELECT c.commentID, c.content, u.userFullName, u.avatar
-                FROM comments c
-                JOIN users u ON c.userID = u.userID
-                WHERE c.documentID = ?
-                ORDER BY c.commentID ASC
-                """;
-
-        try (Connection conn = DatabaseHelper.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setInt(1, documentID);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                String userName = rs.getString("userFullName");
-                String comment = rs.getString("content");
-
-                String avatarPath;
-                String avatarName = rs.getString("avatar");
-                // If no custom avatar is set, load the default avatar
-                if (avatarName == null || avatarName.isEmpty() || avatarName.equals("userAvatar.png")) {
-                    avatarPath = "/image/UserAvatar/userAvatar.png";
-                } else {
-                    avatarPath = "/image/UserAvatar/" + avatarName;
-                }
-
-                Comment newComment = new Comment(userName, comment, avatarPath);
-
-                comments.add(newComment);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return comments;
-    }
-
-    @FXML
-    void handleAddCommentButton() {
-        String newCommentContent = commentArea.getText().trim();
-
-        if (newCommentContent.isEmpty()) {
-            System.out.println("Comment cannot be empty.");
-            return;
-        }
-
-        addCommentToDatabase(newCommentContent);
-        commentArea.clear();
-        loadComments(documentID); // Refresh comments
-    }
-
-    private void addCommentToDatabase(String content) {
-        String query = "INSERT INTO comments (documentID, userID, content) VALUES (?, ?, ?)";
-
-        try (Connection conn = DatabaseHelper.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            int userID = User.getID();
-            stmt.setInt(1, documentID);
-            stmt.setInt(2, userID);
-            stmt.setString(3, content);
-
-            stmt.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void handleBorrowButton() {
-        if (DocumentController.selectedDocument.getQuantity() > 0) {
-            String query = "UPDATE documents\n"
-                    + "SET quantity = quantity - 1\n"
-                    + "WHERE documentID = ? "
-                    + "and status = 'Available'";
-
-            try (Connection conn = DatabaseHelper.getConnection()) {
-                PreparedStatement stmt = conn.prepareStatement(query);
-
-                stmt.setInt(1, documentID);
-                if(updateBorrowingsTable()) {
-                    int rowsAffected = stmt.executeUpdate();
-                    if (rowsAffected > 0) {
-                        borrowButton.setVisible(false);
-                        loadBookDetails();
-                        selectedDocument.setQuantity(selectedDocument.getQuantity() - 1);
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private boolean updateBorrowingsTable() {
-        String query = "INSERT INTO borrowings (userName, documentName) VALUES (?, ?)";
-        DatabaseHelper.connectToDatabase();
-        try (Connection conn = DatabaseHelper.getConnection()) {
-            PreparedStatement stmt = conn.prepareStatement(query);
-
-            stmt.setString(1, User.getUsername());
-            stmt.setString(2, selectedDocument.getDocumentName());
-            int newRowsAffected = stmt.executeUpdate();
-
-            if (newRowsAffected > 0) {
-                showAlert("Alert", "Borrow document successfully!");
-                return true;
-            } else {
-                showAlert("Alert", "failed to borrow document!");
-            }
-            return false;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
 }
 
 

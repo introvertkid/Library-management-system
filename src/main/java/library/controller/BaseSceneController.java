@@ -179,7 +179,7 @@ public class BaseSceneController extends Controller {
     }
 
     public void Logout(ActionEvent actionEvent) {
-        loadNewScene("LoginScene", actionEvent);
+        loadNewScene("BookDetail", actionEvent);
         setStyleForSelectedButton(logoutButton);
     }
 
