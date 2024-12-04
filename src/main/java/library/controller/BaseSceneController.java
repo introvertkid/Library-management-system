@@ -49,6 +49,9 @@ public class BaseSceneController extends Controller {
     private Button logoutButton;
 
     @FXML
+    private Button exploreButton;
+
+    @FXML
     private Text userNameText, role;
 
     @FXML
@@ -179,5 +182,11 @@ public class BaseSceneController extends Controller {
     public void Logout(ActionEvent actionEvent) {
         loadNewScene("LoginScene", actionEvent);
         setStyleForSelectedButton(logoutButton);
+    }
+
+    @FXML
+    public void handleExploreButton() {
+        loadFXMLtoAnchorPane("ExploreScene", contentPane);
+        setStyleForSelectedButton(exploreButton);
     }
 }

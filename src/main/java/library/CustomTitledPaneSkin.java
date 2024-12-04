@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 import static javafx.css.StyleConverter.getEnumConverter;
 
- // from StackOverFlow
+ // from StackOverFlow : https://stackoverflow.com/questions/55082933/javafx-how-to-move-drop-down-arrow-in-titledpane-to-be-on-right#:~:text=Unfortunately%2C%20there%27s%20no%20public%20API%20for%20moving%20the,have%20to%20translate%20the%20arrow%20dynamically%2C%20using%20bindings.
 public class CustomTitledPaneSkin extends TitledPaneSkin {
 
     public enum ArrowSide {
