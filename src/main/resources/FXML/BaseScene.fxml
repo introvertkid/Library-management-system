@@ -79,12 +79,11 @@
                </Button>
 
                <!-- Explore Button -->
-               <Button fx:id="exploreButton" alignment="BASELINE_LEFT" mnemonicParsing="false"
-                       onAction="#handleExploreButton" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="accountButton" text="   Explore">
+               <Button fx:id="exploreButton" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#handleExploreButton" prefHeight="42.0" prefWidth="200.0" style="-fx-cursor: hand;" styleClass="accountButton" text="   Explore">
                   <graphic>
                      <ImageView fitHeight="23.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                         <image>
-                           <Image url="@../image/compass.png" />
+                           <Image url="@../image/explorebook.png" />
                         </image>
                      </ImageView>
                   </graphic>
