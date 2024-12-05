@@ -325,10 +325,7 @@ public class DocumentController extends Controller {
         }
 
         loadDocumentData();
-//        updateTable(currentPage);
-//        updatePage();
     }
-
 
     @FXML
     private void handleDeleteBook() {
@@ -349,17 +346,51 @@ public class DocumentController extends Controller {
     }
 
     private void deleteBookFromDatabase(int documentID) {
-        String deleteQuery = "DELETE FROM documents WHERE documentID = ?";
-        try (Connection conn = DatabaseHelper.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(deleteQuery)) {
-            pstmt.setInt(1, documentID);
-            pstmt.executeUpdate();
-            loadDocumentData();
-            updateTable(currentPage);
-            updatePage();
+        String deleteDocumentTagsQuery = "DELETE FROM document_tag WHERE documentID = ?";
+        String deleteDocumentOwnersQuery = "DELETE FROM documentOwner WHERE documentID = ?";
+        String deleteCommentsQuery = "DELETE FROM comments WHERE documentID = ?";
+        String deleteDocumentQuery = "DELETE FROM documents WHERE documentID = ?";
+
+        try (Connection conn = DatabaseHelper.getConnection()) {
+            conn.setAutoCommit(false); // all query will be executed as one
+
+            // Xóa các liên kết trong bảng document_tag
+            try (PreparedStatement pstmtTags = conn.prepareStatement(deleteDocumentTagsQuery)) {
+                pstmtTags.setInt(1, documentID);
+                pstmtTags.executeUpdate();
+            }
+
+            // Xóa các liên kết trong bảng documentOwner
+            try (PreparedStatement pstmtOwners = conn.prepareStatement(deleteDocumentOwnersQuery)) {
+                pstmtOwners.setInt(1, documentID);
+                pstmtOwners.executeUpdate();
+            }
+
+            // Xóa các bình luận trong bảng comments
+            try (PreparedStatement pstmtComments = conn.prepareStatement(deleteCommentsQuery)) {
+                pstmtComments.setInt(1, documentID);
+                pstmtComments.executeUpdate();
+            }
+
+            // Xóa tài liệu trong bảng documents
+            try (PreparedStatement pstmtDocument = conn.prepareStatement(deleteDocumentQuery)) {
+                pstmtDocument.setInt(1, documentID);
+                pstmtDocument.executeUpdate();
+            }
+
+            conn.commit();
         } catch (SQLException e) {
             e.printStackTrace();
+            try {
+                // Rollback nếu có lỗi
+                DatabaseHelper.getConnection().rollback();
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
         }
+
+        // Cập nhật giao diện
+        loadDocumentData();
     }
 
     @FXML
