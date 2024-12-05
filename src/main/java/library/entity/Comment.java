@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -15,9 +16,12 @@ public class Comment extends VBox {
     public Comment(String userName, String comment, String avatarPath) {
         // Avatar
         ImageView avatar = new ImageView(new Image(avatarPath));
-        avatar.setFitWidth(30);
-        avatar.setFitHeight(30);
+        avatar.setFitWidth(50);
+        avatar.setFitHeight(50);
 
+
+        Circle clip = new Circle(25, 25, 25);
+        avatar.setClip(clip);
         // Full name
         Label userNameLabel = new Label(userName);
         userNameLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px; -fx-wrap-text: true;");
