@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import library.entity.Book;
 import library.entity.Comment;
 import library.entity.Document;
 import library.entity.User;
@@ -51,6 +52,11 @@ public class BookDetailController extends Controller {
     private VBox commentList;
 
     @FXML
+    private TextFlow descriptionText;
+
+    private Book book;
+
+    @FXML
     private ScrollPane commentScroll;
 
     private final Document selectedDocument = DocumentController.selectedDocument;
@@ -67,6 +73,24 @@ public class BookDetailController extends Controller {
 
         commentScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         commentScroll.getStylesheets().add(getClass().getResource("/CSS/ScrollPane.css").toExternalForm());
+    }
+
+    public void setBookDetails(Book book) {
+        this.book = book;
+
+        bookImage.setImage(book.getThumbnail());
+        Text titleText = new Text(book.getTitle());
+        titleText.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
+
+        Text authorText = new Text("\n" + book.getAuthors());
+        authorText.setStyle("-fx-font-size: 16px;");
+
+        details.getChildren().clear();
+        details.getChildren().addAll(titleText, authorText);
+
+        descriptionText.getChildren().clear();
+        descriptionText.getChildren().add(new Text(book.getDescription()));
+
     }
 
     private void loadBookDetails() {
@@ -93,7 +117,11 @@ public class BookDetailController extends Controller {
                     displayBookDetails(documentName, authors, tagName, quantity, status);
                     displayBookDescription(description);
                 } else {
-                    displayError("No details found for this book.");
+                    if (book != null) {
+                        setBookDetails(book);
+                    } else {
+                        displayError("No details found for this book.");
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -244,7 +272,7 @@ public class BookDetailController extends Controller {
                 PreparedStatement stmt = conn.prepareStatement(query);
 
                 stmt.setInt(1, documentID);
-                if(updateBorrowingsTable()) {
+                if (updateBorrowingsTable()) {
                     int rowsAffected = stmt.executeUpdate();
                     if (rowsAffected > 0) {
                         borrowButton.setVisible(false);

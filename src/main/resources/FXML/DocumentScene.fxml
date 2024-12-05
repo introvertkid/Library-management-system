@@ -54,7 +54,7 @@
                         </Button>
                     </children>
                 </StackPane>
-                <ComboBox fx:id="statusChoice" layoutX="464.0" layoutY="10.0" onAction="#updateDocTable" prefHeight="26.0" prefWidth="150.0" promptText="  Status" style="-fx-background-color: silver; -fx-cursor: hand;">
+                <ComboBox fx:id="statusChoice" layoutX="557.0" layoutY="11.0" onAction="#updateDocTable" prefHeight="26.0" prefWidth="150.0" promptText="  Status" style="-fx-background-color: silver; -fx-cursor: hand;">
                     <items>
                         <FXCollections fx:factory="observableArrayList">
                             <String fx:value=" All" />
@@ -63,7 +63,7 @@
                         </FXCollections>
                     </items>
                 </ComboBox>
-            <Button fx:id="detailButton" layoutX="14.0" layoutY="9.0" mnemonicParsing="false" onAction="#handleDetailButton" prefHeight="27.0" prefWidth="95.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show detail" />
+            <Button fx:id="detailButton" layoutX="447.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDetailButton" prefHeight="27.0" prefWidth="95.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show detail" />
             </children>
         </AnchorPane>
         <TableView fx:id="documentTable" layoutX="3.0" layoutY="42.0" onMousePressed="#handleDocumentStatus" prefHeight="480.0" prefWidth="990.0" style="-fx-background-color: transparent;">

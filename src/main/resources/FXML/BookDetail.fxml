@@ -43,4 +43,5 @@
       <TextFlow fx:id="descriptionTextFlow" layoutX="29.0" layoutY="380.0" prefHeight="200.0" prefWidth="503.0" />
    <Button fx:id="returnButton" layoutX="248.0" layoutY="285.0" mnemonicParsing="false" onAction="#handleReturnButton" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Return" />
    <Button fx:id="openDocumentButton" layoutX="248.0" layoutY="239.0" mnemonicParsing="false" onAction="#openDocument" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />
+   <ImageView fx:id="qrCodeImageView" fitHeight="83.0" fitWidth="117.0" layoutX="373.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true" />
 </AnchorPane>
