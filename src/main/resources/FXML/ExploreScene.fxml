@@ -8,7 +8,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="contentPane" prefHeight="609.0" prefWidth="1057.0" stylesheets="@../CSS/ExploreScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.ExploreController">
+<AnchorPane fx:id="contentPane" prefHeight="609.0" prefWidth="1057.0"
+            stylesheets="@../CSS/ExploreScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="library.controller.ExploreController">
     <StackPane layoutX="259.0" prefHeight="52.0" prefWidth="490.0">
         <TextField fx:id="searchField" prefHeight="24.0" prefWidth="206.0" promptText="Search..." styleClass="text-field" />
         <Button fx:id="findBookButton" alignment="CENTER_RIGHT" contentDisplay="RIGHT" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#handleFindBook" prefHeight="34.0" prefWidth="62.0" style="-fx-background-color: transparent; -fx-cursor: hand;" text="🔎" textAlignment="RIGHT" StackPane.alignment="CENTER_RIGHT">
