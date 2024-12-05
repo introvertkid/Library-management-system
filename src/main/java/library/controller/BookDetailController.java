@@ -33,6 +33,9 @@ import java.util.ResourceBundle;
 public class BookDetailController extends Controller {
 
     @FXML
+    public TextFlow descriptionTextFlow;
+
+    @FXML
     private TextFlow details;
 
     @FXML
@@ -64,7 +67,6 @@ public class BookDetailController extends Controller {
 
         commentScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-
         Platform.runLater(() -> {
             Node verticalScrollBar = commentScroll.lookup(".scroll-bar:vertical");
             if (verticalScrollBar != null) {
@@ -75,7 +77,7 @@ public class BookDetailController extends Controller {
 
     private void loadBookDetails() {
         String query = """
-                SELECT d.documentName, d.authors, d.quantity, d.status
+                SELECT d.documentName, d.authors, d.quantity, d.status, d.description
                 FROM documents d
                 WHERE d.documentID = ?;
                 """;
@@ -92,8 +94,10 @@ public class BookDetailController extends Controller {
                     String tagName = Document.getTagsByDocumentID(documentID);
                     int quantity = resultSet.getInt("quantity");
                     String status = resultSet.getString("status");
+                    String description = resultSet.getString("description");
 
                     displayBookDetails(documentName, authors, tagName, quantity, status);
+                    displayBookDescription(description);
                 } else {
                     displayError("No details found for this book.");
                 }
@@ -104,7 +108,16 @@ public class BookDetailController extends Controller {
         }
     }
 
-    private void displayBookDetails(String name, String author, String tagName, int quantity, String status) {
+    private void displayBookDescription(String description) {
+        Text descriptionText = new Text(description);
+        descriptionText.setFont(new Font("Arial", 14));
+
+        descriptionTextFlow.getChildren().clear();
+        descriptionTextFlow.getChildren().addAll(descriptionText);
+    }
+
+    private void displayBookDetails(String name, String author, String tagName,
+                                    int quantity, String status) {
         // Cover image
         String imagePath = "/image/the-swallows-673x1024.jpg";
         Image image = new Image(getClass().getResourceAsStream(imagePath));

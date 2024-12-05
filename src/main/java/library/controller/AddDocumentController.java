@@ -1,5 +1,6 @@
 package library.controller;
 
+import javafx.scene.control.TextArea;
 import library.helper.DatabaseHelper;
 import library.entity.Document;
 
@@ -27,6 +28,7 @@ public class AddDocumentController extends Controller {
     private final String DEFAULT_FILE_NAME = "No file chosen";
     private final String DEFAULT_PATH = "src\\main\\resources\\Document\\";
 
+
     ObservableList<String> suggestions = FXCollections.observableArrayList();
     ObservableList<String> selectedTags = FXCollections.observableArrayList();
 
@@ -41,6 +43,9 @@ public class AddDocumentController extends Controller {
 
     @FXML
     public TextField bookNameField, tagField, authorField;
+
+    @FXML
+    public TextArea descriptionField;
 
     File selectedFile;
 
@@ -155,13 +160,14 @@ public class AddDocumentController extends Controller {
     }
 
     private void insertDocumentIntoDB() {
-        String query = "INSERT INTO documents (documentName, authors, fileName) " +
-                "VALUES (?, ?, ?)";
+        String query = "INSERT INTO documents (documentName, authors, fileName, description) " +
+                "VALUES (?, ?, ?, ?)";
         try (PreparedStatement stmt = DatabaseHelper.getConnection().prepareStatement(query)) {
 
             stmt.setString(1, bookNameField.getText());
             stmt.setString(2, authorField.getText());
             stmt.setString(3, selectedFile.getName());
+            stmt.setString(4, descriptionField.getText());
             stmt.executeUpdate();
             showAlert("Success", "Document added successfully");
         } catch (Exception e) {
