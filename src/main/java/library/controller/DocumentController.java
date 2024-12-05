@@ -564,6 +564,7 @@ public class DocumentController extends Controller {
         if (selectedDocument != null) {
             // Pass the document ID or other details to the BookDetailController
             try {
+                contentPane.getStylesheets().remove(getClass().getResource("/CSS/Document.css").toExternalForm());
                 loadFXMLtoAnchorPane("BookDetail", contentPane);
             } catch (Exception e) {
                 e.printStackTrace();

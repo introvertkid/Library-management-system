@@ -9,10 +9,9 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="517.0" prefWidth="799.0" stylesheets="@../CSS/ShowReportScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="library.controller.ReportRequestController">
+<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="517.0" prefWidth="799.0" stylesheets="@../CSS/ShowReportScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.ReportRequestController">
    <children>
-      <TableView fx:id="reportTable" layoutX="14.0" layoutY="65.0" prefHeight="287.0" prefWidth="642.0">
+      <TableView fx:id="reportTable" layoutX="143.0" layoutY="128.0" prefHeight="356.0" prefWidth="642.0">
          <columns>
             <TableColumn fx:id="reportIDColumn" text="Report ID">
                <cellValueFactory>
@@ -37,7 +36,7 @@
             <TableColumn fx:id="statusColumn" prefWidth="127.2000732421875" text="Status" />
          </columns>
       </TableView>
-      <ComboBox fx:id="statusChoice" layoutX="505.0" layoutY="23.0" prefHeight="26.0" prefWidth="150.0" promptText="Status" style="-fx-background-color: silver;">
+      <ComboBox fx:id="statusChoice" layoutX="635.0" layoutY="88.0" prefHeight="26.0" prefWidth="150.0" promptText="Status" style="-fx-background-color: silver;">
          <items>
             <FXCollections fx:factory="observableArrayList">
                <String fx:value="All" />
@@ -46,6 +45,6 @@
             </FXCollections>
          </items>
       </ComboBox>
-      <Button fx:id="openReportButton" layoutX="436.0" layoutY="23.0" mnemonicParsing="false" onAction="#openReport" prefHeight="26.0" prefWidth="51.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />
+      <Button fx:id="openReportButton" layoutX="566.0" layoutY="88.0" mnemonicParsing="false" onAction="#openReport" prefHeight="26.0" prefWidth="51.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />
    </children>
 </AnchorPane>

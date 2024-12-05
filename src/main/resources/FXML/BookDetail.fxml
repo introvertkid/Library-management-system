@@ -29,9 +29,9 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="addCommentButton" layoutX="809.0" layoutY="574.0" mnemonicParsing="false" onAction="#handleAddCommentButton" prefHeight="26.0" prefWidth="102.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Add Comment" />
-      <TextArea fx:id="commentArea" layoutX="642.0" layoutY="475.0" prefHeight="83.0" prefWidth="307.0" />
-      <VBox fx:id="commentList" layoutX="642.0" layoutY="78.0" prefHeight="374.0" prefWidth="307.0">
+      <Button fx:id="addCommentButton" layoutX="847.0" layoutY="537.0" mnemonicParsing="false" onAction="#handleAddCommentButton" prefHeight="26.0" prefWidth="102.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Add Comment" />
+      <TextArea fx:id="commentArea" layoutX="642.0" layoutY="439.0" prefHeight="83.0" prefWidth="307.0" />
+      <VBox fx:id="commentList" layoutX="642.0" layoutY="78.0" prefHeight="345.0" prefWidth="307.0">
          <children>
             <ScrollPane fx:id="commentScroll" prefHeight="374.0" prefWidth="296.0">
                <content>

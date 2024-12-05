@@ -6,19 +6,19 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="contentPane" prefHeight="543.0" prefWidth="826.0" stylesheets="@../CSS/DocumentRequest.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.DocumentRequestController">
+<AnchorPane fx:id="contentPane" prefHeight="599.0" prefWidth="975.0" stylesheets="@../CSS/DocumentRequest.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.DocumentRequestController">
    <children>
-      <ComboBox fx:id="statusChoice" layoutX="661.0" layoutY="14.0" prefHeight="26.0" prefWidth="150.0" promptText="Status" style="-fx-background-color: silver;" />
-      <TableView fx:id="requestTable" layoutX="27.0" layoutY="50.0" prefHeight="404.0" prefWidth="786.0">
+      <ComboBox fx:id="statusChoice" layoutX="751.0" layoutY="70.0" prefHeight="26.0" prefWidth="150.0" promptText="Status" style="-fx-background-color: silver;" />
+      <TableView fx:id="requestTable" layoutX="115.0" layoutY="110.0" prefHeight="404.0" prefWidth="786.0">
         <columns>
-          <TableColumn fx:id="documentIDColumn" prefWidth="83.0" text="DocumentID" />
-            <TableColumn fx:id="documentNameColumn" prefWidth="204.7999725341797" text="DocumentName" />
+          <TableColumn fx:id="documentIDColumn" prefWidth="96.5" text="DocumentID" />
+            <TableColumn fx:id="documentNameColumn" prefWidth="191.5" text="DocumentName" />
             <TableColumn fx:id="tagColumn" prefWidth="164.79998779296875" text="Tag" />
             <TableColumn fx:id="authorColumn" prefWidth="160.79998779296875" text="Author" />
             <TableColumn fx:id="statusColumn" prefWidth="142.4000244140625" text="Status" />
         </columns>
       </TableView>
-      <Button layoutX="601.0" layoutY="14.0" mnemonicParsing="false" onAction="#openSelectedRequest" prefHeight="26.0" prefWidth="51.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />
-      <Button layoutX="535.0" layoutY="14.0" mnemonicParsing="false" onAction="#previewDocument" prefHeight="26.0" prefWidth="51.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Preview" />
+      <Button layoutX="684.0" layoutY="70.0" mnemonicParsing="false" onAction="#openSelectedRequest" prefHeight="26.0" prefWidth="51.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />
+      <Button layoutX="613.0" layoutY="70.0" mnemonicParsing="false" onAction="#previewDocument" prefHeight="26.0" prefWidth="51.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Preview" />
    </children>
 </AnchorPane>

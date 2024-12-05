@@ -66,13 +66,7 @@ public class BookDetailController extends Controller {
         commentArea.setWrapText(true);
 
         commentScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-
-        Platform.runLater(() -> {
-            Node verticalScrollBar = commentScroll.lookup(".scroll-bar:vertical");
-            if (verticalScrollBar != null) {
-                verticalScrollBar.setStyle("-fx-opacity: 0; -fx-background-color: transparent;");
-            }
-        });
+        commentScroll.getStylesheets().add(getClass().getResource("/CSS/ScrollPane.css").toExternalForm());
     }
 
     private void loadBookDetails() {

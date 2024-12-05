@@ -102,7 +102,7 @@ public class ReportRequestController extends Controller {
 
         if (selectedReport != null) {
             // Pass the report ID or other details to the ReportDetailController
-            try {
+            try {contentPane.getStylesheets().remove(getClass().getResource("/CSS/ShowReportScene.css").toExternalForm());
                 loadFXMLtoAnchorPane("ReportDetailsScene", contentPane);
             } catch (Exception e) {
                 e.printStackTrace();

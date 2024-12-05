@@ -1,0 +1,7 @@
+
+
+#contentPane .text-field,
+#contentPane .text-area {
+    -fx-background-color: white !important;
+    -fx-border-color: #d1d1d1 !important;
+}
