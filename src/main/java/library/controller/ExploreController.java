@@ -185,13 +185,6 @@ public class ExploreController extends Controller {
 
                         Image thumbnail = thumbnailUrl != null ? new Image(thumbnailUrl, 150, 200, true, true) : null;
                         Image qrCode = QRCodeGenerator.generateQRCode(bookLink, 100, 100);
-//                        String title1 = getJsonPrimitive(items.get(0), "title");
-//                        String authors1 = getJsonPrimitive(items.get(0), "authors");
-//                        System.out.println(JsonHelper.decodeURL(JsonHelper.parsePrettyJson((JsonObject) items.get(0))));
-//                        System.out.println("thumbnail: " + thumbnailUrl);
-//                        System.out.println("title: " + title1);
-//                        System.out.println("authors: " + authors1);
-//                        System.out.println("END");
 
                         books.add(new Book(thumbnail, title, authors, qrCode));
                     }

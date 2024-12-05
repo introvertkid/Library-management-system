@@ -40,6 +40,14 @@ public class Document {
         this.tagName = tagName;
     }
 
+    public Document(int documentID, String documentName, String authors, int quantity, String tagName) {
+        this.documentID = documentID;
+        this.documentName = documentName;
+        this.authors = authors;
+        this.quantity = quantity;
+        this.tagName = tagName;
+    }
+
     public static int getSpecificDocumentIDFromDB(String documentName) {
         int ans = 0;
         String query = "select documentID from documents where documentName = ?";

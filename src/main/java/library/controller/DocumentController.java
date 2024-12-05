@@ -103,6 +103,10 @@ public class DocumentController extends Controller {
     }
 
     private void loadDocumentData() {
+        if(!documentList.isEmpty()) {
+            documentList.clear();
+        }
+
         try (Connection connection = DatabaseHelper.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT d.documentID, d.documentName, d.authors, d.quantity " +
@@ -224,72 +228,107 @@ public class DocumentController extends Controller {
         dialog.getDialogPane().getButtonTypes().addAll(editButtonType, ButtonType.CANCEL);
         TextField titleField = new TextField(selectedBook.getDocumentName());
         TextField authorField = new TextField(selectedBook.getAuthors());
-        TextField tagField = new TextField(String.valueOf(selectedBook.getTagName()));
         TextField quantityField = new TextField(String.valueOf(selectedBook.getQuantity()));
+        TextField tagField = new TextField(String.valueOf(selectedBook.getTagName()));
+
         VBox vbox = new VBox(10);
-        vbox.getChildren().addAll(new javafx.scene.control.Label("Title:"), titleField, new javafx.scene.control.Label("Author:"), authorField,
-                new javafx.scene.control.Label("Tag:"), tagField, new Label("Quantity:"), quantityField);
+        vbox.getChildren().addAll(
+                new javafx.scene.control.Label("Title:"), titleField,
+                new javafx.scene.control.Label("Author:"), authorField,
+                new javafx.scene.control.Label("Quantity:"), quantityField,
+                new javafx.scene.control.Label("Tags (comma-separated):"), tagField
+        );
         dialog.getDialogPane().setContent(vbox);
+
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == editButtonType) {
                 if (titleField.getText().isEmpty() || authorField.getText().isEmpty() ||
-                        tagField.getText().isEmpty() || quantityField.getText().isEmpty()) {
+                        quantityField.getText().isEmpty() || tagField.getText().isEmpty()) {
                     showAlert("Input Error", "Please fill in all fields.");
                     return null;
                 }
-                return new Document(titleField.getText(), authorField.getText(),
-                        tagField.getText(), Integer.parseInt(quantityField.getText()), selectedBook.getDocumentID());
+                return new Document(
+                        selectedBook.getDocumentID(),
+                        titleField.getText(),
+                        authorField.getText(),
+                        Integer.parseInt(quantityField.getText()),
+                        tagField.getText()
+                );
             }
             return null;
         });
+
         Optional<Document> result = dialog.showAndWait();
         result.ifPresent(this::updateBookInDatabase);
     }
 
+
     private void updateBookInDatabase(Document updatedBook) {
-        String updateBookQuery = "UPDATE documents SET documentName = ?, authors = ?, quantity = ?, tagID = ? WHERE documentID = ?";
+        String updateDocumentQuery = "UPDATE documents SET documentName = ?, authors = ?, quantity = ? WHERE documentID = ?";
         String getTagIdQuery = "SELECT tagID FROM tags WHERE tagName = ?";
-        int tagID = -1;
-        try (Connection conn = DatabaseHelper.getConnection();
-             PreparedStatement pstmtGetTagId = conn.prepareStatement(getTagIdQuery)) {
-            pstmtGetTagId.setString(1, updatedBook.getTagName());
-            ResultSet rs = pstmtGetTagId.executeQuery();
-            if (rs.next()) {
-                tagID = rs.getInt("tagID");
-            } else {
-                String insertTagQuery = "INSERT INTO tags (tagName) VALUES (?)";
-                try (PreparedStatement pstmtInsertTag = conn.prepareStatement(insertTagQuery, Statement.RETURN_GENERATED_KEYS)) {
-                    pstmtInsertTag.setString(1, updatedBook.getTagName());
-                    pstmtInsertTag.executeUpdate();
-                    ResultSet rsInsert = pstmtInsertTag.getGeneratedKeys();
-                    if (rsInsert.next()) {
-                        tagID = rsInsert.getInt(1);
+        String insertTagQuery = "INSERT INTO tags (tagName) VALUES (?)";
+        String insertDocumentTagQuery = "INSERT INTO document_tag (documentID, tagID) VALUES (?, ?)";
+        String deleteDocumentTagsQuery = "DELETE FROM document_tag WHERE documentID = ?";
+
+        try (Connection conn = DatabaseHelper.getConnection()) {
+            // Update document information
+            try (PreparedStatement pstmt = conn.prepareStatement(updateDocumentQuery)) {
+                pstmt.setString(1, updatedBook.getDocumentName());
+                pstmt.setString(2, updatedBook.getAuthors());
+                pstmt.setInt(3, updatedBook.getQuantity());
+                pstmt.setInt(4, updatedBook.getDocumentID());
+                pstmt.executeUpdate();
+            }
+
+            // Remove existing tags for the document
+            try (PreparedStatement pstmtDelete = conn.prepareStatement(deleteDocumentTagsQuery)) {
+                pstmtDelete.setInt(1, updatedBook.getDocumentID());
+                pstmtDelete.executeUpdate();
+            }
+
+            // Add new tags and update document_tag
+            String[] tags = updatedBook.getTagName().split(",");
+            for (String tag : tags) {
+                tag = tag.trim();
+                int tagID = -1;
+
+                // Check if tag exists
+                try (PreparedStatement pstmtGetTag = conn.prepareStatement(getTagIdQuery)) {
+                    pstmtGetTag.setString(1, tag);
+                    ResultSet rs = pstmtGetTag.executeQuery();
+                    if (rs.next()) {
+                        tagID = rs.getInt("tagID");
+                    } else {
+                        // Insert new tag
+                        try (PreparedStatement pstmtInsertTag = conn.prepareStatement(insertTagQuery, Statement.RETURN_GENERATED_KEYS)) {
+                            pstmtInsertTag.setString(1, tag);
+                            pstmtInsertTag.executeUpdate();
+                            ResultSet rsInsert = pstmtInsertTag.getGeneratedKeys();
+                            if (rsInsert.next()) {
+                                tagID = rsInsert.getInt(1);
+                            }
+                        }
                     }
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                }
+
+                // Add to document_tag
+                if (tagID != -1) {
+                    try (PreparedStatement pstmtInsertDocTag = conn.prepareStatement(insertDocumentTagQuery)) {
+                        pstmtInsertDocTag.setInt(1, updatedBook.getDocumentID());
+                        pstmtInsertDocTag.setInt(2, tagID);
+                        pstmtInsertDocTag.executeUpdate();
+                    }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (tagID != -1) {
-            try (Connection conn = DatabaseHelper.getConnection();
-                 PreparedStatement pstmt = conn.prepareStatement(updateBookQuery)) {
-                pstmt.setString(1, updatedBook.getDocumentName());
-                pstmt.setString(2, updatedBook.getAuthors());
-                pstmt.setInt(3, updatedBook.getQuantity());
-                pstmt.setInt(4, tagID);
-                pstmt.setInt(5, updatedBook.getDocumentID());
-                pstmt.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
 
         loadDocumentData();
-        updateTable(currentPage);
-        updatePage();
+//        updateTable(currentPage);
+//        updatePage();
     }
+
 
     @FXML
     private void handleDeleteBook() {
