@@ -28,7 +28,6 @@ public class AddDocumentController extends Controller {
     private final String DEFAULT_FILE_NAME = "No file chosen";
     private final String DEFAULT_PATH = "src\\main\\resources\\Document\\";
 
-
     ObservableList<String> suggestions = FXCollections.observableArrayList();
     ObservableList<String> selectedTags = FXCollections.observableArrayList();
 
@@ -194,6 +193,7 @@ public class AddDocumentController extends Controller {
         tagField.clear();
         bookNameField.clear();
         authorField.clear();
+        descriptionField.clear();
         selectedTags.clear();
         selectedTagsBox.getChildren().clear();
         selectedFile = null;

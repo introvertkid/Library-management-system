@@ -99,12 +99,4 @@ public class Controller implements Initializable {
                         "    -fx-font-weight: bold;\n" +
                         "    -fx-cursor: hand;");
     }
-
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
-
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
 }

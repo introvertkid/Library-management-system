@@ -58,6 +58,7 @@ public class DocumentDetailsController extends Controller{
     @FXML
     private void rejectRequest() {
         String query = "DELETE FROM documents WHERE documentID = ?";
+
         try (Connection connection = DatabaseHelper.getConnection();
              PreparedStatement statement = connection.prepareStatement(query)) {
             statement.setInt(1, documentID);

@@ -68,6 +68,8 @@ public class DocumentController extends Controller {
 
     private Document selectedBook;
 
+    public static Document selectedDocument;
+
     private final ObservableList<Document> documentList = FXCollections.observableArrayList();
     private int currentPage = 0;
     private static final int ROWS_PER_PAGE = 18;
@@ -214,7 +216,6 @@ public class DocumentController extends Controller {
         }
     }
 
-    //todo: change file of document
     @FXML
     private void handleEditBook() {
         Document selectedBook = documentTable.getSelectionModel().getSelectedItem();
@@ -418,53 +419,6 @@ public class DocumentController extends Controller {
         });
     }
 
-    //this approach is using pdf.js
-//    public void load2()
-//    {
-//        WebView webView = new WebView();
-//        WebEngine webEngine = webView.getEngine();
-//
-//        try {
-//            String url = getClass().getResource("/pdfjs/web/viewer.html").toURI().toString();
-//            webEngine.setUserStyleSheetLocation(
-//                    getClass().getResource("/pdfjs/web/viewer.css").toURI().toString());
-//            webEngine.setJavaScriptEnabled(true);
-//            webEngine.load(url);
-//
-//            webEngine.getLoadWorker().stateProperty()
-//                    .addListener((observableValue, oldValue, newValue) -> {
-//                        if (Worker.State.SUCCEEDED == newValue) {
-//                            InputStream stream = null;
-//                            try {
-//                                InputStream inputStream = getClass().getResourceAsStream("/Document/CUTE.pdf");
-//                                byte[] bytes = IOUtils.toByteArray(inputStream);
-//                                //Base64 from java.util
-//                                String base64 = Base64.getEncoder().encodeToString(bytes);
-//                                //This must be ran on FXApplicationThread
-//                                webEngine.executeScript("openFileFromBase64('" + base64 + "')");
-//                            } catch (IOException e) {
-//                                throw new RuntimeException(e);
-//                            } finally {
-//                                if(stream!=null)
-//                                {
-//                                    try {
-//                                        stream.close();
-//                                    } catch (IOException e) {
-//                                        throw new RuntimeException(e);
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    });
-//
-//            Stage primaryStage=getPrimaryStage();
-//            primaryStage.setScene(new Scene(webView));
-//            setPrimaryStage(primaryStage);
-//        } catch (URISyntaxException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
     @FXML
     private void handleDocumentStatus() {
          selectedBook = documentTable.getSelectionModel().getSelectedItem();
@@ -554,8 +508,6 @@ public class DocumentController extends Controller {
             }
         }
     }
-
-    public static Document selectedDocument;
 
     @FXML
     public void handleDetailButton() {

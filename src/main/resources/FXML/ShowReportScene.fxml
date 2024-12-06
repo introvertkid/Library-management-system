@@ -45,6 +45,6 @@
             </FXCollections>
          </items>
       </ComboBox>
-      <Button fx:id="openReportButton" layoutX="445.0" layoutY="452.0" mnemonicParsing="false" onAction="#openReport" prefHeight="26.0" prefWidth="95.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />
+      <Button fx:id="openReportButton" layoutX="445.0" layoutY="452.0" mnemonicParsing="false" onAction="#openSelectedRequest" prefHeight="26.0" prefWidth="95.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />
    </children>
 </AnchorPane>

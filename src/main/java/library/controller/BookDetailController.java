@@ -2,7 +2,6 @@ package library.controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -90,7 +89,6 @@ public class BookDetailController extends Controller {
 
         descriptionText.getChildren().clear();
         descriptionText.getChildren().add(new Text(book.getDescription()));
-
     }
 
     private void loadBookDetails() {
@@ -138,6 +136,7 @@ public class BookDetailController extends Controller {
         descriptionTextFlow.getChildren().addAll(descriptionText);
     }
 
+    //todo: refactor
     private void displayBookDetails(String name, String author, String tagName,
                                     int quantity, String status) {
         // Cover image
@@ -184,7 +183,6 @@ public class BookDetailController extends Controller {
         commentList.getChildren().clear();
         commentList.getChildren().addAll(cmtList);
     }
-
 
     private List<Comment> fetchComments(int documentID) {
         List<Comment> comments = new ArrayList<>();

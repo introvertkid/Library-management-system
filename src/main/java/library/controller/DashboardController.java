@@ -93,7 +93,6 @@ public class DashboardController extends Controller {
         }
     }
 
-    //todo: join documents - document_tag - tags
     private void loadCategoryBookCounts() {
         String tagBookCountQuery = "SELECT t.tagName, COUNT(dt.documentID) AS totalBooks\n" +
                 "FROM tags t\n" +

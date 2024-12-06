@@ -6,7 +6,6 @@ import library.entity.Document;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -22,7 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class DocumentRequestController extends Controller {
+public class DocumentRequestController extends Controller implements IRequestController {
     @FXML
     private TableView<Document> requestTable;
     @FXML
@@ -54,13 +53,13 @@ public class DocumentRequestController extends Controller {
         loadRequestData();
     }
 
-    private void loadRequestData() {
+    @Override
+    public void loadRequestData() {
         documentList.clear();
         String query = "SELECT d.* FROM documents d " +
                 "WHERE d.status = 'Pending'";
-        DatabaseHelper.connectToDatabase();
-        try (Connection connection = DatabaseHelper.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+
+        try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Document document = new Document(
@@ -69,7 +68,7 @@ public class DocumentRequestController extends Controller {
                         resultSet.getString("authors"),
                         resultSet.getString("fileName"),
                         resultSet.getString("status"),
-                        Document.getTagsByDocumentID( resultSet.getInt("documentID"))
+                        Document.getTagsByDocumentID(resultSet.getInt("documentID"))
                 );
                 documentList.add(document);
             }
@@ -79,9 +78,9 @@ public class DocumentRequestController extends Controller {
         }
     }
 
-
     @FXML
-    private void openSelectedRequest() {
+    @Override
+    public void openSelectedRequest() {
         selectedDocument = requestTable.getSelectionModel().getSelectedItem();
         if (selectedDocument != null) {
             try {

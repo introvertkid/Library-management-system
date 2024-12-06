@@ -60,7 +60,6 @@ public class ExploreDetailController extends Controller {
 
         commentScroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 
-
         Platform.runLater(() -> {
             Node verticalScrollBar = commentScroll.lookup(".scroll-bar:vertical");
             if (verticalScrollBar != null) {
@@ -101,7 +100,6 @@ public class ExploreDetailController extends Controller {
         errorText.setStyle("-fx-fill: red; -fx-font-size: 14;");
         details.getChildren().add(errorText);
     }
-
 
     public void loadComments(int documentID) {
         commentList = new VBox();

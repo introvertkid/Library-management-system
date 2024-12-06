@@ -65,6 +65,6 @@
             </padding>
         </HBox>
           <Button fx:id="SendReport" alignment="BOTTOM_RIGHT" layoutX="699.0" layoutY="383.0" mnemonicParsing="false" onAction="#sendReport" prefHeight="26.0" prefWidth="88.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand; -fx-faint-focus-color: transparent; -fx-focus-color: transparent;" text="Send Report" />
-          <Button layoutX="597.0" layoutY="384.0" mnemonicParsing="false" onAction="#setFileChooser" prefHeight="25.0" prefWidth="76.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;" text="Attach" />
+<!--          <Button layoutX="597.0" layoutY="384.0" mnemonicParsing="false" onAction="#setFileChooser" prefHeight="25.0" prefWidth="76.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;" text="Attach" />-->
     </children>
 </AnchorPane>
