@@ -93,7 +93,7 @@ public class BaseSceneController extends Controller {
     }
 
     public void setCircularAvatar() {
-        userAvatar.setImage(changeAvatar(User.getUsername()));
+        userAvatar.setImage(getUserAvatar(User.getUsername()));
         double centerX = userAvatar.getFitWidth() / 2;
         double centerY = (userAvatar.getFitHeight() - 1.75) / 2;
         double radius = (Math.min(userAvatar.getFitWidth(), userAvatar.getFitHeight()) - 1) / 2;
@@ -102,9 +102,10 @@ public class BaseSceneController extends Controller {
     }
 
     @FXML
-    private Image changeAvatar(String username) {
+    private Image getUserAvatar(String username) {
         String query = "SELECT avatar FROM users WHERE username = ?";
-        String avt = "";
+        String avt = "userAvatar.png";
+
         try (Connection conn = DatabaseHelper.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, username);
@@ -117,21 +118,18 @@ public class BaseSceneController extends Controller {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         Image avatarImage = defaultAvatar;
-        if (avt != null && !avt.isEmpty()) {
-            String avatarPath = "/image/UserAvatar/" + avt;
-            if (!avatarPath.equals(defaultAvatar.getUrl())) {
-                try {
-                    avatarImage = new Image(avatarPath);
-                    System.out.println(avatarImage.getUrl());
-                } catch (Exception e) {
-                    System.out.println("Avatar path: " + avatarPath);
-                    e.printStackTrace();
-                }
-            } else {
-                avatarImage = defaultAvatar;
-            }
+        String avatarPath = "/image/UserAvatar/" + avt;
+
+        try {
+            avatarImage = new Image(avatarPath);
+            System.out.println(avatarImage.getUrl());
+        } catch (Exception e) {
+            System.out.println("Failed to get avatar from: " + avatarPath);
+            e.printStackTrace();
         }
+
         return avatarImage;
     }
 

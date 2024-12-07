@@ -164,7 +164,7 @@ public class ProfileController extends Controller {
                 }
 
                 // Create a new file in the avatar directory
-                String newAvatarName = String.valueOf(User.getID()) + "_" + selectedFile.getName();
+                String newAvatarName = User.getID() + "_" + selectedFile.getName();
                 File destinationFile = new File(directory, newAvatarName);
 
                 // Copy the selected file to the destination
@@ -184,6 +184,7 @@ public class ProfileController extends Controller {
 
                 // Show new avatar in the profile
                 avatar.setFill(new ImagePattern(new Image(destinationFile.toURI().toString())));
+//                BaseSceneController.setCircularAvatar();
             } catch (IOException | SQLException e) {
                 e.printStackTrace();
             }
