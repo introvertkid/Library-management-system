@@ -1,5 +1,6 @@
-package library.controller;
+package library.controller.request;
 
+import library.controller.Controller;
 import library.helper.DatabaseHelper;
 import library.entity.Document;
 
@@ -15,7 +16,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

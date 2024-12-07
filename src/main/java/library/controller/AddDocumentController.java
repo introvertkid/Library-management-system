@@ -52,6 +52,8 @@ public class AddDocumentController extends Controller {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        descriptionField.setWrapText(true);
+
         suggestionList.setVisible(false);
         getAllTagsFromDB();
         System.out.println(Collections.singletonList(tags));

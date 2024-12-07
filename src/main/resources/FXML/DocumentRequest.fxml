@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="contentPane" prefHeight="599.0" prefWidth="975.0" stylesheets="@../CSS/DocumentRequest.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.DocumentRequestController">
+<AnchorPane fx:id="contentPane" prefHeight="599.0" prefWidth="975.0" stylesheets="@../CSS/DocumentRequest.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.request.DocumentRequestController">
    <children>
       <ComboBox fx:id="statusChoice" layoutX="751.0" layoutY="70.0" prefHeight="26.0" prefWidth="150.0" promptText="Status" style="-fx-background-color: silver;" />
       <TableView fx:id="requestTable" layoutX="115.0" layoutY="110.0" prefHeight="404.0" prefWidth="786.0">

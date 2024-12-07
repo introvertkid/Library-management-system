@@ -1,6 +1,7 @@
-package library.controller;
+package library.controller.request;
 
 import javafx.collections.transformation.FilteredList;
+import library.controller.Controller;
 import library.entity.Report;
 import library.helper.DatabaseHelper;
 

@@ -1,8 +1,8 @@
-package library.controller;
+package library.controller.request;
 
+import library.controller.Controller;
 import library.helper.DatabaseHelper;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -54,7 +54,7 @@ public class ReportDetailsController extends Controller {
     }
 
     @FXML
-    public void handledOrPending(ActionEvent event) {
+    public void handledOrPending() {
         // Toggle status
         status = status.equals("Pending") ? "Handled" : "Pending";
 

@@ -14,6 +14,7 @@ public class Document {
     private String status;
     private String fileName;
     private int quantity;
+    private String description = "This document has no description";
 
     public Document(String documentName, String authors, String tagName, int quantity, int documentID) {
         this.documentID = documentID;

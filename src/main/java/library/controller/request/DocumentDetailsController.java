@@ -1,5 +1,6 @@
-package library.controller;
+package library.controller.request;
 
+import library.controller.Controller;
 import library.entity.Document;
 import library.helper.DatabaseHelper;
 
@@ -17,7 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class DocumentDetailsController extends Controller{
+public class DocumentDetailsController extends Controller {
     @FXML
     private TextField bookNameField;
 

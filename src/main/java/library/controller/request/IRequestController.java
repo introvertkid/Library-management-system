@@ -1,4 +1,4 @@
-package library.controller;
+package library.controller.request;
 
 public interface IRequestController {
     void loadRequestData();
