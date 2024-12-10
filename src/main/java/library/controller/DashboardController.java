@@ -2,6 +2,8 @@ package library.controller;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import library.entity.User;
@@ -28,7 +30,7 @@ public class DashboardController extends Controller {
     private Label labelTotalBooks;
 
     @FXML
-    private AnchorPane content;
+    private AnchorPane contentPane;
 
     @FXML
     private Label labelTotalUsers;
@@ -58,11 +60,11 @@ public class DashboardController extends Controller {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tagColumn.setCellValueFactory(new PropertyValueFactory<>("tagName"));
         totalBooksColumn.setCellValueFactory(new PropertyValueFactory<>("totalBooks"));
+
         loadTotalBooksAndUsers();
         loadCategoryBookCounts();
         loadBorrowingBookCounts(User.getUsername());
         getTotalBorrowedAndUnreturnedBooks(User.getUsername());
-
         loadRecommendation();
     }
 
@@ -97,7 +99,7 @@ public class DashboardController extends Controller {
         String tagBookCountQuery = "SELECT t.tagName, COUNT(dt.documentID) AS totalBooks\n" +
                 "FROM tags t\n" +
                 "LEFT JOIN document_tag dt ON t.tagID = dt.tagID\n" +
-                "GROUP BY  t.tagName\n" +
+                "GROUP BY t.tagName\n" +
                 "HAVING totalBooks > 0\n" +
                 "ORDER BY totalBooks DESC";
 
@@ -110,7 +112,6 @@ public class DashboardController extends Controller {
                 int totalBooks = resultSet.getInt("totalBooks");
                 tagTable.getItems().add(new TagBookCount(tagName, totalBooks));
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -122,12 +123,10 @@ public class DashboardController extends Controller {
                 "INNER JOIN users u ON b.userName = u.username " +
                 "WHERE u.username = ? and returned = false";
 
-        try (Connection connection = DatabaseHelper.getConnection();
-             PreparedStatement bookStatement = connection.prepareStatement(borrowQuery)) {
+        try (PreparedStatement stmt = DatabaseHelper.getConnection().prepareStatement(borrowQuery)) {
+            stmt.setString(1, username);
 
-            bookStatement.setString(1, username);
-
-            try (ResultSet res = bookStatement.executeQuery()) {
+            try (ResultSet res = stmt.executeQuery()) {
                 if (res.next()) {
                     int borrowedCount = res.getInt(1);
                     labelBorrowedBooks.setText(String.valueOf(borrowedCount));
@@ -161,10 +160,6 @@ public class DashboardController extends Controller {
         labelTotalBorrow.setText(String.valueOf(x));
     }
 
-    public void document() {
-        loadFXMLtoAnchorPane("DocumentScene", content);
-    }
-
     private void loadRecommendation() {
         List<String> suggestions = List.of("java", "javafx", "mysql", "physics", "math",
                 "science", "chemistry", "biology", "history", "geography", "algorithm",
@@ -175,6 +170,40 @@ public class DashboardController extends Controller {
         String query = APIHelper.parseQuery(suggestions.get(hjhj)) + "&limit=2";
         System.out.println("query: " + query);
 
+//        long S=System.nanoTime();
+//        Task<Boolean> recommendTask= new Task<>() {
+//            @Override
+//            protected Boolean call() {
+//                JsonObject jsonObject = APIHelper.fetchBookData(query);
+//                assert jsonObject != null;
+//                JsonArray items = jsonObject.getAsJsonArray("items");
+//                System.out.println("items's size: " + items.size());
+//
+//                JsonObject firstBook = (JsonObject) items.get(random.nextInt(items.size()));
+//                JsonObject secondBook = (JsonObject) items.get(random.nextInt(items.size()));
+//
+//                Platform.runLater(() -> {
+//                    // Assign their details to the labels
+//                    firstBookName.setText(ExploreController.getJsonPrimitive(firstBook, "title"));
+//                    firstBookAuthor.setText(ExploreController.getJsonPrimitive(firstBook, "authors"));
+//                    firstBookCover.setImage(new Image(Objects.requireNonNull
+//                            (ExploreController.getJsonPrimitive(firstBook, "thumbnail"))));
+//
+//                    secondBookName.setText(ExploreController.getJsonPrimitive(secondBook, "title"));
+//                    secondBookAuthor.setText(ExploreController.getJsonPrimitive(secondBook, "authors"));
+//                    secondBookCover.setImage(new Image(Objects.requireNonNull
+//                            (ExploreController.getJsonPrimitive(secondBook, "thumbnail"))));
+//                });
+//
+//                return true;
+//            }
+//        };
+//        Thread recommendThread=new Thread(recommendTask);
+//        recommendThread.setDaemon(true);
+//        recommendThread.start();
+//        System.out.println(System.nanoTime()-S);
+
+//        long S=System.nanoTime();
         JsonObject jsonObject = APIHelper.fetchBookData(query);
         assert jsonObject != null;
         JsonArray items = jsonObject.getAsJsonArray("items");
@@ -193,5 +222,10 @@ public class DashboardController extends Controller {
         secondBookAuthor.setText(ExploreController.getJsonPrimitive(secondBook, "authors"));
         secondBookCover.setImage(new Image(Objects.requireNonNull
                 (ExploreController.getJsonPrimitive(secondBook, "thumbnail"))));
+//        System.out.println(System.nanoTime()-S);
+    }
+
+    public void document() {
+        loadFXMLtoAnchorPane("DocumentScene", contentPane);
     }
 }

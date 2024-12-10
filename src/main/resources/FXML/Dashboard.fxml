@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="content" prefHeight="600.0" prefWidth="1005.0" style="-fx-background-color: white;"
+<AnchorPane fx:id="contentPane" prefHeight="600.0" prefWidth="1005.0" style="-fx-background-color: white;"
             stylesheets="@../CSS/Dashboard.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="library.controller.DashboardController">
    <VBox fx:id="contentVbox" alignment="CENTER" layoutY="-6.0" prefHeight="198.0" prefWidth="983.0" spacing="20"

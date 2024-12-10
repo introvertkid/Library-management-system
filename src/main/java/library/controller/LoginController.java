@@ -94,7 +94,9 @@ public class LoginController extends Controller {
     @FXML
     public void handleLogin(ActionEvent actionEvent) {
         String username = usernameField.getText();
-        String password = passwordField.isVisible() ? passwordField.getText() : passwordFieldHidden.getText();
+        String password = passwordField.isVisible()
+                ? passwordField.getText()
+                : passwordFieldHidden.getText();
 
         loadingIndicator.setVisible(true);
         loginButton.setDisable(true);
@@ -127,7 +129,6 @@ public class LoginController extends Controller {
         loginThread.setDaemon(true);
         loginThread.start();
     }
-
 
     public String generateRandomPassword(int length) {
         String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

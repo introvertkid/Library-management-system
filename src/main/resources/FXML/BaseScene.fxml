@@ -138,7 +138,7 @@
                         <Button fx:id="showReportButton" alignment="BASELINE_LEFT" layoutY="42.0"
                                 mnemonicParsing="false" onAction="#handleShowReportButtonAction" prefHeight="42.0"
                                 prefWidth="200.0" style="-fx-cursor: hand;" styleClass="showreportButton"
-                                text="Show Reports" visible="false">
+                                text="Report Request" visible="false">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true"
                                          preserveRatio="true">
@@ -210,25 +210,25 @@
                   </font>
                </Button>
                <AnchorPane prefHeight="47.0" prefWidth="70.0">
-                  <children>
-
-                           <Text fx:id="userNameText" fontSmoothingType="LCD" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-wrap-text: false;" text="username" textAlignment="RIGHT" AnchorPane.rightAnchor="0.0">
-                              <font>
-                                 <Font name="Tahoma" size="17.0" />
-                              </font>
-                           </Text>
-                     <Text fx:id="role" fontSmoothingType="LCD" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-wrap-text: false;" text="admin" textAlignment="RIGHT" AnchorPane.rightAnchor="0.0">
-                        <font>
-                           <Font name="Tahoma" size="12.0" />
-                        </font>
-                        <cursor>
-                           <Cursor fx:constant="OPEN_HAND" />
-                        </cursor>
-                        <rotationAxis>
-                           <Point3D />
-                        </rotationAxis>
-                     </Text>
-                  </children>
+                  <Text fx:id="userNameText" fontSmoothingType="LCD" layoutY="21.0" strokeType="OUTSIDE"
+                        strokeWidth="0.0" style="-fx-wrap-text: false;" text="username" textAlignment="RIGHT"
+                        AnchorPane.rightAnchor="0.0">
+                     <font>
+                        <Font name="Tahoma" size="17.0"/>
+                     </font>
+                  </Text>
+                  <Text fx:id="role" fontSmoothingType="LCD" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                        style="-fx-wrap-text: false;" text="admin" textAlignment="RIGHT" AnchorPane.rightAnchor="0.0">
+                     <font>
+                        <Font name="Tahoma" size="12.0"/>
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND"/>
+                     </cursor>
+                     <rotationAxis>
+                        <Point3D/>
+                     </rotationAxis>
+                  </Text>
                </AnchorPane>
                <!-- User Avatar -->
                <ImageView fx:id="userAvatar" fitHeight="40.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">

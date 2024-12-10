@@ -9,42 +9,48 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="985.0" stylesheets="@../CSS/ShowReportScene.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.request.ReportRequestController">
-   <children>
-      <TableView fx:id="reportTable" layoutX="172.0" layoutY="150.0" prefHeight="287.0" prefWidth="642.0">
-         <columns>
-            <TableColumn fx:id="reportIDColumn" text="Report ID">
-               <cellValueFactory>
-                  <PropertyValueFactory property="documentID" />
-               </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="userIDColumn" prefWidth="78.4000244140625" text="User ID">
-               <cellValueFactory>
-                  <PropertyValueFactory property="documentName" />
-               </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="reportTypeColumn" prefWidth="178.40003967285156" text="Report Type">
-               <cellValueFactory>
-                  <PropertyValueFactory property="categoryID" />
-               </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="titleColumn" prefWidth="177.5999755859375" text="Title">
-               <cellValueFactory>
-                  <PropertyValueFactory property="authors" />
-               </cellValueFactory>
-            </TableColumn>
-            <TableColumn fx:id="statusColumn" prefWidth="127.2000732421875" text="Status" />
-         </columns>
-      </TableView>
-      <ComboBox fx:id="statusChoice" layoutX="172.0" layoutY="115.0" prefHeight="26.0" prefWidth="150.0" promptText="   Status" style="-fx-background-color: silver; -fx-faint-focus-color: transparent; -fx-focus-color: transparent; -fx-text-fill: white; -fx-cursor: hand;">
-         <items>
-            <FXCollections fx:factory="observableArrayList">
-               <String fx:value="All" />
-               <String fx:value="Pending" />
-               <String fx:value="Handled" />
-            </FXCollections>
-         </items>
-      </ComboBox>
-      <Button fx:id="openReportButton" layoutX="445.0" layoutY="452.0" mnemonicParsing="false" onAction="#openSelectedRequest" prefHeight="26.0" prefWidth="95.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />
-   </children>
+<AnchorPane fx:id="contentPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="588.0" prefWidth="985.0" stylesheets="@../CSS/ShowReportScene.css"
+            xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="library.controller.request.ReportRequestController">
+   <TableView fx:id="reportTable" layoutX="172.0" layoutY="150.0" prefHeight="287.0" prefWidth="642.0">
+      <columns>
+         <TableColumn fx:id="reportIDColumn" text="Report ID">
+            <cellValueFactory>
+               <PropertyValueFactory property="documentID"/>
+            </cellValueFactory>
+         </TableColumn>
+         <TableColumn fx:id="userIDColumn" prefWidth="78.4000244140625" text="User ID">
+            <cellValueFactory>
+               <PropertyValueFactory property="documentName"/>
+            </cellValueFactory>
+         </TableColumn>
+         <TableColumn fx:id="reportTypeColumn" prefWidth="178.40003967285156" text="Report Type">
+            <cellValueFactory>
+               <PropertyValueFactory property="categoryID"/>
+            </cellValueFactory>
+         </TableColumn>
+         <TableColumn fx:id="titleColumn" prefWidth="177.5999755859375" text="Title">
+            <cellValueFactory>
+               <PropertyValueFactory property="authors"/>
+            </cellValueFactory>
+         </TableColumn>
+         <TableColumn fx:id="statusColumn" prefWidth="127.2000732421875" text="Status"/>
+      </columns>
+   </TableView>
+   <ComboBox fx:id="statusChoice" layoutX="172.0" layoutY="115.0" prefHeight="26.0" prefWidth="150.0"
+             promptText="   Status"
+             style="-fx-background-color: silver; -fx-faint-focus-color: transparent; -fx-focus-color: transparent; -fx-text-fill: white; -fx-cursor: hand;">
+      <items>
+         <FXCollections fx:factory="observableArrayList">
+            <String fx:value="All"/>
+            <String fx:value="Pending"/>
+            <String fx:value="Handled"/>
+         </FXCollections>
+      </items>
+   </ComboBox>
+   <Button fx:id="openReportButton" layoutX="445.0" layoutY="452.0" mnemonicParsing="false"
+           onAction="#openSelectedRequest" prefHeight="26.0" prefWidth="95.0"
+           style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;"
+           text="Open report"/>
 </AnchorPane>

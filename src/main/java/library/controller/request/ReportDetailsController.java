@@ -88,4 +88,8 @@ public class ReportDetailsController extends Controller {
             return false;
         }
     }
+
+    public void handleCancelButton() {
+        loadFXMLtoAnchorPane("ShowReportScene", contentPane);
+    }
 }
