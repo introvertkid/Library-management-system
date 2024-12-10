@@ -46,6 +46,9 @@ public class ExploreDetailController extends Controller {
     private VBox commentList;
 
     @FXML
+    private TextFlow descriptionText;
+
+    @FXML
     private ScrollPane commentScroll;
 
     private final Book selectedDocument = ExploreController.selectedBook;
@@ -92,6 +95,17 @@ public class ExploreDetailController extends Controller {
 
         details.getChildren().clear();
         details.getChildren().addAll(nameText, authorText);
+
+        String descriptionContent = selectedDocument.getDescription();
+        if (descriptionContent == null || descriptionContent.isEmpty()) {
+            descriptionContent = "No description";
+        }
+        Text description = new Text(descriptionContent);
+        description.setFont(new Font("Arial", 14));
+        description.setWrappingWidth(400);
+
+        descriptionText.getChildren().clear();
+        descriptionText.getChildren().add(description);
     }
 
     private void displayError(String errorMessage) {

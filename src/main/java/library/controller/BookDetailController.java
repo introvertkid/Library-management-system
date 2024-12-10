@@ -74,23 +74,6 @@ public class BookDetailController extends Controller {
         commentScroll.getStylesheets().add(getClass().getResource("/CSS/ScrollPane.css").toExternalForm());
     }
 
-    public void setBookDetails(Book book) {
-        this.book = book;
-
-        bookImage.setImage(book.getThumbnail());
-        Text titleText = new Text(book.getTitle());
-        titleText.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
-
-        Text authorText = new Text("\n" + book.getAuthors());
-        authorText.setStyle("-fx-font-size: 16px;");
-
-        details.getChildren().clear();
-        details.getChildren().addAll(titleText, authorText);
-
-        descriptionText.getChildren().clear();
-        descriptionText.getChildren().add(new Text(book.getDescription()));
-    }
-
     private void loadBookDetails() {
         String query = """
                 SELECT d.documentName, d.authors, d.quantity, d.status, d.description
@@ -114,12 +97,6 @@ public class BookDetailController extends Controller {
 
                     displayBookDetails(documentName, authors, tagName, quantity, status);
                     displayBookDescription(description);
-                } else {
-                    if (book != null) {
-                        setBookDetails(book);
-                    } else {
-                        displayError("No details found for this book.");
-                    }
                 }
             }
         } catch (SQLException e) {
@@ -129,6 +106,10 @@ public class BookDetailController extends Controller {
     }
 
     private void displayBookDescription(String description) {
+        if (description == null || description.isEmpty()) {
+            description = "No description";
+        }
+
         Text descriptionText = new Text(description);
         descriptionText.setFont(new Font("Arial", 14));
 

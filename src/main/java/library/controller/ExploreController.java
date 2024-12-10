@@ -168,6 +168,7 @@ public class ExploreController extends Controller {
         loadingIndicator.setVisible(true);
 
         // Tạo Task để load dữ liệu trên background thread
+        // Sử dụng Task để tải dữ liệu từ API trong một luồng nền, tránh làm giao diện người dùng bị treo khi tải dữ liệu.
         Task<ObservableList<Book>> loadBooksTask = new Task<>() {
             @Override
             protected ObservableList<Book> call() throws Exception {
@@ -193,7 +194,6 @@ public class ExploreController extends Controller {
                         books.add(new Book(thumbnail, title, authors, qrCode, description));
                     }
                 }
-
                 return books;
             }
         };

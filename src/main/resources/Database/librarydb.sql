@@ -80,6 +80,13 @@ insert into tags(tagName)
 values ('javafx'), ('java'), ('c'), ('cpp'), ('c++'), ('regex'), ('document'), ('uet'), ('hust'), ('final exam'), ('mid exam'), ('dsa'),
 		('vnu'), ('linear algebra'), ('calculus'), ('mysql'), ('oop'), ('math'), ('physics'), ('machine learning');
 
+
+INSERT INTO documents (documentName, authors, fileName, quantity,status, description)
+VALUES
+('Đề thi OOP', 'VNU', 'oop.pdf', 10, 'Available', 'Đề thi cuối kì Lập trình hướng đối tượng HK1 2020 - 2021'),
+('Đề thi XSTK', 'VNU', 'xstk.pdf', 10, 'Available', 'Đề thi giữa kì môn xác suất thống kê năm học 2020 - 2021 Học kỳ hè'),
+('Đề thi DSA', 'VNU', 'dsa.docx', 10, 'Available', 'Đề thi học phần cấu trúc dữ liệu và giải thuật HK1 NĂM HỌC 2021 – 2022');
+
 #insert documents
 INSERT INTO documents (documentName, authors, fileName, quantity,status)
 VALUES
@@ -104,5 +111,16 @@ VALUES
 ('The Chronicles of Narnia: The Voyage of the Dawn Treader', 'C.S. Lewis', 'narnia_3.pdf', 10, 'Available'),
 ('The Chronicles of Narnia: The Silver Chair', 'C.S. Lewis', 'narnia_4.pdf', 10, 'Available'),
 ('The Chronicles of Narnia: The Last Battle', 'C.S. Lewis', 'narnia_5.pdf', 10, 'Available');
+
+#insert tag
+INSERT INTO document_tag (documentID, tagID)
+VALUES
+('1','10'),
+('1','17'),
+('1','8'),
+('2', '11'),
+('2', '18'),
+('3', '12'),
+('3', '10');
 
 UPDATE users SET role = "Admin" WHERE username = "admin";
