@@ -181,6 +181,9 @@ public class ExploreController extends Controller {
                         JsonObject bookJson = items.get(i).getAsJsonObject().getAsJsonObject("volumeInfo");
                         String title = getJsonPrimitive(bookJson, "title");
                         String authors = getJsonPrimitive(bookJson, "authors");
+                        String categories = getJsonPrimitive(bookJson, "categories");
+                        String averageRating = getJsonPrimitive(bookJson, "averageRating");
+                        String publishedDate = getJsonPrimitive(bookJson, "publishedDate");
                         String thumbnailUrl = bookJson.has("imageLinks")
                                 ? bookJson.getAsJsonObject("imageLinks").get("thumbnail").getAsString()
                                 : null;
@@ -190,8 +193,8 @@ public class ExploreController extends Controller {
                         Image qrCode = QRCodeGenerator.generateQRCode(bookLink, 100, 100);
                         String description = bookJson.has("description") ? bookJson.get("description").getAsString() : "No description for this book";
 
-                        books.add(new Book(thumbnail, title, authors, qrCode));
-                        books.add(new Book(thumbnail, title, authors, qrCode, description));
+                        System.out.println(bookJson);
+                        books.add(new Book(thumbnail, title, authors, qrCode, description, publishedDate, categories, averageRating));
                     }
                 }
                 return books;

@@ -8,20 +8,35 @@ public class Book {
     private String authors;
     private String description;
     private Image qrCode;
+    private String publishedDate;
+    private String categories;
+    private String averageRating;
 
-    public Book(Image thumbnail, String title, String authors, Image qrCode) {
-        this.thumbnail = thumbnail;
-        this.title = title;
-        this.authors = authors;
-        this.qrCode = qrCode;
-    }
-
-    public Book(Image thumbnail, String title, String authors, Image qrCode, String description) {
+    public Book(Image thumbnail, String title, String authors, Image qrCode, String description, String publishedDate, String categories, String averageRating) {
         this.thumbnail = thumbnail;
         this.title = title;
         this.authors = authors;
         this.qrCode = qrCode;
         this.description = description;
+        this.publishedDate = publishedDate;
+        this.categories = categories;
+        this.averageRating = averageRating;
+    }
+
+    public String getPublishedDate() {
+        return publishedDate;
+    }
+
+    public String getCategories() {
+        return categories;
+    }
+
+    public void setPublishedDate(String publishedDate) {
+        this.publishedDate = publishedDate;
+    }
+
+    public String getAverageRating() {
+        return averageRating;
     }
 
     public Image getThumbnail() {

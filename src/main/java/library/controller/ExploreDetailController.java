@@ -77,6 +77,7 @@ public class ExploreDetailController extends Controller {
         System.out.println(selectedDocument.getTitle());
         System.out.println(selectedDocument.getAuthors());
 //        System.out.println(selectedDocument.getThumbnail());
+        System.out.println(selectedDocument.getPublishedDate());
         System.out.println(selectedDocument.getDescription());
     }
 
@@ -93,8 +94,17 @@ public class ExploreDetailController extends Controller {
         Text authorText = new Text("Author: " + selectedDocument.getAuthors() + "\n");
         authorText.setFont(new Font("Arial", 14));
 
+        Text categories = new Text("Categories: " + selectedDocument.getCategories() + "\n");
+        categories.setFont(new Font("Arial", 14));
+
+        Text publishedDate = new Text("Published Date: " + selectedDocument.getPublishedDate() + "\n");
+        publishedDate.setFont(new Font("Arial", 14));
+
+        Text averageRating = new Text("averageRating: " + selectedDocument.getAverageRating() + "\n");
+        averageRating.setFont(new Font("Arial", 14));
+
         details.getChildren().clear();
-        details.getChildren().addAll(nameText, authorText);
+        details.getChildren().addAll(nameText, authorText,categories, publishedDate, averageRating);
 
         String descriptionContent = selectedDocument.getDescription();
         if (descriptionContent == null || descriptionContent.isEmpty()) {
