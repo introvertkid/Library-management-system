@@ -189,14 +189,14 @@ public class ExploreController extends Controller {
                         String thumbnailUrl = bookJson.has("imageLinks")
                                 ? bookJson.getAsJsonObject("imageLinks").get("thumbnail").getAsString()
                                 : null;
-                        String bookLink = bookJson.has("infoLink") ? bookJson.get("infoLink").getAsString() : "";
+                        String infoLink = bookJson.has("infoLink") ? bookJson.get("infoLink").getAsString() : "";
 
                         Image thumbnail = thumbnailUrl != null ? new Image(thumbnailUrl, 150, 200, true, true) : null;
-                        Image qrCode = QRCodeGenerator.generateQRCode(bookLink, 100, 100);
+                        Image qrCode = QRCodeGenerator.generateQRCode(infoLink, 100, 100);
                         String description = bookJson.has("description") ? bookJson.get("description").getAsString() : "No description for this book";
 
                         System.out.println(bookJson);
-                        books.add(new Book(thumbnail, title, authors, qrCode, description, publishedDate, categories, averageRating));
+                        books.add(new Book(thumbnail, title, authors, qrCode, description, publishedDate, categories, averageRating, infoLink));
                     }
                 }
                 return books;

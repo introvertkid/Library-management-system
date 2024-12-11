@@ -1,45 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.ExploreDetailController">
-   <!-- Ảnh sách -->
-   <ImageView fx:id="bookImage" fitHeight="284.0" fitWidth="200.0" layoutX="29.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
+    <!-- Ảnh sách -->
+    <ImageView fx:id="bookImage" fitHeight="284.0" fitWidth="200.0" layoutX="29.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
 
-      <!-- Nội dung sách -->
-      <TextFlow fx:id="details" layoutX="248.0" layoutY="27.0" prefHeight="200.0" prefWidth="307.0" />
+    <!-- Nội dung sách -->
+    <TextFlow fx:id="details" layoutX="248.0" layoutY="27.0" prefHeight="200.0" prefWidth="307.0" />
 
-      <!-- Nút Button -->
-      <Label layoutX="29.0" layoutY="344.0" prefHeight="27.0" prefWidth="130.0" text="Description:">
-         <font>
+    <!-- Nút Button -->
+    <Label layoutX="29.0" layoutY="344.0" prefHeight="27.0" prefWidth="130.0" text="Description:">
+        <font>
             <Font size="20.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="719.0" layoutY="27.0" prefHeight="35.0" prefWidth="137.0" text="Comment">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-<!--      <Button fx:id="addCommentButton" layoutX="809.0" layoutY="574.0" mnemonicParsing="false" -->
-<!--              onAction="#handleAddCommentButton" prefHeight="26.0" prefWidth="102.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Add Comment" />-->
-      <TextArea fx:id="commentArea" layoutX="642.0" layoutY="475.0" prefHeight="83.0" prefWidth="307.0" />
-      <VBox fx:id="commentList" layoutX="642.0" layoutY="78.0" prefHeight="374.0" prefWidth="307.0">
-         <children>
-            <ScrollPane fx:id="commentScroll" prefHeight="374.0" prefWidth="296.0">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-               </content>
-            </ScrollPane>
-         </children>
-      </VBox>
-      <TextFlow fx:id="descriptionText" layoutX="29.0" layoutY="380.0" prefHeight="200.0" prefWidth="503.0" />
-<!--   <Button fx:id="openDocumentButton" layoutX="248.0" layoutY="239.0" mnemonicParsing="false"-->
-<!--           onAction="#openDocument" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />-->
+        </font>
+    </Label>
+    <TextFlow fx:id="descriptionText" layoutX="29.0" layoutY="380.0" prefHeight="200.0" prefWidth="622.0" />
+   <Button fx:id="openBookButton" layoutX="248.0" layoutY="241.0" mnemonicParsing="false" onAction="#openBook" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />
+   <ImageView fx:id="qrCode" fitHeight="250.0" fitWidth="250.0" layoutX="672.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
+    <!--   <Button fx:id="openDocumentButton" layoutX="248.0" layoutY="239.0" mnemonicParsing="false"-->
+    <!--           onAction="#openDocument" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />-->
 </AnchorPane>

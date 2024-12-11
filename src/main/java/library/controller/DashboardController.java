@@ -54,7 +54,7 @@ public class DashboardController extends Controller {
     private ImageView firstBookCover, secondBookCover;
 
     @FXML
-    private Label firstBookName, secondBookName, firstBookAuthor, secondBookAuthor;
+    private Label firstBookName, secondBookName, firstBookAuthor, secondBookAuthor, rate1, rate2;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -215,12 +215,23 @@ public class DashboardController extends Controller {
         // Assign their details to the labels
         firstBookName.setText(ExploreController.getJsonPrimitive(firstBook, "title"));
         firstBookAuthor.setText(ExploreController.getJsonPrimitive(firstBook, "authors"));
+        String rate1Value = ExploreController.getJsonPrimitive(firstBook, "averageRating");
+        if (rate1Value != null) {
+            rate1.setText("Rate: " + rate1Value + "/5");
+        } else {
+            rate1.setText("");
+        }
         firstBookCover.setImage(new Image(Objects.requireNonNull
                 (ExploreController.getJsonPrimitive(firstBook, "thumbnail"))));
 
         secondBookName.setText(ExploreController.getJsonPrimitive(secondBook, "title"));
         secondBookAuthor.setText(ExploreController.getJsonPrimitive(secondBook, "authors"));
-        secondBookCover.setImage(new Image(Objects.requireNonNull
+        String rate = ExploreController.getJsonPrimitive(secondBook, "averageRating");
+        if (rate != null) {
+            rate2.setText("Rate: " + rate + "/5");
+        } else {
+            rate2.setText("");
+        }        secondBookCover.setImage(new Image(Objects.requireNonNull
                 (ExploreController.getJsonPrimitive(secondBook, "thumbnail"))));
 //        System.out.println(System.nanoTime()-S);
     }

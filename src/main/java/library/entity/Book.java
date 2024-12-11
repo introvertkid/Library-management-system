@@ -11,8 +11,9 @@ public class Book {
     private String publishedDate;
     private String categories;
     private String averageRating;
+    private String bookLink;
 
-    public Book(Image thumbnail, String title, String authors, Image qrCode, String description, String publishedDate, String categories, String averageRating) {
+    public Book(Image thumbnail, String title, String authors, Image qrCode, String description, String publishedDate, String categories, String averageRating, String bookLink) {
         this.thumbnail = thumbnail;
         this.title = title;
         this.authors = authors;
@@ -21,6 +22,15 @@ public class Book {
         this.publishedDate = publishedDate;
         this.categories = categories;
         this.averageRating = averageRating;
+        this.bookLink = bookLink;
+    }
+
+    public String getBookLink() {
+        return bookLink;
+    }
+
+    public void setBookLink(String bookLink) {
+        this.bookLink = bookLink;
     }
 
     public String getPublishedDate() {

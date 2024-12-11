@@ -150,10 +150,10 @@
       </Label>
       <Label fx:id="firstBookAuthor" layoutX="29.0" layoutY="328.0" prefHeight="18.0" prefWidth="202.0"
              text="Author: Antoine de Saint Exupéry"/>
-      <Label layoutX="29.0" layoutY="346.0" prefHeight="18.0" prefWidth="163.0" text="Rate: 5/5"/>
+      <Label fx:id="rate1" layoutX="29.0" layoutY="346.0" prefHeight="18.0" prefWidth="163.0" text="Rate: 5/5"/>
       <Label fx:id="secondBookAuthor" layoutX="248.0" layoutY="328.0" prefHeight="18.0" prefWidth="202.0"
              text="Author: Eva Ibbotson"/>
-      <Label layoutX="248.0" layoutY="346.0" prefHeight="18.0" prefWidth="163.0" text="Rate: 5/5"/>
+      <Label fx:id="rate2" layoutX="248.0" layoutY="346.0" prefHeight="18.0" prefWidth="163.0" text="Rate: 5/5"/>
       <Label fx:id="secondBookName" layoutX="248.0" layoutY="309.0" prefHeight="21.0" prefWidth="157.0"
              text="Đối thoại cùng ma">
          <font>
