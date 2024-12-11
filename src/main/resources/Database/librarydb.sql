@@ -23,8 +23,10 @@ create table if not exists document_tag(
 	documentID int not null,
     tagID int not null,
     primary key(documentID, tagID),
-    foreign key(documentID) references documents(documentID) on update cascade,
+    foreign key(documentID) references documents(documentID) on update cascade
+															 on delete cascade,
 	foreign key(tagID) references tags(tagID) on update cascade
+											  on delete cascade
 );
 
 CREATE TABLE IF NOT EXISTS users (

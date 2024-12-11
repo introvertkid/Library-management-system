@@ -60,8 +60,7 @@ public class DocumentDetailsController extends Controller {
     private void rejectRequest() {
         String query = "DELETE FROM documents WHERE documentID = ?";
 
-        try (Connection connection = DatabaseHelper.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+        try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
             statement.setInt(1, documentID);
             statement.executeUpdate();
             showAlert("Update", "Delete document successfully!");
