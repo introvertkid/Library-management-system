@@ -114,7 +114,6 @@ public class BaseSceneController extends Controller {
             if (rs.next()) {
                 avt = rs.getString("avatar");
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

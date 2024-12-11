@@ -19,7 +19,6 @@ public class Comment extends VBox {
         avatar.setFitWidth(50);
         avatar.setFitHeight(50);
 
-
         Circle clip = new Circle(25, 25, 25);
         avatar.setClip(clip);
         // Full name

@@ -1,6 +1,7 @@
 package library.controller;
 
 import javafx.application.Platform;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -17,8 +18,12 @@ import library.entity.Comment;
 import library.entity.Document;
 import library.entity.User;
 import library.helper.DatabaseHelper;
+import org.apache.commons.io.FilenameUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -36,6 +41,9 @@ public class BookDetailController extends Controller {
     public TextFlow descriptionTextFlow;
 
     @FXML
+    public Text noThumbnailText;
+
+    @FXML
     private TextFlow details;
 
     @FXML
@@ -49,9 +57,6 @@ public class BookDetailController extends Controller {
 
     @FXML
     private VBox commentList;
-
-    @FXML
-    private TextFlow descriptionText;
 
     private Book book;
 
@@ -86,21 +91,16 @@ public class BookDetailController extends Controller {
 
         details.getChildren().clear();
         details.getChildren().addAll(titleText, authorText);
-
-        descriptionText.getChildren().clear();
-        descriptionText.getChildren().add(new Text(book.getDescription()));
     }
 
     private void loadBookDetails() {
         String query = """
-                SELECT d.documentName, d.authors, d.quantity, d.status, d.description
+                SELECT d.documentName, d.authors, d.quantity, d.status, d.description, d.fileName
                 FROM documents d
                 WHERE d.documentID = ?;
                 """;
 
-        try (Connection conn = DatabaseHelper.getConnection();
-             PreparedStatement statement = conn.prepareStatement(query)) {
-
+        try (PreparedStatement statement = DatabaseHelper.getConnection().prepareStatement(query)) {
             statement.setInt(1, documentID);
 
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -111,40 +111,36 @@ public class BookDetailController extends Controller {
                     int quantity = resultSet.getInt("quantity");
                     String status = resultSet.getString("status");
                     String description = resultSet.getString("description");
+                    String fileName = resultSet.getString("fileName");
 
-                    displayBookDetails(documentName, authors, tagName, quantity, status);
-                    displayBookDescription(description);
+                    displayBookDetails(documentName, authors, tagName,
+                            quantity, status, description, fileName);
                 } else {
                     if (book != null) {
                         setBookDetails(book);
                     } else {
-                        displayError("No details found for this book.");
+                        showAlert("Error", "No details were found for this book.");
                     }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            displayError("Failed to load book details.");
+            showAlert("Error", "Failed to load book details.");
         }
-    }
-
-    private void displayBookDescription(String description) {
-        Text descriptionText = new Text(description);
-        descriptionText.setFont(new Font("Arial", 14));
-
-        descriptionTextFlow.getChildren().clear();
-        descriptionTextFlow.getChildren().addAll(descriptionText);
     }
 
     //todo: refactor
     private void displayBookDetails(String name, String author, String tagName,
-                                    int quantity, String status) {
+                                    int quantity, String status, String description, String fileName) {
         // Cover image
-        String imagePath = "/image/the-swallows-673x1024.jpg";
-        Image image = new Image(getClass().getResourceAsStream(imagePath));
-        bookImage.setImage(image);
-        bookImage.setFitWidth(200);
-        bookImage.setPreserveRatio(true);
+        String imagePath = "src/main/resources/Document/" + fileName;
+        Image image = getFirstPageImage(imagePath);
+        if (image != null) {
+            bookImage.setImage(image);
+            bookImage.setFitWidth(200);
+            bookImage.setPreserveRatio(true);
+        }
+
 
         Text nameText = new Text("Name: " + name + "\n\n");
         nameText.setFont(new Font("Arial", 24));
@@ -162,17 +158,15 @@ public class BookDetailController extends Controller {
         Text statusText = new Text("Status: " + status + "\n");
         statusText.setFont(new Font("Arial", 14));
 
+        Text descriptionText = new Text(description);
+        descriptionText.setFont(new Font("Arial", 14));
+
+        descriptionTextFlow.getChildren().clear();
+        descriptionTextFlow.getChildren().addAll(descriptionText);
+
         details.getChildren().clear();
         details.getChildren().addAll(nameText, authorText, tagText, quantityText, statusText);
     }
-
-    private void displayError(String errorMessage) {
-        details.getChildren().clear();
-        Text errorText = new Text(errorMessage);
-        errorText.setStyle("-fx-fill: red; -fx-font-size: 14;");
-        details.getChildren().add(errorText);
-    }
-
 
     public void loadComments(int documentID) {
         commentList = new VBox();
@@ -215,7 +209,6 @@ public class BookDetailController extends Controller {
                 }
 
                 Comment newComment = new Comment(userName, comment, avatarPath);
-
                 comments.add(newComment);
             }
 
@@ -261,10 +254,11 @@ public class BookDetailController extends Controller {
     @FXML
     private void handleBorrowButton() {
         if (DocumentController.selectedDocument.getQuantity() > 0) {
-            String query = "UPDATE documents\n"
-                    + "SET quantity = quantity - 1\n"
-                    + "WHERE documentID = ? "
-                    + "and status = 'Available'";
+            String query = """
+                    UPDATE documents
+                    SET quantity = quantity - 1
+                    WHERE documentID = ?
+                    and status = 'Available'""";
 
             try (Connection conn = DatabaseHelper.getConnection()) {
                 PreparedStatement stmt = conn.prepareStatement(query);
@@ -444,6 +438,30 @@ public class BookDetailController extends Controller {
         } else {
             showAlert("Error", "File not found.");
         }
+    }
+
+    public Image getFirstPageImage(String pdfPath) {
+        String ex = getFileExtension(pdfPath);
+        if (ex.equals("pdf")) {
+            try (PDDocument document = PDDocument.load(new File(pdfPath))) {
+                PDFRenderer pdfRenderer = new PDFRenderer(document);
+                // Render the first page (0-indexed)
+                BufferedImage bufferedImage = pdfRenderer.renderImageWithDPI(0, 150); // 150 DPI for quality
+                return SwingFXUtils.toFXImage(bufferedImage, null);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null; // Return null if something goes wrong
+            }
+        } else {
+            noThumbnailText.setVisible(true);
+        }
+        return null;
+    }
+
+    private String getFileExtension(String path) {
+        //excluded "."
+        int i = path.lastIndexOf(".");
+        return path.substring(i + 1);
     }
 }
 

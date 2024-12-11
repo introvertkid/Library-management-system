@@ -8,10 +8,10 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="library.controller.BookDetailController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="624.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="library.controller.BookDetailController">
    <!-- Ảnh sách -->
    <ImageView fx:id="bookImage" fitHeight="284.0" fitWidth="200.0" layoutX="29.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true" />
 
@@ -32,17 +32,15 @@
       </Label>
       <Button fx:id="addCommentButton" layoutX="847.0" layoutY="537.0" mnemonicParsing="false" onAction="#handleAddCommentButton" prefHeight="26.0" prefWidth="102.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Add Comment" />
       <TextArea fx:id="commentArea" layoutX="642.0" layoutY="439.0" prefHeight="83.0" prefWidth="307.0" />
-      <VBox fx:id="commentList" layoutX="642.0" layoutY="78.0" prefHeight="345.0" prefWidth="307.0">
-         <children>
-            <ScrollPane fx:id="commentScroll" prefHeight="374.0" prefWidth="296.0">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-               </content>
-            </ScrollPane>
-         </children>
-      </VBox>
+   <VBox fx:id="commentList" layoutX="642.0" layoutY="78.0" prefHeight="345.0" prefWidth="307.0">
+      <ScrollPane fx:id="commentScroll" prefHeight="374.0" prefWidth="296.0">
+         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+      </ScrollPane>
+   </VBox>
       <TextFlow fx:id="descriptionTextFlow" layoutX="29.0" layoutY="380.0" prefHeight="200.0" prefWidth="503.0" />
    <Button fx:id="returnButton" layoutX="248.0" layoutY="285.0" mnemonicParsing="false" onAction="#handleReturnButton" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Return" />
    <Button fx:id="openDocumentButton" layoutX="248.0" layoutY="239.0" mnemonicParsing="false" onAction="#openDocument" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show" />
    <ImageView fx:id="qrCodeImageView" fitHeight="83.0" fitWidth="117.0" layoutX="373.0" layoutY="239.0" pickOnBounds="true" preserveRatio="true" />
+   <Text fx:id="noThumbnailText" layoutX="47.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0"
+         text="No thumbnail for this document." textAlignment="CENTER" visible="false" wrappingWidth="156.6666603088379" />
 </AnchorPane>

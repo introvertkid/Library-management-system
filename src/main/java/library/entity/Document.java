@@ -86,7 +86,6 @@ public class Document {
         return ans;
     }
 
-
     public Document(int documentID, String documentName, String authors, String fileName, String status, String tagName, int quantity) {
         this.documentID = documentID;
         this.documentName = documentName;
@@ -96,7 +95,6 @@ public class Document {
         this.tagName = tagName;
         this.quantity = quantity;
     }
-
 
     public int getDocumentID() {
         return documentID;

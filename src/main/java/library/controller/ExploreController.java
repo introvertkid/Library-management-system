@@ -160,6 +160,8 @@ public class ExploreController extends Controller {
         loadingIndicator.setVisible(false);
         loadingIndicator.setStyle("-fx-pref-width: 30px; -fx-pref-height: 30px;");
         contentPane.getChildren().add(loadingIndicator);
+
+        bookTable.getStylesheets().add(getClass().getResource("/CSS/ScrollPane.css").toExternalForm());
     }
 
     public void handleFindBook() {
