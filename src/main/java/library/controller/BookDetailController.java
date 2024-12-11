@@ -141,7 +141,6 @@ public class BookDetailController extends Controller {
             bookImage.setPreserveRatio(true);
         }
 
-
         Text nameText = new Text("Name: " + name + "\n\n");
         nameText.setFont(new Font("Arial", 24));
         nameText.setStyle("-fx-font-weight: bold;");

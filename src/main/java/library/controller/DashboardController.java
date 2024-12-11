@@ -167,7 +167,7 @@ public class DashboardController extends Controller {
 
         Random random = new Random();
         int hjhj = random.nextInt(suggestions.size());
-        String query = APIHelper.parseQuery(suggestions.get(hjhj)) + "&limit=2";
+        String query = APIHelper.parseQuery(suggestions.get(hjhj));
         System.out.println("query: " + query);
 
 //        long S=System.nanoTime();

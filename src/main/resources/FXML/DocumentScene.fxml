@@ -19,7 +19,8 @@
         <AnchorPane layoutX="8.0" prefHeight="46.0" prefWidth="980.0">
             <children>
 
-                <Button fx:id="deleteBookButton" alignment="BASELINE_LEFT" layoutX="911.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleDeleteBook" prefHeight="24.0" prefWidth="10.0" style="-fx-cursor: hand; -fx-background-color: transparent;" styleClass="accountButton" visible="true">
+                <Button fx:id="deleteBookButton" alignment="BASELINE_LEFT" layoutX="911.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleDeleteBook" prefHeight="24.0" prefWidth="10.0" style="-fx-cursor: hand; -fx-background-color: transparent;" styleClass="accountButton"
+                        visible="false">
                     <graphic>
                         <ImageView fitHeight="23.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -32,7 +33,8 @@
                     </font>
                 </Button>
 
-                <Button fx:id="editBookButton" alignment="BASELINE_LEFT" layoutX="931.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleEditBook" prefHeight="24.0" prefWidth="10.0" style="-fx-cursor: hand; -fx-background-color: transparent;" styleClass="accountButton" visible="true">
+                <Button fx:id="editBookButton" alignment="BASELINE_LEFT" layoutX="931.0" layoutY="12.0" mnemonicParsing="false" onAction="#handleEditBook" prefHeight="24.0" prefWidth="10.0" style="-fx-cursor: hand; -fx-background-color: transparent;" styleClass="accountButton"
+                        visible="false">
                     <graphic>
                         <ImageView fitHeight="20.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                             <image>

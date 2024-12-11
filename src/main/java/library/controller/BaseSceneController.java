@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -122,8 +123,13 @@ public class BaseSceneController extends Controller {
         String avatarPath = "/image/UserAvatar/" + avt;
 
         try {
-            avatarImage = new Image(avatarPath);
-            System.out.println(avatarImage.getUrl());
+            URL resource = getClass().getResource(avatarPath);
+            if (resource != null) {
+                avatarImage = new Image(resource.toExternalForm());
+                System.out.println("Avatar loaded from: " + avatarImage.getUrl());
+            } else {
+                throw new FileNotFoundException("Resource not found: " + avatarPath);
+            }
         } catch (Exception e) {
             System.out.println("Failed to get avatar from: " + avatarPath);
             e.printStackTrace();

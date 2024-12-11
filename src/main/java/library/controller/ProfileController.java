@@ -156,19 +156,26 @@ public class ProfileController extends Controller {
             try {
                 // Define the directory to store user avatars
                 String destinationPath = "src/main/resources/image/UserAvatar/";
+                String targetPath = "target/classes/image/UserAvatar/";
 
                 // Create destination directory if it doesn't exist
                 File directory = new File(destinationPath);
                 if (!directory.exists()) {
                     directory.mkdirs();
                 }
+                File targetDirectory = new File(targetPath);
+                if (!targetDirectory.exists()) {
+                    targetDirectory.mkdirs();
+                }
 
                 // Create a new file in the avatar directory
                 String newAvatarName = User.getID() + "_" + selectedFile.getName();
                 File destinationFile = new File(directory, newAvatarName);
+                File targetFile = new File(targetDirectory, newAvatarName);
 
                 // Copy the selected file to the destination
                 Files.copy(selectedFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(selectedFile.toPath(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
                 // Update the avatar in the database
                 DatabaseHelper.connectToDatabase();
