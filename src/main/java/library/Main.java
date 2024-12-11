@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 public class Main extends Application {
 
@@ -19,7 +20,7 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Library Management System");
         loadScene("/FXML/LoginScene.fxml");
-
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/image/icon.png")));
         primaryStage.show();
     }
 

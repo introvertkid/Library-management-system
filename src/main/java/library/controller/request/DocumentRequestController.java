@@ -95,11 +95,15 @@ public class DocumentRequestController extends Controller implements IRequestCon
     @FXML
     private void previewDocument() {
         selectedDocument = requestTable.getSelectionModel().getSelectedItem();
-        try {
-            String fileName = selectedDocument.getFileName();
-            Desktop.getDesktop().open(new File("src/main/resources/Document/" + fileName));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (selectedDocument == null) {
+            showAlert("Error", "Please select document");
+        } else {
+            try {
+                String fileName = selectedDocument.getFileName();
+                Desktop.getDesktop().open(new File("src/main/resources/Document/" + fileName));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

@@ -66,8 +66,7 @@
             <Button fx:id="detailButton" layoutX="447.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleDetailButton" prefHeight="27.0" prefWidth="95.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Show detail" />
             </children>
         </AnchorPane>
-        <TableView fx:id="documentTable" layoutX="3.0" layoutY="42.0"
-                   onMousePressed="#handleDocumentStatus" prefHeight="480.0" prefWidth="990.0" style="-fx-background-color: transparent;">
+        <TableView fx:id="documentTable" layoutX="3.0" layoutY="42.0" onMousePressed="#handleDocumentStatus" prefHeight="480.0" prefWidth="990.0" style="-fx-background-color: transparent;">
             <columns>
                 <TableColumn fx:id="titleColumn" prefWidth="247.99996328353882" text="Title" />
                 <TableColumn fx:id="authorColumn" prefWidth="308.00006103515625" text="Author" />

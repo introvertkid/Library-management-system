@@ -20,7 +20,7 @@
 
       <!-- Nút Button -->
       <Button fx:id="borrowButton" layoutX="248.0" layoutY="239.0" mnemonicParsing="false" onAction="#handleBorrowButton" prefHeight="26.0" prefWidth="86.0" style="-fx-font-family: 'Montserrat'; -fx-text-fill: white; -fx-background-color: #3b5998; -fx-font-weight: bold; -fx-cursor: hand;" text="Borrow" />
-      <Label layoutX="29.0" layoutY="344.0" prefHeight="27.0" prefWidth="130.0" text="Description">
+      <Label layoutX="29.0" layoutY="344.0" prefHeight="27.0" prefWidth="130.0" text="Description:">
          <font>
             <Font size="20.0" />
          </font>
